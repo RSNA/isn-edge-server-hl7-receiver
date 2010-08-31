@@ -1,6 +1,205 @@
 <com.webreach.mirth.model.ServerConfiguration>
-  <date>2010-08-18 18:57:15</date>
+  <date>2010-08-31 08:21:22</date>
   <channels>
+    <com.webreach.mirth.model.Channel>
+      <id>1b6b5460-0d59-4099-9ce0-0c386ac6b661</id>
+      <name>RSNA Edge Appliance DICOM SCP</name>
+      <description></description>
+      <enabled>true</enabled>
+      <version>1.8.2.4472</version>
+      <lastModified>
+        <time>1282941042970</time>
+        <timezone>America/Los_Angeles</timezone>
+      </lastModified>
+      <revision>24</revision>
+      <sourceConnector>
+        <name>sourceConnector</name>
+        <properties>
+          <property name="noclientauth">1</property>
+          <property name="keystorepw"></property>
+          <property name="sosndbuf">0</property>
+          <property name="bufsize">1</property>
+          <property name="requestto">5</property>
+          <property name="keystore"></property>
+          <property name="pdv1">0</property>
+          <property name="rspdelay">0</property>
+          <property name="defts">0</property>
+          <property name="soclosedelay">50</property>
+          <property name="async">0</property>
+          <property name="rcvpdulen">16</property>
+          <property name="truststore"></property>
+          <property name="nativeData">1</property>
+          <property name="applicationEntity">RSNA-ISN</property>
+          <property name="nossl2">1</property>
+          <property name="port">104</property>
+          <property name="dest"></property>
+          <property name="tls">notls</property>
+          <property name="host">192.168.50.73</property>
+          <property name="truststorepw"></property>
+          <property name="releaseto">5</property>
+          <property name="keypw"></property>
+          <property name="idleto">60</property>
+          <property name="reaper">10</property>
+          <property name="tcpdelay">1</property>
+          <property name="bigendian">0</property>
+          <property name="sorcvbuf">0</property>
+          <property name="sndpdulen">16</property>
+        </properties>
+        <transformer>
+          <steps>
+            <com.webreach.mirth.model.Step>
+              <sequenceNumber>0</sequenceNumber>
+              <name>patientId</name>
+              <script>var mapping;try { mapping = msg[&apos;tag00100020&apos;]; }catch (e) { logger.error(e);  mapping = &apos;&apos;;}channelMap.put(&apos;patientId&apos;, validate( mapping , &apos;PATIENT-ID-UNAVAILABLE&apos;, new Array()));</script>
+              <type>Mapper</type>
+              <data class="map">
+                <entry>
+                  <string>Variable</string>
+                  <string>patientId</string>
+                </entry>
+                <entry>
+                  <string>DefaultValue</string>
+                  <string>&apos;PATIENT-ID-UNAVAILABLE&apos;</string>
+                </entry>
+                <entry>
+                  <string>Mapping</string>
+                  <string>msg[&apos;tag00100020&apos;]</string>
+                </entry>
+                <entry>
+                  <string>RegularExpressions</string>
+                  <list/>
+                </entry>
+                <entry>
+                  <string>isGlobal</string>
+                  <string>channel</string>
+                </entry>
+              </data>
+            </com.webreach.mirth.model.Step>
+            <com.webreach.mirth.model.Step>
+              <sequenceNumber>1</sequenceNumber>
+              <name>accessionNumber</name>
+              <script>var mapping;try { mapping = msg[&apos;tag00080050&apos;]; }catch (e) { logger.error(e);  mapping = &apos;&apos;;}channelMap.put(&apos;accessionNumber&apos;, validate( mapping , &apos;ACCESSION-NUMBER-UNAVAILABLE&apos;, new Array()));</script>
+              <type>Mapper</type>
+              <data class="map">
+                <entry>
+                  <string>Variable</string>
+                  <string>accessionNumber</string>
+                </entry>
+                <entry>
+                  <string>DefaultValue</string>
+                  <string>&apos;ACCESSION-NUMBER-UNAVAILABLE&apos;</string>
+                </entry>
+                <entry>
+                  <string>Mapping</string>
+                  <string>msg[&apos;tag00080050&apos;]</string>
+                </entry>
+                <entry>
+                  <string>RegularExpressions</string>
+                  <list/>
+                </entry>
+                <entry>
+                  <string>isGlobal</string>
+                  <string>channel</string>
+                </entry>
+              </data>
+            </com.webreach.mirth.model.Step>
+            <com.webreach.mirth.model.Step>
+              <sequenceNumber>2</sequenceNumber>
+              <name>sopInstanceUid</name>
+              <script>var mapping;try { mapping = msg[&apos;tag00080018&apos;]; }catch (e) { logger.error(e);  mapping = &apos;&apos;;}channelMap.put(&apos;sopInstanceUid&apos;, validate( mapping , &apos;&apos;, new Array()));</script>
+              <type>Mapper</type>
+              <data class="map">
+                <entry>
+                  <string>Variable</string>
+                  <string>sopInstanceUid</string>
+                </entry>
+                <entry>
+                  <string>DefaultValue</string>
+                  <string></string>
+                </entry>
+                <entry>
+                  <string>Mapping</string>
+                  <string>msg[&apos;tag00080018&apos;]</string>
+                </entry>
+                <entry>
+                  <string>RegularExpressions</string>
+                  <list/>
+                </entry>
+                <entry>
+                  <string>isGlobal</string>
+                  <string>channel</string>
+                </entry>
+              </data>
+            </com.webreach.mirth.model.Step>
+          </steps>
+          <inboundTemplate></inboundTemplate>
+          <outboundTemplate></outboundTemplate>
+          <inboundProtocol>DICOM</inboundProtocol>
+          <outboundProtocol>DICOM</outboundProtocol>
+          <inboundProperties/>
+          <outboundProperties/>
+        </transformer>
+        <filter>
+          <rules/>
+        </filter>
+        <transportName>DICOM Listener</transportName>
+        <mode>SOURCE</mode>
+        <enabled>true</enabled>
+      </sourceConnector>
+      <destinationConnectors>
+        <com.webreach.mirth.model.Connector>
+          <name>File Output</name>
+          <properties>
+            <property name="secure">1</property>
+            <property name="scheme">file</property>
+            <property name="binary">1</property>
+            <property name="username">anonymous</property>
+            <property name="outputPattern">${sopInstanceUid}.dcm</property>
+            <property name="validateConnections">1</property>
+            <property name="DataType">File Writer</property>
+            <property name="FTPAnonymous">1</property>
+            <property name="charsetEncoding">DEFAULT_ENCODING</property>
+            <property name="password">anonymous</property>
+            <property name="passive">1</property>
+            <property name="template">${DICOMMESSAGE}</property>
+            <property name="outputAppend">0</property>
+            <property name="host">D:/rsna/${patientId}/${accessionNumber}/</property>
+          </properties>
+          <transformer>
+            <steps/>
+            <inboundProtocol>DICOM</inboundProtocol>
+            <outboundProtocol>DICOM</outboundProtocol>
+            <inboundProperties/>
+          </transformer>
+          <filter>
+            <rules/>
+          </filter>
+          <transportName>File Writer</transportName>
+          <mode>DESTINATION</mode>
+          <enabled>true</enabled>
+        </com.webreach.mirth.model.Connector>
+      </destinationConnectors>
+      <properties>
+        <property name="initialState">started</property>
+        <property name="synchronous">true</property>
+        <property name="store_messages">true</property>
+        <property name="encryptData">false</property>
+        <property name="transactional">false</property>
+        <property name="max_message_age">-1</property>
+        <property name="dont_store_filtered">false</property>
+        <property name="error_messages_only">true</property>
+      </properties>
+      <preprocessingScript>// Modify the message variable below to pre process data
+return message;</preprocessingScript>
+      <postprocessingScript>// This script executes once after a message has been processed
+return;</postprocessingScript>
+      <deployScript>// This script executes once when the mule engine is started
+// You only have access to the globalMap here to persist data
+return;</deployScript>
+      <shutdownScript>// This script executes once when the mule engine is stopped
+// You only have access to the globalMap here to persist data
+return;</shutdownScript>
+    </com.webreach.mirth.model.Channel>
     <com.webreach.mirth.model.Channel>
       <id>20873abb-9dd8-4e32-9167-f3a87fd99fbe</id>
       <name>Edge Server HL7 Receiver</name>
@@ -8,10 +207,10 @@
       <enabled>true</enabled>
       <version>1.8.2.4472</version>
       <lastModified>
-        <time>1282183012483</time>
+        <time>1282940141025</time>
         <timezone>America/Los_Angeles</timezone>
       </lastModified>
-      <revision>204</revision>
+      <revision>211</revision>
       <sourceConnector>
         <name>sourceConnector</name>
         <properties>
@@ -33,14 +232,14 @@
           <property name="ackMsgSuccessful"></property>
           <property name="tcpProtocolClassName">org.mule.providers.tcp.protocols.TcpProtocol</property>
           <property name="responseFromTransformer">0</property>
-          <property name="segmentEnd">0x0D</property>
           <property name="ackPort"></property>
+          <property name="segmentEnd">0x0D</property>
           <property name="charsetEncoding">DEFAULT_ENCODING</property>
           <property name="host">127.0.0.1</property>
           <property name="responseValue">None</property>
           <property name="DataType">LLP Listener</property>
-          <property name="processBatchFiles">0</property>
           <property name="ackMsgError">An Error Occured Processing Message.</property>
+          <property name="processBatchFiles">0</property>
           <property name="serverMode">1</property>
           <property name="ackCodeSuccessful">AA</property>
           <property name="ackIP"></property>
@@ -91,12 +290,12 @@ else if(type == &quot;ORM^O01&quot; || type == &quot;ORU^R01&quot; ) {
                   <string></string>
                 </entry>
                 <entry>
-                  <string>RegularExpressions</string>
-                  <list/>
-                </entry>
-                <entry>
                   <string>Mapping</string>
                   <string>msg[&apos;PID&apos;][&apos;PID.5&apos;][&apos;PID.5.1&apos;].toString() + &quot;^&quot; + msg[&apos;PID&apos;][&apos;PID.5&apos;][&apos;PID.5.2&apos;].toString() +&quot;^&quot; + msg[&apos;PID&apos;][&apos;PID.5&apos;][&apos;PID.5.3&apos;].toString()</string>
+                </entry>
+                <entry>
+                  <string>RegularExpressions</string>
+                  <list/>
                 </entry>
                 <entry>
                   <string>isGlobal</string>
@@ -119,12 +318,12 @@ else if(type == &quot;ORM^O01&quot; || type == &quot;ORU^R01&quot; ) {
                   <string></string>
                 </entry>
                 <entry>
-                  <string>RegularExpressions</string>
-                  <list/>
-                </entry>
-                <entry>
                   <string>Mapping</string>
                   <string>msg[&apos;PID&apos;][&apos;PID.3&apos;][&apos;PID.3.1&apos;].toString()</string>
+                </entry>
+                <entry>
+                  <string>RegularExpressions</string>
+                  <list/>
                 </entry>
                 <entry>
                   <string>isGlobal</string>
@@ -167,12 +366,12 @@ channelMap.put(&quot;dob&quot;, dob);</string>
                   <string></string>
                 </entry>
                 <entry>
-                  <string>RegularExpressions</string>
-                  <list/>
-                </entry>
-                <entry>
                   <string>Mapping</string>
                   <string>msg[&apos;PID&apos;][&apos;PID.8&apos;][&apos;PID.8.1&apos;].toString()</string>
+                </entry>
+                <entry>
+                  <string>RegularExpressions</string>
+                  <list/>
                 </entry>
                 <entry>
                   <string>isGlobal</string>
@@ -195,12 +394,12 @@ channelMap.put(&quot;dob&quot;, dob);</string>
                   <string></string>
                 </entry>
                 <entry>
-                  <string>RegularExpressions</string>
-                  <list/>
-                </entry>
-                <entry>
                   <string>Mapping</string>
                   <string>msg[&apos;PID&apos;][&apos;PID.11&apos;][&apos;PID.11.1&apos;].toString()</string>
+                </entry>
+                <entry>
+                  <string>RegularExpressions</string>
+                  <list/>
                 </entry>
                 <entry>
                   <string>isGlobal</string>
@@ -223,12 +422,12 @@ channelMap.put(&quot;dob&quot;, dob);</string>
                   <string></string>
                 </entry>
                 <entry>
-                  <string>RegularExpressions</string>
-                  <list/>
-                </entry>
-                <entry>
                   <string>Mapping</string>
                   <string>msg[&apos;PID&apos;][&apos;PID.11&apos;][&apos;PID.11.3&apos;].toString()</string>
+                </entry>
+                <entry>
+                  <string>RegularExpressions</string>
+                  <list/>
                 </entry>
                 <entry>
                   <string>isGlobal</string>
@@ -251,12 +450,12 @@ channelMap.put(&quot;dob&quot;, dob);</string>
                   <string></string>
                 </entry>
                 <entry>
-                  <string>RegularExpressions</string>
-                  <list/>
-                </entry>
-                <entry>
                   <string>Mapping</string>
                   <string>msg[&apos;PID&apos;][&apos;PID.11&apos;][&apos;PID.11.4&apos;].toString()</string>
+                </entry>
+                <entry>
+                  <string>RegularExpressions</string>
+                  <list/>
                 </entry>
                 <entry>
                   <string>isGlobal</string>
@@ -279,12 +478,12 @@ channelMap.put(&quot;dob&quot;, dob);</string>
                   <string></string>
                 </entry>
                 <entry>
-                  <string>RegularExpressions</string>
-                  <list/>
-                </entry>
-                <entry>
                   <string>Mapping</string>
                   <string>msg[&apos;PID&apos;][&apos;PID.11&apos;][&apos;PID.11.5&apos;].toString()</string>
+                </entry>
+                <entry>
+                  <string>RegularExpressions</string>
+                  <list/>
                 </entry>
                 <entry>
                   <string>isGlobal</string>
@@ -333,12 +532,12 @@ channelMap.put(&quot;dob&quot;, dob);</string>
                   <string></string>
                 </entry>
                 <entry>
-                  <string>RegularExpressions</string>
-                  <list/>
-                </entry>
-                <entry>
                   <string>Mapping</string>
                   <string>msg[&apos;OBR&apos;][&apos;OBR.3&apos;][&apos;OBR.3.1&apos;].toString()</string>
+                </entry>
+                <entry>
+                  <string>RegularExpressions</string>
+                  <list/>
                 </entry>
                 <entry>
                   <string>isGlobal</string>
@@ -361,12 +560,12 @@ channelMap.put(&quot;dob&quot;, dob);</string>
                   <string></string>
                 </entry>
                 <entry>
-                  <string>Mapping</string>
-                  <string>msg[&apos;OBR&apos;][&apos;OBR.4&apos;][&apos;OBR.4.2&apos;].toString()</string>
-                </entry>
-                <entry>
                   <string>RegularExpressions</string>
                   <list/>
+                </entry>
+                <entry>
+                  <string>Mapping</string>
+                  <string>msg[&apos;OBR&apos;][&apos;OBR.4&apos;][&apos;OBR.4.2&apos;].toString()</string>
                 </entry>
                 <entry>
                   <string>isGlobal</string>
@@ -822,8 +1021,17 @@ while(rs.next())
 	var updateJobSets = &quot;UPDATE job_sets SET patient_id = ? WHERE patient_id = ?&quot;;
 	con.executeUpdate(updateJobSets, params);
 
-	var updateRsnaIds = &quot;UPDATE patients_rsna_ids SET patient_id = ? WHERE patient_id = ?&quot;;
+	var updateRsnaIds = &quot;UPDATE patient_rsna_ids SET patient_id = ? WHERE patient_id = ?&quot;;
 	con.executeUpdate(updateRsnaIds, params);
+
+
+	
+	params.add($(&apos;mrn&apos;));
+	params.add($(&apos;priorMrn&apos;));
+
+	var insertEvent = &quot;INSERT INTO patient_merge_events (new_patient_id, old_patient_id, new_mrn, old_mrn) &quot; 
+		+ &quot;VALUES (?, ?, ?, ?)&quot;
+	con.executeUpdate(insertEvent, params);
 
 }
 
@@ -1145,7 +1353,7 @@ function insertStatusChange(exam) {
 		if(count == 0)
 		{
 			var insert = &quot;INSERT INTO reports &quot; 
-				+ &quot;(exam_id, status, status_timestamp, report_text, signer_name, dictator_name, transcriber_name) &quot; 
+				+ &quot;(exam_id, status, status_timestamp, report_text, signer, dictator, transcriber) &quot; 
 				+ &quot;VALUES (?, ?, ?, ?, ?, ?, ?)&quot;;
 
 
@@ -1198,7 +1406,7 @@ function insertStatusChange(exam) {
     <property name="smtp.username"></property>
     <property name="firstlogin">0</property>
     <property name="smtp.host"></property>
-    <property name="stats.time">1282169615545</property>
+    <property name="stats.time">1283185934541</property>
     <property name="update.enabled">1</property>
     <property name="smtp.secure">none</property>
     <property name="smtp.port">25</property>
@@ -1224,7 +1432,9 @@ return;</string>
       <string>Preprocessor</string>
       <string>// Modify the message variable below to pre process data
 // This script applies across all channels
-return message;</string>
+var newMessage = message.replace(/[\x00-\x08]|[\x0B-\x0C]|[\x0E-\x1F]/g, &apos;&apos;);
+
+return newMessage;</string>
     </entry>
     <entry>
       <string>Postprocessor</string>
