@@ -5,10 +5,10 @@
   <enabled>true</enabled>
   <version>1.8.2.4472</version>
   <lastModified>
-    <time>1284407460203</time>
+    <time>1284409313222</time>
     <timezone>America/Chicago</timezone>
   </lastModified>
-  <revision>228</revision>
+  <revision>229</revision>
   <sourceConnector>
     <name>sourceConnector</name>
     <properties>
@@ -192,12 +192,12 @@ channelMap.put(&quot;dob&quot;, dob);</string>
               <string></string>
             </entry>
             <entry>
-              <string>RegularExpressions</string>
-              <list/>
-            </entry>
-            <entry>
               <string>Mapping</string>
               <string>msg[&apos;PID&apos;][&apos;PID.11&apos;][&apos;PID.11.1&apos;].toString()</string>
+            </entry>
+            <entry>
+              <string>RegularExpressions</string>
+              <list/>
             </entry>
             <entry>
               <string>isGlobal</string>
@@ -318,7 +318,7 @@ channelMap.put(&quot;dob&quot;, dob);</string>
         <com.webreach.mirth.model.Step>
           <sequenceNumber>10</sequenceNumber>
           <name>accNum</name>
-          <script>var mapping;try { mapping = msg[&apos;OBR&apos;][&apos;OBR.3&apos;][&apos;OBR.3.1&apos;].toString(); }catch (e) { logger.error(e);  mapping = &apos;&apos;;}channelMap.put(&apos;accNum&apos;, validate( mapping , &apos;&apos;, new Array()));</script>
+          <script>var mapping;try { mapping = msg[&apos;OBR&apos;][&apos;OBR.18&apos;][&apos;OBR.18.1&apos;].toString(); }catch (e) { logger.error(e);  mapping = &apos;&apos;;}channelMap.put(&apos;accNum&apos;, validate( mapping , &apos;&apos;, new Array()));</script>
           <type>Mapper</type>
           <data class="map">
             <entry>
@@ -330,12 +330,12 @@ channelMap.put(&quot;dob&quot;, dob);</string>
               <string></string>
             </entry>
             <entry>
-              <string>RegularExpressions</string>
-              <list/>
+              <string>Mapping</string>
+              <string>msg[&apos;OBR&apos;][&apos;OBR.18&apos;][&apos;OBR.18.1&apos;].toString()</string>
             </entry>
             <entry>
-              <string>Mapping</string>
-              <string>msg[&apos;OBR&apos;][&apos;OBR.3&apos;][&apos;OBR.3.1&apos;].toString()</string>
+              <string>RegularExpressions</string>
+              <list/>
             </entry>
             <entry>
               <string>isGlobal</string>
