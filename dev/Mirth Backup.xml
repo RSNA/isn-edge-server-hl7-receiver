@@ -1,0 +1,1469 @@
+<com.webreach.mirth.model.ServerConfiguration>
+  <date>2010-09-13 13:07:45</date>
+  <channels>
+    <com.webreach.mirth.model.Channel>
+      <id>1b6b5460-0d59-4099-9ce0-0c386ac6b661</id>
+      <name>RSNA Edge Appliance DICOM SCP</name>
+      <description></description>
+      <enabled>true</enabled>
+      <version>1.8.2.4472</version>
+      <lastModified>
+        <time>1284132501441</time>
+        <timezone>America/Chicago</timezone>
+      </lastModified>
+      <revision>35</revision>
+      <sourceConnector>
+        <name>sourceConnector</name>
+        <properties>
+          <property name="noclientauth">1</property>
+          <property name="keystorepw"></property>
+          <property name="sosndbuf">0</property>
+          <property name="bufsize">1</property>
+          <property name="requestto">5</property>
+          <property name="keystore"></property>
+          <property name="pdv1">0</property>
+          <property name="rspdelay">0</property>
+          <property name="defts">0</property>
+          <property name="soclosedelay">50</property>
+          <property name="async">0</property>
+          <property name="rcvpdulen">16</property>
+          <property name="truststore"></property>
+          <property name="nativeData">1</property>
+          <property name="applicationEntity">RSNA-ISN</property>
+          <property name="nossl2">1</property>
+          <property name="port">4104</property>
+          <property name="dest"></property>
+          <property name="tls">notls</property>
+          <property name="host">0.0.0.0</property>
+          <property name="truststorepw"></property>
+          <property name="releaseto">5</property>
+          <property name="keypw"></property>
+          <property name="idleto">60</property>
+          <property name="reaper">10</property>
+          <property name="tcpdelay">1</property>
+          <property name="bigendian">0</property>
+          <property name="sorcvbuf">0</property>
+          <property name="sndpdulen">16</property>
+        </properties>
+        <transformer>
+          <steps>
+            <com.webreach.mirth.model.Step>
+              <sequenceNumber>0</sequenceNumber>
+              <name>patientId</name>
+              <script>var mapping;try { mapping = msg[&apos;tag00100020&apos;]; }catch (e) { logger.error(e);  mapping = &apos;&apos;;}channelMap.put(&apos;patientId&apos;, validate( mapping , &apos;PATIENT-ID-UNAVAILABLE&apos;, new Array()));</script>
+              <type>Mapper</type>
+              <data class="map">
+                <entry>
+                  <string>Variable</string>
+                  <string>patientId</string>
+                </entry>
+                <entry>
+                  <string>DefaultValue</string>
+                  <string>&apos;PATIENT-ID-UNAVAILABLE&apos;</string>
+                </entry>
+                <entry>
+                  <string>RegularExpressions</string>
+                  <list/>
+                </entry>
+                <entry>
+                  <string>Mapping</string>
+                  <string>msg[&apos;tag00100020&apos;]</string>
+                </entry>
+                <entry>
+                  <string>isGlobal</string>
+                  <string>channel</string>
+                </entry>
+              </data>
+            </com.webreach.mirth.model.Step>
+            <com.webreach.mirth.model.Step>
+              <sequenceNumber>1</sequenceNumber>
+              <name>accessionNumber</name>
+              <script>var mapping;try { mapping = msg[&apos;tag00080050&apos;]; }catch (e) { logger.error(e);  mapping = &apos;&apos;;}channelMap.put(&apos;accessionNumber&apos;, validate( mapping , &apos;ACCESSION-NUMBER-UNAVAILABLE&apos;, new Array()));</script>
+              <type>Mapper</type>
+              <data class="map">
+                <entry>
+                  <string>Variable</string>
+                  <string>accessionNumber</string>
+                </entry>
+                <entry>
+                  <string>DefaultValue</string>
+                  <string>&apos;ACCESSION-NUMBER-UNAVAILABLE&apos;</string>
+                </entry>
+                <entry>
+                  <string>RegularExpressions</string>
+                  <list/>
+                </entry>
+                <entry>
+                  <string>Mapping</string>
+                  <string>msg[&apos;tag00080050&apos;]</string>
+                </entry>
+                <entry>
+                  <string>isGlobal</string>
+                  <string>channel</string>
+                </entry>
+              </data>
+            </com.webreach.mirth.model.Step>
+            <com.webreach.mirth.model.Step>
+              <sequenceNumber>2</sequenceNumber>
+              <name>sopInstanceUid</name>
+              <script>var mapping;try { mapping = msg[&apos;tag00080018&apos;]; }catch (e) { logger.error(e);  mapping = &apos;&apos;;}channelMap.put(&apos;sopInstanceUid&apos;, validate( mapping , &apos;&apos;, new Array()));</script>
+              <type>Mapper</type>
+              <data class="map">
+                <entry>
+                  <string>Variable</string>
+                  <string>sopInstanceUid</string>
+                </entry>
+                <entry>
+                  <string>DefaultValue</string>
+                  <string></string>
+                </entry>
+                <entry>
+                  <string>RegularExpressions</string>
+                  <list/>
+                </entry>
+                <entry>
+                  <string>Mapping</string>
+                  <string>msg[&apos;tag00080018&apos;]</string>
+                </entry>
+                <entry>
+                  <string>isGlobal</string>
+                  <string>channel</string>
+                </entry>
+              </data>
+            </com.webreach.mirth.model.Step>
+          </steps>
+          <inboundTemplate></inboundTemplate>
+          <outboundTemplate></outboundTemplate>
+          <inboundProtocol>DICOM</inboundProtocol>
+          <outboundProtocol>DICOM</outboundProtocol>
+          <inboundProperties/>
+          <outboundProperties/>
+        </transformer>
+        <filter>
+          <rules/>
+        </filter>
+        <transportName>DICOM Listener</transportName>
+        <mode>SOURCE</mode>
+        <enabled>true</enabled>
+      </sourceConnector>
+      <destinationConnectors>
+        <com.webreach.mirth.model.Connector>
+          <name>File Output</name>
+          <properties>
+            <property name="secure">1</property>
+            <property name="scheme">file</property>
+            <property name="binary">1</property>
+            <property name="username">anonymous</property>
+            <property name="outputPattern">${sopInstanceUid}.dcm</property>
+            <property name="validateConnections">1</property>
+            <property name="DataType">File Writer</property>
+            <property name="FTPAnonymous">1</property>
+            <property name="charsetEncoding">DEFAULT_ENCODING</property>
+            <property name="password">anonymous</property>
+            <property name="passive">1</property>
+            <property name="template">${DICOMMESSAGE}</property>
+            <property name="outputAppend">0</property>
+            <property name="host">/rsna/dcm/${patientId}/${accessionNumber}/</property>
+          </properties>
+          <transformer>
+            <steps/>
+            <inboundProtocol>DICOM</inboundProtocol>
+            <outboundProtocol>DICOM</outboundProtocol>
+            <inboundProperties/>
+          </transformer>
+          <filter>
+            <rules/>
+          </filter>
+          <transportName>File Writer</transportName>
+          <mode>DESTINATION</mode>
+          <enabled>true</enabled>
+        </com.webreach.mirth.model.Connector>
+      </destinationConnectors>
+      <properties>
+        <property name="initialState">started</property>
+        <property name="synchronous">true</property>
+        <property name="store_messages">true</property>
+        <property name="encryptData">false</property>
+        <property name="transactional">false</property>
+        <property name="max_message_age">-1</property>
+        <property name="dont_store_filtered">false</property>
+        <property name="error_messages_only">true</property>
+      </properties>
+      <preprocessingScript>// Modify the message variable below to pre process data
+return message;</preprocessingScript>
+      <postprocessingScript>// This script executes once after a message has been processed
+return;</postprocessingScript>
+      <deployScript>// This script executes once when the mule engine is started
+// You only have access to the globalMap here to persist data
+return;</deployScript>
+      <shutdownScript>// This script executes once when the mule engine is stopped
+// You only have access to the globalMap here to persist data
+return;</shutdownScript>
+    </com.webreach.mirth.model.Channel>
+    <com.webreach.mirth.model.Channel>
+      <id>20873abb-9dd8-4e32-9167-f3a87fd99fbe</id>
+      <name>Edge Server HL7 Receiver</name>
+      <description></description>
+      <enabled>true</enabled>
+      <version>1.8.2.4472</version>
+      <lastModified>
+        <time>1284407460203</time>
+        <timezone>America/Chicago</timezone>
+      </lastModified>
+      <revision>228</revision>
+      <sourceConnector>
+        <name>sourceConnector</name>
+        <properties>
+          <property name="messageEnd">0x1C</property>
+          <property name="ackCodeError">AE</property>
+          <property name="messageStart">0x0B</property>
+          <property name="ackMsgRejected">Message Rejected.</property>
+          <property name="ackCodeRejected">AR</property>
+          <property name="receiveTimeout">0</property>
+          <property name="charEncoding">hex</property>
+          <property name="bufferSize">65536</property>
+          <property name="useStrictLLP">1</property>
+          <property name="reconnectInterval">5000</property>
+          <property name="waitForEndOfMessageCharacter">0</property>
+          <property name="sendACK">1</property>
+          <property name="port">20000</property>
+          <property name="ackOnNewConnection">0</property>
+          <property name="checkMSH15">0</property>
+          <property name="ackMsgSuccessful"></property>
+          <property name="tcpProtocolClassName">org.mule.providers.tcp.protocols.TcpProtocol</property>
+          <property name="responseFromTransformer">0</property>
+          <property name="segmentEnd">0x0D</property>
+          <property name="ackPort"></property>
+          <property name="charsetEncoding">DEFAULT_ENCODING</property>
+          <property name="host">0.0.0.0</property>
+          <property name="responseValue">None</property>
+          <property name="DataType">LLP Listener</property>
+          <property name="processBatchFiles">0</property>
+          <property name="ackMsgError">An Error Occured Processing Message.</property>
+          <property name="serverMode">1</property>
+          <property name="ackCodeSuccessful">AA</property>
+          <property name="ackIP"></property>
+          <property name="recordSeparator">0x0D</property>
+        </properties>
+        <transformer>
+          <steps>
+            <com.webreach.mirth.model.Step>
+              <sequenceNumber>0</sequenceNumber>
+              <name>event</name>
+              <script>var type = msg[&apos;MSH&apos;][&apos;MSH.9&apos;][&apos;MSH.9.1&apos;].toString() + &quot;^&quot; + msg[&apos;MSH&apos;][&apos;MSH.9&apos;][&apos;MSH.9.2&apos;].toString();
+
+
+if(type == &quot;ADT^A18&quot; || type == &quot;ADT^A40&quot; ) {
+	channelMap.put(&quot;event&quot;, &quot;MERGE&quot;);
+}
+else if(type == &quot;ORM^O01&quot; || type == &quot;ORU^R01&quot; ) {
+	channelMap.put(&quot;event&quot;, &quot;UPDATE&quot;);
+}</script>
+              <type>JavaScript</type>
+              <data class="map">
+                <entry>
+                  <string>Script</string>
+                  <string>var type = msg[&apos;MSH&apos;][&apos;MSH.9&apos;][&apos;MSH.9.1&apos;].toString() + &quot;^&quot; + msg[&apos;MSH&apos;][&apos;MSH.9&apos;][&apos;MSH.9.2&apos;].toString();
+
+
+if(type == &quot;ADT^A18&quot; || type == &quot;ADT^A40&quot; ) {
+	channelMap.put(&quot;event&quot;, &quot;MERGE&quot;);
+}
+else if(type == &quot;ORM^O01&quot; || type == &quot;ORU^R01&quot; ) {
+	channelMap.put(&quot;event&quot;, &quot;UPDATE&quot;);
+}</string>
+                </entry>
+              </data>
+            </com.webreach.mirth.model.Step>
+            <com.webreach.mirth.model.Step>
+              <sequenceNumber>1</sequenceNumber>
+              <name>name</name>
+              <script>var mapping;try { mapping = msg[&apos;PID&apos;][&apos;PID.5&apos;][&apos;PID.5.1&apos;].toString() + &quot;^&quot; + msg[&apos;PID&apos;][&apos;PID.5&apos;][&apos;PID.5.2&apos;].toString() +&quot;^&quot; + msg[&apos;PID&apos;][&apos;PID.5&apos;][&apos;PID.5.3&apos;].toString(); }catch (e) { logger.error(e);  mapping = &apos;&apos;;}channelMap.put(&apos;name&apos;, validate( mapping , &apos;&apos;, new Array()));</script>
+              <type>Mapper</type>
+              <data class="map">
+                <entry>
+                  <string>Variable</string>
+                  <string>name</string>
+                </entry>
+                <entry>
+                  <string>DefaultValue</string>
+                  <string></string>
+                </entry>
+                <entry>
+                  <string>RegularExpressions</string>
+                  <list/>
+                </entry>
+                <entry>
+                  <string>Mapping</string>
+                  <string>msg[&apos;PID&apos;][&apos;PID.5&apos;][&apos;PID.5.1&apos;].toString() + &quot;^&quot; + msg[&apos;PID&apos;][&apos;PID.5&apos;][&apos;PID.5.2&apos;].toString() +&quot;^&quot; + msg[&apos;PID&apos;][&apos;PID.5&apos;][&apos;PID.5.3&apos;].toString()</string>
+                </entry>
+                <entry>
+                  <string>isGlobal</string>
+                  <string>channel</string>
+                </entry>
+              </data>
+            </com.webreach.mirth.model.Step>
+            <com.webreach.mirth.model.Step>
+              <sequenceNumber>2</sequenceNumber>
+              <name>mrn</name>
+              <script>var mapping;try { mapping = msg[&apos;PID&apos;][&apos;PID.3&apos;][&apos;PID.3.1&apos;].toString(); }catch (e) { logger.error(e);  mapping = &apos;&apos;;}channelMap.put(&apos;mrn&apos;, validate( mapping , &apos;&apos;, new Array()));</script>
+              <type>Mapper</type>
+              <data class="map">
+                <entry>
+                  <string>Variable</string>
+                  <string>mrn</string>
+                </entry>
+                <entry>
+                  <string>DefaultValue</string>
+                  <string></string>
+                </entry>
+                <entry>
+                  <string>RegularExpressions</string>
+                  <list/>
+                </entry>
+                <entry>
+                  <string>Mapping</string>
+                  <string>msg[&apos;PID&apos;][&apos;PID.3&apos;][&apos;PID.3.1&apos;].toString()</string>
+                </entry>
+                <entry>
+                  <string>isGlobal</string>
+                  <string>channel</string>
+                </entry>
+              </data>
+            </com.webreach.mirth.model.Step>
+            <com.webreach.mirth.model.Step>
+              <sequenceNumber>3</sequenceNumber>
+              <name>dob</name>
+              <script>var date = DateUtil.getDate(&quot;yyyyMMdd&quot;, msg[&apos;PID&apos;][&apos;PID.7&apos;][&apos;PID.7.1&apos;].toString());
+
+var dob = new java.sql.Date(date.getTime());
+
+channelMap.put(&quot;dob&quot;, dob);</script>
+              <type>JavaScript</type>
+              <data class="map">
+                <entry>
+                  <string>Script</string>
+                  <string>var date = DateUtil.getDate(&quot;yyyyMMdd&quot;, msg[&apos;PID&apos;][&apos;PID.7&apos;][&apos;PID.7.1&apos;].toString());
+
+var dob = new java.sql.Date(date.getTime());
+
+channelMap.put(&quot;dob&quot;, dob);</string>
+                </entry>
+              </data>
+            </com.webreach.mirth.model.Step>
+            <com.webreach.mirth.model.Step>
+              <sequenceNumber>4</sequenceNumber>
+              <name>sex</name>
+              <script>var mapping;try { mapping = msg[&apos;PID&apos;][&apos;PID.8&apos;][&apos;PID.8.1&apos;].toString(); }catch (e) { logger.error(e);  mapping = &apos;&apos;;}channelMap.put(&apos;sex&apos;, validate( mapping , &apos;&apos;, new Array()));</script>
+              <type>Mapper</type>
+              <data class="map">
+                <entry>
+                  <string>Variable</string>
+                  <string>sex</string>
+                </entry>
+                <entry>
+                  <string>DefaultValue</string>
+                  <string></string>
+                </entry>
+                <entry>
+                  <string>RegularExpressions</string>
+                  <list/>
+                </entry>
+                <entry>
+                  <string>Mapping</string>
+                  <string>msg[&apos;PID&apos;][&apos;PID.8&apos;][&apos;PID.8.1&apos;].toString()</string>
+                </entry>
+                <entry>
+                  <string>isGlobal</string>
+                  <string>channel</string>
+                </entry>
+              </data>
+            </com.webreach.mirth.model.Step>
+            <com.webreach.mirth.model.Step>
+              <sequenceNumber>5</sequenceNumber>
+              <name>street</name>
+              <script>var mapping;try { mapping = msg[&apos;PID&apos;][&apos;PID.11&apos;][&apos;PID.11.1&apos;].toString(); }catch (e) { logger.error(e);  mapping = &apos;&apos;;}channelMap.put(&apos;street&apos;, validate( mapping , &apos;&apos;, new Array()));</script>
+              <type>Mapper</type>
+              <data class="map">
+                <entry>
+                  <string>Variable</string>
+                  <string>street</string>
+                </entry>
+                <entry>
+                  <string>DefaultValue</string>
+                  <string></string>
+                </entry>
+                <entry>
+                  <string>RegularExpressions</string>
+                  <list/>
+                </entry>
+                <entry>
+                  <string>Mapping</string>
+                  <string>msg[&apos;PID&apos;][&apos;PID.11&apos;][&apos;PID.11.1&apos;].toString()</string>
+                </entry>
+                <entry>
+                  <string>isGlobal</string>
+                  <string>channel</string>
+                </entry>
+              </data>
+            </com.webreach.mirth.model.Step>
+            <com.webreach.mirth.model.Step>
+              <sequenceNumber>6</sequenceNumber>
+              <name>city</name>
+              <script>var mapping;try { mapping = msg[&apos;PID&apos;][&apos;PID.11&apos;][&apos;PID.11.3&apos;].toString(); }catch (e) { logger.error(e);  mapping = &apos;&apos;;}channelMap.put(&apos;city&apos;, validate( mapping , &apos;&apos;, new Array()));</script>
+              <type>Mapper</type>
+              <data class="map">
+                <entry>
+                  <string>Variable</string>
+                  <string>city</string>
+                </entry>
+                <entry>
+                  <string>DefaultValue</string>
+                  <string></string>
+                </entry>
+                <entry>
+                  <string>Mapping</string>
+                  <string>msg[&apos;PID&apos;][&apos;PID.11&apos;][&apos;PID.11.3&apos;].toString()</string>
+                </entry>
+                <entry>
+                  <string>RegularExpressions</string>
+                  <list/>
+                </entry>
+                <entry>
+                  <string>isGlobal</string>
+                  <string>channel</string>
+                </entry>
+              </data>
+            </com.webreach.mirth.model.Step>
+            <com.webreach.mirth.model.Step>
+              <sequenceNumber>7</sequenceNumber>
+              <name>state</name>
+              <script>var mapping;try { mapping = msg[&apos;PID&apos;][&apos;PID.11&apos;][&apos;PID.11.4&apos;].toString(); }catch (e) { logger.error(e);  mapping = &apos;&apos;;}channelMap.put(&apos;state&apos;, validate( mapping , &apos;&apos;, new Array()));</script>
+              <type>Mapper</type>
+              <data class="map">
+                <entry>
+                  <string>Variable</string>
+                  <string>state</string>
+                </entry>
+                <entry>
+                  <string>DefaultValue</string>
+                  <string></string>
+                </entry>
+                <entry>
+                  <string>Mapping</string>
+                  <string>msg[&apos;PID&apos;][&apos;PID.11&apos;][&apos;PID.11.4&apos;].toString()</string>
+                </entry>
+                <entry>
+                  <string>RegularExpressions</string>
+                  <list/>
+                </entry>
+                <entry>
+                  <string>isGlobal</string>
+                  <string>channel</string>
+                </entry>
+              </data>
+            </com.webreach.mirth.model.Step>
+            <com.webreach.mirth.model.Step>
+              <sequenceNumber>8</sequenceNumber>
+              <name>zipCode</name>
+              <script>var mapping;try { mapping = msg[&apos;PID&apos;][&apos;PID.11&apos;][&apos;PID.11.5&apos;].toString(); }catch (e) { logger.error(e);  mapping = &apos;&apos;;}channelMap.put(&apos;zipCode&apos;, validate( mapping , &apos;&apos;, new Array()));</script>
+              <type>Mapper</type>
+              <data class="map">
+                <entry>
+                  <string>Variable</string>
+                  <string>zipCode</string>
+                </entry>
+                <entry>
+                  <string>DefaultValue</string>
+                  <string></string>
+                </entry>
+                <entry>
+                  <string>RegularExpressions</string>
+                  <list/>
+                </entry>
+                <entry>
+                  <string>Mapping</string>
+                  <string>msg[&apos;PID&apos;][&apos;PID.11&apos;][&apos;PID.11.5&apos;].toString()</string>
+                </entry>
+                <entry>
+                  <string>isGlobal</string>
+                  <string>channel</string>
+                </entry>
+              </data>
+            </com.webreach.mirth.model.Step>
+            <com.webreach.mirth.model.Step>
+              <sequenceNumber>9</sequenceNumber>
+              <name>priorMrn</name>
+              <script>if($(&apos;event&apos;) == &quot;MERGE&quot; ) {
+	var priorMrn = msg[&apos;MRG&apos;][&apos;MRG.1&apos;][&apos;MRG.1.1&apos;].toString();
+
+	if (priorMrn == &quot;&quot; )
+		priorMrn = msg[&apos;PID&apos;][&apos;PID.4&apos;][&apos;PID.4.1&apos;].toString();
+
+	channelMap.put(&quot;priorMrn&quot;, priorMrn);
+}</script>
+              <type>JavaScript</type>
+              <data class="map">
+                <entry>
+                  <string>Script</string>
+                  <string>if($(&apos;event&apos;) == &quot;MERGE&quot; ) {
+	var priorMrn = msg[&apos;MRG&apos;][&apos;MRG.1&apos;][&apos;MRG.1.1&apos;].toString();
+
+	if (priorMrn == &quot;&quot; )
+		priorMrn = msg[&apos;PID&apos;][&apos;PID.4&apos;][&apos;PID.4.1&apos;].toString();
+
+	channelMap.put(&quot;priorMrn&quot;, priorMrn);
+}</string>
+                </entry>
+              </data>
+            </com.webreach.mirth.model.Step>
+            <com.webreach.mirth.model.Step>
+              <sequenceNumber>10</sequenceNumber>
+              <name>accNum</name>
+              <script>var mapping;try { mapping = msg[&apos;OBR&apos;][&apos;OBR.3&apos;][&apos;OBR.3.1&apos;].toString(); }catch (e) { logger.error(e);  mapping = &apos;&apos;;}channelMap.put(&apos;accNum&apos;, validate( mapping , &apos;&apos;, new Array()));</script>
+              <type>Mapper</type>
+              <data class="map">
+                <entry>
+                  <string>Variable</string>
+                  <string>accNum</string>
+                </entry>
+                <entry>
+                  <string>DefaultValue</string>
+                  <string></string>
+                </entry>
+                <entry>
+                  <string>RegularExpressions</string>
+                  <list/>
+                </entry>
+                <entry>
+                  <string>Mapping</string>
+                  <string>msg[&apos;OBR&apos;][&apos;OBR.3&apos;][&apos;OBR.3.1&apos;].toString()</string>
+                </entry>
+                <entry>
+                  <string>isGlobal</string>
+                  <string>channel</string>
+                </entry>
+              </data>
+            </com.webreach.mirth.model.Step>
+            <com.webreach.mirth.model.Step>
+              <sequenceNumber>11</sequenceNumber>
+              <name>studyDescription</name>
+              <script>var mapping;try { mapping = msg[&apos;OBR&apos;][&apos;OBR.4&apos;][&apos;OBR.4.2&apos;].toString(); }catch (e) { logger.error(e);  mapping = &apos;&apos;;}channelMap.put(&apos;studyDescription&apos;, validate( mapping , &apos;&apos;, new Array()));</script>
+              <type>Mapper</type>
+              <data class="map">
+                <entry>
+                  <string>Variable</string>
+                  <string>studyDescription</string>
+                </entry>
+                <entry>
+                  <string>DefaultValue</string>
+                  <string></string>
+                </entry>
+                <entry>
+                  <string>Mapping</string>
+                  <string>msg[&apos;OBR&apos;][&apos;OBR.4&apos;][&apos;OBR.4.2&apos;].toString()</string>
+                </entry>
+                <entry>
+                  <string>RegularExpressions</string>
+                  <list/>
+                </entry>
+                <entry>
+                  <string>isGlobal</string>
+                  <string>channel</string>
+                </entry>
+              </data>
+            </com.webreach.mirth.model.Step>
+            <com.webreach.mirth.model.Step>
+              <sequenceNumber>12</sequenceNumber>
+              <name>status</name>
+              <script>var status = msg[&apos;OBR&apos;][&apos;OBR.25&apos;][&apos;OBR.25.1&apos;].toString();
+
+if(status == &quot;&quot;)
+	status = msg[&apos;ORC&apos;][&apos;ORC.5&apos;][&apos;ORC.5.1&apos;].toString();
+
+
+if(status == &quot;O&quot;) {
+	channelMap.put(&quot;status&quot;, &quot;ORDERED&quot;);
+}
+else if(status == &quot;S&quot; || status == &quot;SC&quot;) {
+	channelMap.put(&quot;status&quot;, &quot;SCHEDULED&quot;);
+}
+else if (status == &quot;I&quot; ) {
+	channelMap.put(&quot;status&quot;, &quot;IN-PROGRESS&quot;);
+}
+else if (status == &quot;C&quot; || status == &quot;CM&quot;) {
+	channelMap.put(&quot;status&quot;, &quot;COMPLETED&quot;);
+}
+else if (status == &quot;D&quot; ) {
+	channelMap.put(&quot;status&quot;, &quot;DICTATED&quot;);
+}
+else if (status == &quot;P&quot; ) {
+	channelMap.put(&quot;status&quot;, &quot;PRELIMINARY&quot;);
+}
+else if (status == &quot;F&quot; ) {
+	channelMap.put(&quot;status&quot;, &quot;FINALIZED&quot;);
+}
+else if (status == &quot;RE&quot; ) {
+	channelMap.put(&quot;status&quot;, &quot;REVISED&quot;);
+}
+else if (status == &quot;A&quot; ) {
+	channelMap.put(&quot;status&quot;, &quot;ADDENDED&quot;);
+}
+else if (status == &quot;X&quot; || status ==&quot;CA&quot;) {
+	channelMap.put(&quot;status&quot;, &quot;CANCELED&quot;);
+}</script>
+              <type>JavaScript</type>
+              <data class="map">
+                <entry>
+                  <string>Script</string>
+                  <string>var status = msg[&apos;OBR&apos;][&apos;OBR.25&apos;][&apos;OBR.25.1&apos;].toString();
+
+if(status == &quot;&quot;)
+	status = msg[&apos;ORC&apos;][&apos;ORC.5&apos;][&apos;ORC.5.1&apos;].toString();
+
+
+if(status == &quot;O&quot;) {
+	channelMap.put(&quot;status&quot;, &quot;ORDERED&quot;);
+}
+else if(status == &quot;S&quot; || status == &quot;SC&quot;) {
+	channelMap.put(&quot;status&quot;, &quot;SCHEDULED&quot;);
+}
+else if (status == &quot;I&quot; ) {
+	channelMap.put(&quot;status&quot;, &quot;IN-PROGRESS&quot;);
+}
+else if (status == &quot;C&quot; || status == &quot;CM&quot;) {
+	channelMap.put(&quot;status&quot;, &quot;COMPLETED&quot;);
+}
+else if (status == &quot;D&quot; ) {
+	channelMap.put(&quot;status&quot;, &quot;DICTATED&quot;);
+}
+else if (status == &quot;P&quot; ) {
+	channelMap.put(&quot;status&quot;, &quot;PRELIMINARY&quot;);
+}
+else if (status == &quot;F&quot; ) {
+	channelMap.put(&quot;status&quot;, &quot;FINALIZED&quot;);
+}
+else if (status == &quot;RE&quot; ) {
+	channelMap.put(&quot;status&quot;, &quot;REVISED&quot;);
+}
+else if (status == &quot;A&quot; ) {
+	channelMap.put(&quot;status&quot;, &quot;ADDENDED&quot;);
+}
+else if (status == &quot;X&quot; || status ==&quot;CA&quot;) {
+	channelMap.put(&quot;status&quot;, &quot;CANCELED&quot;);
+}</string>
+                </entry>
+              </data>
+            </com.webreach.mirth.model.Step>
+            <com.webreach.mirth.model.Step>
+              <sequenceNumber>13</sequenceNumber>
+              <name>statusChangeTimestamp</name>
+              <script>var str = msg[&apos;OBR&apos;][&apos;OBR.22&apos;][&apos;OBR.22.1&apos;].toString();
+
+if(str == &quot;&quot;) {
+	str = msg[&apos;ORC&apos;][&apos;ORC.15&apos;][&apos;ORC.15.1&apos;].toString();
+}
+
+
+if(str != &quot;&quot;)
+{
+	var date = DateUtil.getDate(&quot;yyyyMMddHHmm&quot;, str);
+	var timestamp = new java.sql.Timestamp(date.getTime());
+
+	channelMap.put(&quot;statusChangeTimestamp&quot;, timestamp);
+}</script>
+              <type>JavaScript</type>
+              <data class="map">
+                <entry>
+                  <string>Script</string>
+                  <string>var str = msg[&apos;OBR&apos;][&apos;OBR.22&apos;][&apos;OBR.22.1&apos;].toString();
+
+if(str == &quot;&quot;) {
+	str = msg[&apos;ORC&apos;][&apos;ORC.15&apos;][&apos;ORC.15.1&apos;].toString();
+}
+
+
+if(str != &quot;&quot;)
+{
+	var date = DateUtil.getDate(&quot;yyyyMMddHHmm&quot;, str);
+	var timestamp = new java.sql.Timestamp(date.getTime());
+
+	channelMap.put(&quot;statusChangeTimestamp&quot;, timestamp);
+}</string>
+                </entry>
+              </data>
+            </com.webreach.mirth.model.Step>
+            <com.webreach.mirth.model.Step>
+              <sequenceNumber>14</sequenceNumber>
+              <name>report</name>
+              <script>var report = &quot;&quot;;
+
+for each (var seg in msg..OBX)
+{
+	report+= seg[&apos;OBX.5&apos;][&apos;OBX.5.1&apos;].toString()+&quot;\r\n&quot;;
+}
+
+channelMap.put(&quot;report&quot;, report);</script>
+              <type>JavaScript</type>
+              <data class="map">
+                <entry>
+                  <string>Script</string>
+                  <string>var report = &quot;&quot;;
+
+for each (var seg in msg..OBX)
+{
+	report+= seg[&apos;OBX.5&apos;][&apos;OBX.5.1&apos;].toString()+&quot;\r\n&quot;;
+}
+
+channelMap.put(&quot;report&quot;, report);</string>
+                </entry>
+              </data>
+            </com.webreach.mirth.model.Step>
+            <com.webreach.mirth.model.Step>
+              <sequenceNumber>15</sequenceNumber>
+              <name>patient</name>
+              <script>var patient = new java.util.LinkedHashMap();
+
+
+patient.put(&quot;name&quot;, $(&apos;name&apos;));
+patient.put(&quot;mrn&quot;, $(&apos;mrn&apos;));
+patient.put(&quot;dob&quot;, $(&apos;dob&apos;));
+patient.put(&quot;sex&quot;, $(&apos;sex&apos;));
+patient.put(&quot;street&quot;, $(&apos;street&apos;));
+patient.put(&quot;city&quot;, $(&apos;city&apos;));
+patient.put(&quot;state&quot;, $(&apos;state&apos;));
+patient.put(&quot;zipCode&quot;, $(&apos;zipCode&apos;));
+
+
+channelMap.put(&quot;patient&quot;, patient);</script>
+              <type>JavaScript</type>
+              <data class="map">
+                <entry>
+                  <string>Script</string>
+                  <string>var patient = new java.util.LinkedHashMap();
+
+
+patient.put(&quot;name&quot;, $(&apos;name&apos;));
+patient.put(&quot;mrn&quot;, $(&apos;mrn&apos;));
+patient.put(&quot;dob&quot;, $(&apos;dob&apos;));
+patient.put(&quot;sex&quot;, $(&apos;sex&apos;));
+patient.put(&quot;street&quot;, $(&apos;street&apos;));
+patient.put(&quot;city&quot;, $(&apos;city&apos;));
+patient.put(&quot;state&quot;, $(&apos;state&apos;));
+patient.put(&quot;zipCode&quot;, $(&apos;zipCode&apos;));
+
+
+channelMap.put(&quot;patient&quot;, patient);</string>
+                </entry>
+              </data>
+            </com.webreach.mirth.model.Step>
+            <com.webreach.mirth.model.Step>
+              <sequenceNumber>16</sequenceNumber>
+              <name>signer</name>
+              <script>var signer = &quot;&quot;;
+
+if(!msg[&apos;OBR&apos;][&apos;OBR.32&apos;][&apos;OBR.32.2&apos;].toString().equals(&quot;&quot;))
+{
+	signer += msg[&apos;OBR&apos;][&apos;OBR.32&apos;][&apos;OBR.32.1&apos;].toString() + &quot;^&quot;; // ID number
+	signer += msg[&apos;OBR&apos;][&apos;OBR.32&apos;][&apos;OBR.32.2&apos;].toString() + &quot;^&quot;; // Family name
+	signer += msg[&apos;OBR&apos;][&apos;OBR.32&apos;][&apos;OBR.32.3&apos;].toString() + &quot;^&quot;; // Given name
+	signer += msg[&apos;OBR&apos;][&apos;OBR.32&apos;][&apos;OBR.32.4&apos;].toString() + &quot;^&quot;; // Middle name
+	signer += msg[&apos;OBR&apos;][&apos;OBR.32&apos;][&apos;OBR.32.5&apos;].toString() + &quot;^&quot;; // Suffix
+	signer += msg[&apos;OBR&apos;][&apos;OBR.32&apos;][&apos;OBR.32.6&apos;].toString(); // Prefix
+}
+
+
+channelMap.put(&quot;signer&quot;, signer);</script>
+              <type>JavaScript</type>
+              <data class="map">
+                <entry>
+                  <string>Script</string>
+                  <string>var signer = &quot;&quot;;
+
+if(!msg[&apos;OBR&apos;][&apos;OBR.32&apos;][&apos;OBR.32.2&apos;].toString().equals(&quot;&quot;))
+{
+	signer += msg[&apos;OBR&apos;][&apos;OBR.32&apos;][&apos;OBR.32.1&apos;].toString() + &quot;^&quot;; // ID number
+	signer += msg[&apos;OBR&apos;][&apos;OBR.32&apos;][&apos;OBR.32.2&apos;].toString() + &quot;^&quot;; // Family name
+	signer += msg[&apos;OBR&apos;][&apos;OBR.32&apos;][&apos;OBR.32.3&apos;].toString() + &quot;^&quot;; // Given name
+	signer += msg[&apos;OBR&apos;][&apos;OBR.32&apos;][&apos;OBR.32.4&apos;].toString() + &quot;^&quot;; // Middle name
+	signer += msg[&apos;OBR&apos;][&apos;OBR.32&apos;][&apos;OBR.32.5&apos;].toString() + &quot;^&quot;; // Suffix
+	signer += msg[&apos;OBR&apos;][&apos;OBR.32&apos;][&apos;OBR.32.6&apos;].toString(); // Prefix
+}
+
+
+channelMap.put(&quot;signer&quot;, signer);</string>
+                </entry>
+              </data>
+            </com.webreach.mirth.model.Step>
+            <com.webreach.mirth.model.Step>
+              <sequenceNumber>17</sequenceNumber>
+              <name>dictator</name>
+              <script>var dictator = &quot;&quot;;
+
+// UCSF specific
+
+if(!msg[&apos;ZRI&apos;][&apos;ZRI.2&apos;][&apos;ZRI.2.2&apos;].toString().equals(&quot;&quot;))
+{
+	dictator += msg[&apos;ZRI&apos;][&apos;ZRI.2&apos;][&apos;ZRI.2.1&apos;].toString() + &quot;^&quot;; // Id number
+	dictator += msg[&apos;ZRI&apos;][&apos;ZRI.2&apos;][&apos;ZRI.2.2&apos;].toString() + &quot;^&quot;; // Family name
+	dictator += msg[&apos;ZRI&apos;][&apos;ZRI.2&apos;][&apos;ZRI.2.3&apos;].toString() + &quot;^&quot;; // Given name
+	dictator += msg[&apos;ZRI&apos;][&apos;ZRI.2&apos;][&apos;ZRI.2.4&apos;].toString() + &quot;^&quot;; // Middle name
+	dictator += msg[&apos;ZRI&apos;][&apos;ZRI.2&apos;][&apos;ZRI.2.5&apos;].toString() + &quot;^&quot;; // Suffix
+	dictator += msg[&apos;ZRI&apos;][&apos;ZRI.2&apos;][&apos;ZRI.2.6&apos;].toString(); // Prefix
+
+
+	if(!msg[&apos;ZRI&apos;][&apos;ZRI.3&apos;][&apos;ZRI.3.2&apos;].toString().equals(&quot;&quot;))
+	{
+		dictator += &quot;\\&quot;;
+		dictator += msg[&apos;ZRI&apos;][&apos;ZRI.3&apos;][&apos;ZRI.3.1&apos;].toString() + &quot;^&quot;; // Id number
+		dictator += msg[&apos;ZRI&apos;][&apos;ZRI.3&apos;][&apos;ZRI.3.2&apos;].toString() + &quot;^&quot;; // Family name
+		dictator += msg[&apos;ZRI&apos;][&apos;ZRI.3&apos;][&apos;ZRI.3.3&apos;].toString() + &quot;^&quot;; // Given name
+		dictator += msg[&apos;ZRI&apos;][&apos;ZRI.3&apos;][&apos;ZRI.3.4&apos;].toString() + &quot;^&quot;; // Middle name
+		dictator += msg[&apos;ZRI&apos;][&apos;ZRI.3&apos;][&apos;ZRI.3.5&apos;].toString() + &quot;^&quot;; // Suffix
+		dictator += msg[&apos;ZRI&apos;][&apos;ZRI.3&apos;][&apos;ZRI.3.6&apos;].toString(); // Prefix
+	}
+}
+
+
+
+
+if(dictator == &quot;&quot;)
+{
+	dicatator = $(&apos;signer&apos;);
+}
+
+channelMap.put(&quot;dictator&quot;, dictator);</script>
+              <type>JavaScript</type>
+              <data class="map">
+                <entry>
+                  <string>Script</string>
+                  <string>var dictator = &quot;&quot;;
+
+// UCSF specific
+
+if(!msg[&apos;ZRI&apos;][&apos;ZRI.2&apos;][&apos;ZRI.2.2&apos;].toString().equals(&quot;&quot;))
+{
+	dictator += msg[&apos;ZRI&apos;][&apos;ZRI.2&apos;][&apos;ZRI.2.1&apos;].toString() + &quot;^&quot;; // Id number
+	dictator += msg[&apos;ZRI&apos;][&apos;ZRI.2&apos;][&apos;ZRI.2.2&apos;].toString() + &quot;^&quot;; // Family name
+	dictator += msg[&apos;ZRI&apos;][&apos;ZRI.2&apos;][&apos;ZRI.2.3&apos;].toString() + &quot;^&quot;; // Given name
+	dictator += msg[&apos;ZRI&apos;][&apos;ZRI.2&apos;][&apos;ZRI.2.4&apos;].toString() + &quot;^&quot;; // Middle name
+	dictator += msg[&apos;ZRI&apos;][&apos;ZRI.2&apos;][&apos;ZRI.2.5&apos;].toString() + &quot;^&quot;; // Suffix
+	dictator += msg[&apos;ZRI&apos;][&apos;ZRI.2&apos;][&apos;ZRI.2.6&apos;].toString(); // Prefix
+
+
+	if(!msg[&apos;ZRI&apos;][&apos;ZRI.3&apos;][&apos;ZRI.3.2&apos;].toString().equals(&quot;&quot;))
+	{
+		dictator += &quot;\\&quot;;
+		dictator += msg[&apos;ZRI&apos;][&apos;ZRI.3&apos;][&apos;ZRI.3.1&apos;].toString() + &quot;^&quot;; // Id number
+		dictator += msg[&apos;ZRI&apos;][&apos;ZRI.3&apos;][&apos;ZRI.3.2&apos;].toString() + &quot;^&quot;; // Family name
+		dictator += msg[&apos;ZRI&apos;][&apos;ZRI.3&apos;][&apos;ZRI.3.3&apos;].toString() + &quot;^&quot;; // Given name
+		dictator += msg[&apos;ZRI&apos;][&apos;ZRI.3&apos;][&apos;ZRI.3.4&apos;].toString() + &quot;^&quot;; // Middle name
+		dictator += msg[&apos;ZRI&apos;][&apos;ZRI.3&apos;][&apos;ZRI.3.5&apos;].toString() + &quot;^&quot;; // Suffix
+		dictator += msg[&apos;ZRI&apos;][&apos;ZRI.3&apos;][&apos;ZRI.3.6&apos;].toString(); // Prefix
+	}
+}
+
+
+
+
+if(dictator == &quot;&quot;)
+{
+	dicatator = $(&apos;signer&apos;);
+}
+
+channelMap.put(&quot;dictator&quot;, dictator);</string>
+                </entry>
+              </data>
+            </com.webreach.mirth.model.Step>
+            <com.webreach.mirth.model.Step>
+              <sequenceNumber>18</sequenceNumber>
+              <name>transcriber</name>
+              <script>var transcriber = &quot;&quot;;
+
+if(!msg[&apos;OBR&apos;][&apos;OBR.35&apos;][&apos;OBR.35.2&apos;].toString().equals(&quot;&quot;))
+{
+	transcriber += msg[&apos;OBR&apos;][&apos;OBR.35&apos;][&apos;OBR.35.1&apos;].toString() + &quot;^&quot;; // ID number
+	transcriber += msg[&apos;OBR&apos;][&apos;OBR.35&apos;][&apos;OBR.35.2&apos;].toString() + &quot;^&quot;; // Family name
+	transcriber += msg[&apos;OBR&apos;][&apos;OBR.35&apos;][&apos;OBR.35.3&apos;].toString() + &quot;^&quot;; // Given name
+	transcriber += msg[&apos;OBR&apos;][&apos;OBR.35&apos;][&apos;OBR.35.4&apos;].toString() + &quot;^&quot;; // Middle name
+	transcriber += msg[&apos;OBR&apos;][&apos;OBR.35&apos;][&apos;OBR.35.5&apos;].toString() + &quot;^&quot;; // Suffix
+	transcriber += msg[&apos;OBR&apos;][&apos;OBR.35&apos;][&apos;OBR.35.6&apos;].toString(); // Prefix
+}
+
+
+channelMap.put(&quot;transcriber&quot;, transcriber);</script>
+              <type>JavaScript</type>
+              <data class="map">
+                <entry>
+                  <string>Script</string>
+                  <string>var transcriber = &quot;&quot;;
+
+if(!msg[&apos;OBR&apos;][&apos;OBR.35&apos;][&apos;OBR.35.2&apos;].toString().equals(&quot;&quot;))
+{
+	transcriber += msg[&apos;OBR&apos;][&apos;OBR.35&apos;][&apos;OBR.35.1&apos;].toString() + &quot;^&quot;; // ID number
+	transcriber += msg[&apos;OBR&apos;][&apos;OBR.35&apos;][&apos;OBR.35.2&apos;].toString() + &quot;^&quot;; // Family name
+	transcriber += msg[&apos;OBR&apos;][&apos;OBR.35&apos;][&apos;OBR.35.3&apos;].toString() + &quot;^&quot;; // Given name
+	transcriber += msg[&apos;OBR&apos;][&apos;OBR.35&apos;][&apos;OBR.35.4&apos;].toString() + &quot;^&quot;; // Middle name
+	transcriber += msg[&apos;OBR&apos;][&apos;OBR.35&apos;][&apos;OBR.35.5&apos;].toString() + &quot;^&quot;; // Suffix
+	transcriber += msg[&apos;OBR&apos;][&apos;OBR.35&apos;][&apos;OBR.35.6&apos;].toString(); // Prefix
+}
+
+
+channelMap.put(&quot;transcriber&quot;, transcriber);</string>
+                </entry>
+              </data>
+            </com.webreach.mirth.model.Step>
+            <com.webreach.mirth.model.Step>
+              <sequenceNumber>19</sequenceNumber>
+              <name>exam</name>
+              <script>var exam = new java.util.LinkedHashMap();
+
+exam.put(&quot;patient&quot;, $(&apos;patient&apos;));
+exam.put(&quot;accNum&quot;, $(&apos;accNum&apos;));
+exam.put(&quot;studyDescription&quot;, $(&apos;studyDescription&apos;));
+exam.put(&quot;status&quot;, $(&apos;status&apos;));
+exam.put(&quot;statusChangeTimestamp&quot;, $(&apos;statusChangeTimestamp&apos;));
+exam.put(&quot;report&quot;, $(&apos;report&apos;));
+exam.put(&quot;signer&quot;, $(&apos;signer&apos;));
+exam.put(&quot;dictator&quot;, $(&apos;dictator&apos;));
+exam.put(&quot;transcriber&quot;, $(&apos;transcriber&apos;));
+
+
+channelMap.put(&quot;exam&quot;, exam);</script>
+              <type>JavaScript</type>
+              <data class="map">
+                <entry>
+                  <string>Script</string>
+                  <string>var exam = new java.util.LinkedHashMap();
+
+exam.put(&quot;patient&quot;, $(&apos;patient&apos;));
+exam.put(&quot;accNum&quot;, $(&apos;accNum&apos;));
+exam.put(&quot;studyDescription&quot;, $(&apos;studyDescription&apos;));
+exam.put(&quot;status&quot;, $(&apos;status&apos;));
+exam.put(&quot;statusChangeTimestamp&quot;, $(&apos;statusChangeTimestamp&apos;));
+exam.put(&quot;report&quot;, $(&apos;report&apos;));
+exam.put(&quot;signer&quot;, $(&apos;signer&apos;));
+exam.put(&quot;dictator&quot;, $(&apos;dictator&apos;));
+exam.put(&quot;transcriber&quot;, $(&apos;transcriber&apos;));
+
+
+channelMap.put(&quot;exam&quot;, exam);</string>
+                </entry>
+              </data>
+            </com.webreach.mirth.model.Step>
+          </steps>
+          <inboundTemplate>MSH|^~\&amp;|XDSDEMO_OF|XDSDEMO|APPLICATION|FACILITY|201009131343||ORM^O01^ORM_O01|00000014|P|2.3.1||||||||
+PID|||458056966^^^&amp;1.3.6.1.4.1.21367.2010.1.2.300&amp;ISO||Moore^G||19051212|M|||49 Woodland Ave^^Atlanta^GA^30322^USA||^^^G.Moore.433@ihe.net|||||458056966|||||||||||||||||||||
+PV1||O|^9994^1|||||5105^Cleaver^Ward^^^DR|||||||||||V11-1^^^XDSDEMO_ADT|||||||||||||||||||||||||201009131343|||||||V|
+ORC|NW|PN10^|FN10^||SC||1^once^^^^S||201009131343|5102^Kildare^Richard^^^DR||5107^Howser^Doogie^^^DR||3145551212|201009131343||||
+OBR|1|PN10^|FN10^||||||||||relevant clinical info||Radiology^^^^R|5107^Howser^Doogie^^^DR|3145551212|IHE383143.2|RPID10|SPSID10||||MR|||1^once^^^^S|||WALK|||||||||||A|||
+ZDS|1.2.3.4.5.6.7.383143.26^100^Application^DICOM</inboundTemplate>
+          <outboundTemplate></outboundTemplate>
+          <inboundProtocol>HL7V2</inboundProtocol>
+          <outboundProtocol>HL7V2</outboundProtocol>
+          <inboundProperties/>
+          <outboundProperties/>
+        </transformer>
+        <filter>
+          <rules/>
+        </filter>
+        <transportName>LLP Listener</transportName>
+        <mode>SOURCE</mode>
+        <enabled>true</enabled>
+      </sourceConnector>
+      <destinationConnectors>
+        <com.webreach.mirth.model.Connector>
+          <name>Merge Patient</name>
+          <properties>
+            <property name="script">if($(&apos;event&apos;) != &quot;MERGE&quot;) 
+{
+	return;
+}
+
+
+if($(&apos;priorMrn&apos;) == $(&apos;mrn&apos;))
+{
+	throw &quot;Prior MRN and current MRN are the same: &quot; + $(&apos;mrn&apos;);
+}
+
+
+var patient = $(&apos;patient&apos;);
+
+insertOrUpdatePatient(patient);
+
+
+var con = getConnection();
+
+
+var selectNewId = &quot;SELECT patient_id FROM patients &quot;
+	+ &quot;WHERE mrn = ? AND patient_name = ? AND dob = ?&quot;;
+
+var params = new java.util.ArrayList();
+params.add($(&apos;mrn&apos;));
+params.add($(&apos;name&apos;));
+params.add($(&apos;dob&apos;));
+
+var newId;
+var rs = con.executeCachedQuery(selectNewId, params);
+if(rs.next())
+{
+	newId = rs.getInt(&quot;patient_id&quot;);
+
+
+	rs.close();
+}
+else
+{
+	throw &quot;Unable to get patient id for patient with name = &quot; + $(&apos;name&apos;) 
+		+ &quot;, mrn = &quot; + $(&apos;mrn&apos;) + &quot; and dob = &quot; + $(&apos;dob&apos;);
+}
+
+
+
+
+
+var selectOldId = &quot;SELECT patient_id FROM patients WHERE mrn = ?&quot;;
+
+params.clear();
+params.add($(&apos;priorMrn&apos;));
+
+
+rs = con.executeCachedQuery(selectOldId, params);
+while(rs.next())
+{
+	var oldId = rs.getInt(&quot;patient_id&quot;);
+
+	params.clear();
+	params.add(newId);
+	params.add(oldId);
+
+	var updateExams = &quot;UPDATE exams SET patient_id = ? WHERE patient_id = ?&quot;;
+	con.executeUpdate(updateExams, params);
+
+
+	var updateJobSets = &quot;UPDATE job_sets SET patient_id = ? WHERE patient_id = ?&quot;;
+	con.executeUpdate(updateJobSets, params);
+
+	var updateRsnaIds = &quot;UPDATE patient_rsna_ids SET patient_id = ? WHERE patient_id = ?&quot;;
+	con.executeUpdate(updateRsnaIds, params);
+
+
+	
+	params.add($(&apos;mrn&apos;));
+	params.add($(&apos;priorMrn&apos;));
+
+	var insertEvent = &quot;INSERT INTO patient_merge_events (new_patient_id, old_patient_id, new_mrn, old_mrn) &quot; 
+		+ &quot;VALUES (?, ?, ?, ?)&quot;
+	con.executeUpdate(insertEvent, params);
+
+}
+
+
+
+
+
+
+var del = &quot;DELETE FROM patients WHERE mrn = ?&quot;;
+
+params.clear();
+params.add($(&apos;priorMrn&apos;));
+
+con.executeUpdate(del, params);
+
+
+
+
+logger.warn(&quot;Merged patient &quot; + $(&apos;priorMrn&apos;) + &quot; with patient &quot; + $(&apos;mrn&apos;));</property>
+            <property name="DataType">JavaScript Writer</property>
+            <property name="host">sink</property>
+          </properties>
+          <transformer>
+            <steps/>
+            <inboundProtocol>HL7V2</inboundProtocol>
+            <outboundProtocol>HL7V2</outboundProtocol>
+            <inboundProperties/>
+          </transformer>
+          <filter>
+            <rules/>
+          </filter>
+          <transportName>JavaScript Writer</transportName>
+          <mode>DESTINATION</mode>
+          <enabled>true</enabled>
+        </com.webreach.mirth.model.Connector>
+        <com.webreach.mirth.model.Connector>
+          <name>Update Exam Status</name>
+          <properties>
+            <property name="script">if($(&apos;event&apos;) != &quot;UPDATE&quot; ) {
+	return;
+}
+
+var patient = $(&apos;patient&apos;);
+
+insertOrUpdatePatient(patient);
+
+
+
+
+var exam = $(&apos;exam&apos;);
+
+insertOrUpdateExam(exam);
+
+
+insertStatusChange(exam);</property>
+            <property name="DataType">JavaScript Writer</property>
+            <property name="host">sink</property>
+          </properties>
+          <transformer>
+            <steps/>
+            <inboundProtocol>HL7V2</inboundProtocol>
+            <outboundProtocol>HL7V2</outboundProtocol>
+            <inboundProperties/>
+          </transformer>
+          <filter>
+            <rules/>
+          </filter>
+          <transportName>JavaScript Writer</transportName>
+          <mode>DESTINATION</mode>
+          <enabled>true</enabled>
+        </com.webreach.mirth.model.Connector>
+      </destinationConnectors>
+      <properties>
+        <property name="initialState">started</property>
+        <property name="synchronous">true</property>
+        <property name="store_messages">true</property>
+        <property name="encryptData">false</property>
+        <property name="transactional">false</property>
+        <property name="max_message_age">-1</property>
+        <property name="dont_store_filtered">false</property>
+        <property name="error_messages_only">false</property>
+      </properties>
+      <preprocessingScript>// Modify the message variable below to pre process data
+return message;</preprocessingScript>
+      <postprocessingScript>// This script executes once after a message has been processed
+return;</postprocessingScript>
+      <deployScript>// This script executes once when the mule engine is started
+// You only have access to the globalMap here to persist data
+return;</deployScript>
+      <shutdownScript>// This script executes once when the mule engine is stopped
+// You only have access to the globalMap here to persist data
+return;</shutdownScript>
+    </com.webreach.mirth.model.Channel>
+  </channels>
+  <alerts>
+    <com.webreach.mirth.model.Alert>
+      <id>91f8224c-cf29-48d8-8502-5c12299937a1</id>
+      <name>IDXRad Report Feed Alerts</name>
+      <expression>ERROR</expression>
+      <template>${ERROR}</template>
+      <enabled>true</enabled>
+      <subject></subject>
+      <channels/>
+      <emails/>
+    </com.webreach.mirth.model.Alert>
+  </alerts>
+  <codeTemplates>
+    <com.webreach.mirth.model.CodeTemplate>
+      <id>c0122134-078d-403b-a860-a8951b978da8</id>
+      <name>Get Database Connection</name>
+      <tooltip>Returns a connection to the RSNA results database</tooltip>
+      <code>// modify function_name and parameters as you wish.
+// one function per template is recommended. i.e.) create a new code template for each new function.
+function getConnection() {
+	var con = DatabaseConnectionFactory.createDatabaseConnection(&apos;org.postgresql.Driver&apos;, 
+		&apos;jdbc:postgresql://localhost:5432/rsnadb&apos;,&apos;edge&apos;,&apos;edge01&apos;);
+
+
+	return con;
+}</code>
+      <type>FUNCTION</type>
+      <scope>0</scope>
+    </com.webreach.mirth.model.CodeTemplate>
+    <com.webreach.mirth.model.CodeTemplate>
+      <id>e503f004-5160-4781-83c9-8120b8d259e6</id>
+      <name>Insert or Update Patient</name>
+      <tooltip>Adds a new patient or updates an existing patient&apos;s demographic information.  Returns &apos;true&apos; of patient was added to the database, &apos;false&apos; if patient was updated</tooltip>
+      <code>
+function insertOrUpdatePatient(patient) {
+	var con = getConnection();
+
+	var update = &quot;UPDATE patients SET patient_name = ?, &quot;;
+	update += &quot;dob = ?, &quot;;
+	update += &quot;sex = ?, &quot;;
+	update += &quot;street = ?, &quot;;
+	update += &quot;state = ?, &quot;;
+	update += &quot;zip_code = ? &quot;;
+	update += &quot;WHERE mrn = ?&quot;;
+
+
+	var params = new java.util.ArrayList();
+	params.add(patient.get(&quot;name&quot;));
+	params.add(patient.get(&quot;dob&quot;));
+	params.add(patient.get(&quot;sex&quot;));
+	params.add(patient.get(&quot;street&quot;));
+	params.add(patient.get(&quot;state&quot;));
+	params.add(patient.get(&quot;zipCode&quot;));
+	params.add(patient.get(&quot;mrn&quot;));
+
+
+	var count = con.executeUpdate(update, params);
+
+	if(count &gt;= 1) {
+		logger.warn(&quot;Updated patient: &quot; + patient.get(&quot;mrn&quot;));
+
+		return false;
+	}
+	else {
+		var insert = &quot;INSERT INTO patients (&quot;;
+		insert += &quot;patient_name, &quot;;
+		insert += &quot;mrn, &quot;;
+		insert += &quot;dob, &quot;;
+		insert += &quot;sex, &quot;;
+		insert += &quot;street, &quot;;
+		insert += &quot;state, &quot;;
+		insert += &quot;zip_code&quot;;
+		insert += &quot;) VALUES (?, ?, ?, ?, ?, ?, ?)&quot;;
+
+		params.clear();
+		params.add(patient.get(&quot;name&quot;));
+		params.add(patient.get(&quot;mrn&quot;));
+		params.add(patient.get(&quot;dob&quot;));
+		params.add(patient.get(&quot;sex&quot;));
+		params.add(patient.get(&quot;street&quot;));
+		params.add(patient.get(&quot;state&quot;));
+		params.add(patient.get(&quot;zipCode&quot;));
+
+		con.executeUpdate(insert, params);
+
+		logger.warn(&quot;Added new patient: &quot; + patient.get(&quot;mrn&quot;));
+
+		return true;
+	}
+
+	con.close();
+}</code>
+      <type>FUNCTION</type>
+      <scope>1</scope>
+    </com.webreach.mirth.model.CodeTemplate>
+    <com.webreach.mirth.model.CodeTemplate>
+      <id>1b6b4712-4043-4b4e-adf8-998a56dfd4ff</id>
+      <name>Insert or Update Exam</name>
+      <tooltip>Adds a new exam or updates an existing exam.</tooltip>
+      <code>
+function insertOrUpdateExam(exam) {
+	var patient = exam.get(&quot;patient&quot;);
+
+
+	var con = getConnection();
+	var params = new java.util.ArrayList();
+	var select = &quot;SELECT patient_id FROM patients WHERE &quot; 
+		+ &quot;patient_name = ? AND &quot;
+		+ &quot;mrn = ? AND &quot;
+		+ &quot;dob = ?&quot;;
+
+
+	params.add(patient.get(&quot;name&quot;));
+	params.add(patient.get(&quot;mrn&quot;));
+	params.add(patient.get(&quot;dob&quot;));
+
+	var rs = con.executeCachedQuery(select, params);
+	if(rs.next())
+	{
+		var patientId = rs.getInt(&quot;patient_id&quot;);
+
+		var update = &quot;UPDATE exams SET exam_description = ? &quot;
+				+ &quot;WHERE accession_number = ? AND patient_id = ?&quot;;
+
+		params.clear();
+		params.add(exam.get(&quot;studyDescription&quot;));
+		params.add(exam.get(&quot;accNum&quot;));
+		params.add(patientId);
+	
+		var count = con.executeUpdate(update, params);
+
+		if(count &gt;= 1) 
+		{
+			logger.warn(&quot;Updated exam: &quot; + exam.get(&quot;accNum&quot;));
+
+			return false;
+		}
+		else 
+		{
+			var insert = &quot;INSERT INTO exams (&quot;;
+			insert += &quot;accession_number, &quot;;
+			insert += &quot;exam_description, &quot;;
+			insert += &quot;patient_id&quot;;
+			insert += &quot;) VALUES (?, ?, ?)&quot;;
+
+
+			params.clear();
+			params.add(exam.get(&quot;accNum&quot;));
+			params.add(exam.get(&quot;studyDescription&quot;));
+			params.add(patientId);
+
+			con.executeUpdate(insert, params);
+
+			logger.warn(&quot;Added new exam: &quot; + exam.get(&quot;accNum&quot;));
+		}
+
+		con.close();
+	}
+	else
+	{
+		con.close();
+
+		throw &quot;Unable to get patient_id for patient &quot; 
+			+ patient.get(&quot;name&quot;) 
+			+ &quot; with MRN &quot; 
+			+ patient.get(&quot;mrn&quot;);
+	}
+
+
+	
+
+	
+
+
+
+	
+}</code>
+      <type>FUNCTION</type>
+      <scope>1</scope>
+    </com.webreach.mirth.model.CodeTemplate>
+    <com.webreach.mirth.model.CodeTemplate>
+      <id>45cdd14a-aaa2-4f21-915a-49e93f9f6027</id>
+      <name>Insert Status Change</name>
+      <tooltip>Adds a new entry into the reports table</tooltip>
+      <code>
+function insertStatusChange(exam) {
+	var patient = exam.get(&quot;patient&quot;);
+
+
+	var con = getConnection();
+	var params = new java.util.ArrayList();
+	var selectExamId = &quot;SELECT exam_id FROM &quot; 
+		+ &quot;exams INNER JOIN patients ON exams.patient_id = patients.patient_id WHERE &quot; 
+		+ &quot;patient_name = ? AND &quot;
+		+ &quot;mrn = ? AND &quot;
+		+ &quot;dob = ? AND &quot;
+		+ &quot;accession_number = ?&quot;;
+
+	params.add(patient.get(&quot;name&quot;));
+	params.add(patient.get(&quot;mrn&quot;));
+	params.add(patient.get(&quot;dob&quot;));
+	params.add(exam.get(&quot;accNum&quot;));
+
+	var rs = con.executeCachedQuery(selectExamId, params);
+	if(rs.next())
+	{
+		var examId = rs.getInt(&quot;exam_id&quot;);
+
+		// Make sure we don&apos;t already have this status.
+		// This can happen if a message is retransmitted.
+		var selectCount = &quot;SELECT count(*) AS status_count FROM reports WHERE &quot;
+			+ &quot;exam_id = ? AND &quot;
+			+ &quot;status = ? AND &quot;
+			+ &quot;status_timestamp = ?&quot;
+
+		params.clear();
+		params.add(examId);
+		params.add(exam.get(&quot;status&quot;));
+		params.add(exam.get(&quot;statusChangeTimestamp&quot;));
+
+		var rs2 = con.executeCachedQuery(selectCount, params);
+		rs2.next();
+		
+		var count = rs2.getInt(&quot;status_count&quot;);
+		if(count == 0)
+		{
+			var insert = &quot;INSERT INTO reports &quot; 
+				+ &quot;(exam_id, status, status_timestamp, report_text, signer, dictator, transcriber) &quot; 
+				+ &quot;VALUES (?, ?, ?, ?, ?, ?, ?)&quot;;
+
+
+			params.clear();
+			params.add(examId);
+			params.add(exam.get(&quot;status&quot;));
+			params.add(exam.get(&quot;statusChangeTimestamp&quot;));
+			params.add(exam.get(&quot;report&quot;));
+			params.add(exam.get(&quot;signer&quot;));
+			params.add(exam.get(&quot;dictator&quot;));
+			params.add(exam.get(&quot;transcriber&quot;));
+
+
+			con.executeUpdate(insert, params);
+
+
+			logger.warn(&quot;Updated status for exam &quot; + exam.get(&quot;accNum&quot;) + &quot; to &quot; + exam.get(&quot;status&quot;));
+		}
+		else
+		{
+			logger.warn(&quot;Received duplicate status update for exam &quot; 
+				+ exam.get(&quot;accNum&quot;) 
+				+ &quot;, status: &quot; + exam.get(&quot;status&quot;) );
+		}
+
+
+		con.close();		
+	}
+	else
+	{
+		con.close();
+	
+		throw &quot;Unable to find exam id for exam with name = &quot; 
+			+ patient.get(&quot;name&quot;) 
+			+ &quot;, mrn = &quot;
+			+ patient.get(&quot;mrn&quot;)
+			+ &quot;, dob = &quot;
+			+ patient.get(&quot;dob&quot;)
+			+ &quot;, acc num = &quot;
+			+ patient.get(&quot;accNum&quot;);
+	}
+}</code>
+      <type>FUNCTION</type>
+      <scope>1</scope>
+    </com.webreach.mirth.model.CodeTemplate>
+  </codeTemplates>
+  <properties>
+    <property name="server.resetglobalvariables">1</property>
+    <property name="smtp.from"></property>
+    <property name="smtp.username"></property>
+    <property name="firstlogin">0</property>
+    <property name="smtp.host"></property>
+    <property name="stats.time">1284391818161</property>
+    <property name="update.enabled">1</property>
+    <property name="smtp.secure">none</property>
+    <property name="smtp.port">25</property>
+    <property name="smtp.auth">0</property>
+    <property name="smtp.password"></property>
+    <property name="stats.enabled">1</property>
+    <property name="update.url">http://updates.mirthcorp.com</property>
+  </properties>
+  <globalScripts>
+    <entry>
+      <string>Shutdown</string>
+      <string>// This script executes once when the mule engine is stopped
+// You only have access to the globalMap here to persist data
+return;</string>
+    </entry>
+    <entry>
+      <string>Deploy</string>
+      <string>// This script executes once when the mule engine is started
+// You only have access to the globalMap here to persist data
+return;</string>
+    </entry>
+    <entry>
+      <string>Preprocessor</string>
+      <string>// Modify the message variable below to pre process data
+// This script applies across all channels
+var newMessage = message.replace(/[\x00-\x08]|[\x0B-\x0C]|[\x0E-\x1F]/g, &apos;&apos;);
+
+return newMessage;</string>
+    </entry>
+    <entry>
+      <string>Postprocessor</string>
+      <string>// This script executes once after a message has been processed
+// This script applies across all channels
+return;</string>
+    </entry>
+  </globalScripts>
+</com.webreach.mirth.model.ServerConfiguration>
