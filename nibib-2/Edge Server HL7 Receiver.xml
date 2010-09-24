@@ -5,10 +5,10 @@
   <enabled>true</enabled>
   <version>1.8.2.4472</version>
   <lastModified>
-    <time>1284409313222</time>
+    <time>1284663995669</time>
     <timezone>America/Chicago</timezone>
   </lastModified>
-  <revision>229</revision>
+  <revision>230</revision>
   <sourceConnector>
     <name>sourceConnector</name>
     <properties>
@@ -164,12 +164,12 @@ channelMap.put(&quot;dob&quot;, dob);</string>
               <string></string>
             </entry>
             <entry>
-              <string>RegularExpressions</string>
-              <list/>
-            </entry>
-            <entry>
               <string>Mapping</string>
               <string>msg[&apos;PID&apos;][&apos;PID.8&apos;][&apos;PID.8.1&apos;].toString()</string>
+            </entry>
+            <entry>
+              <string>RegularExpressions</string>
+              <list/>
             </entry>
             <entry>
               <string>isGlobal</string>
@@ -318,7 +318,7 @@ channelMap.put(&quot;dob&quot;, dob);</string>
         <com.webreach.mirth.model.Step>
           <sequenceNumber>10</sequenceNumber>
           <name>accNum</name>
-          <script>var mapping;try { mapping = msg[&apos;OBR&apos;][&apos;OBR.18&apos;][&apos;OBR.18.1&apos;].toString(); }catch (e) { logger.error(e);  mapping = &apos;&apos;;}channelMap.put(&apos;accNum&apos;, validate( mapping , &apos;&apos;, new Array()));</script>
+          <script>var mapping;try { mapping = msg[&apos;OBR&apos;][&apos;OBR.3&apos;][&apos;OBR.3.1&apos;].toString(); }catch (e) { logger.error(e);  mapping = &apos;&apos;;}channelMap.put(&apos;accNum&apos;, validate( mapping , &apos;&apos;, new Array()));</script>
           <type>Mapper</type>
           <data class="map">
             <entry>
@@ -331,7 +331,7 @@ channelMap.put(&quot;dob&quot;, dob);</string>
             </entry>
             <entry>
               <string>Mapping</string>
-              <string>msg[&apos;OBR&apos;][&apos;OBR.18&apos;][&apos;OBR.18.1&apos;].toString()</string>
+              <string>msg[&apos;OBR&apos;][&apos;OBR.3&apos;][&apos;OBR.3.1&apos;].toString()</string>
             </entry>
             <entry>
               <string>RegularExpressions</string>
@@ -750,12 +750,21 @@ channelMap.put(&quot;exam&quot;, exam);</string>
           </data>
         </com.webreach.mirth.model.Step>
       </steps>
-      <inboundTemplate>MSH|^~\&amp;|XDSDEMO_OF|XDSDEMO|APPLICATION|FACILITY|201009131343||ORM^O01^ORM_O01|00000014|P|2.3.1||||||||
-PID|||458056966^^^&amp;1.3.6.1.4.1.21367.2010.1.2.300&amp;ISO||Moore^G||19051212|M|||49 Woodland Ave^^Atlanta^GA^30322^USA||^^^G.Moore.433@ihe.net|||||458056966|||||||||||||||||||||
-PV1||O|^9994^1|||||5105^Cleaver^Ward^^^DR|||||||||||V11-1^^^XDSDEMO_ADT|||||||||||||||||||||||||201009131343|||||||V|
-ORC|NW|PN10^|FN10^||SC||1^once^^^^S||201009131343|5102^Kildare^Richard^^^DR||5107^Howser^Doogie^^^DR||3145551212|201009131343||||
-OBR|1|PN10^|FN10^||||||||||relevant clinical info||Radiology^^^^R|5107^Howser^Doogie^^^DR|3145551212|IHE383143.2|RPID10|SPSID10||||MR|||1^once^^^^S|||WALK|||||||||||A|||
-ZDS|1.2.3.4.5.6.7.383143.26^100^Application^DICOM</inboundTemplate>
+      <inboundTemplate>MSH|^~\&amp;|IDXrad||||201006021057||ORU|0287422309|P|2.1||
+PID|||01234561||TEST^PATIENT^A^^^|Fleischer^^^^^|19010101|F|PATIENT^TEST^^^^||BOX 0824 - MCB 300^DATA CONTROL^SAN FRANCISCO^CA^94143||(415)476-1926|(510)891-4777X4234||||BOGUSVST|000-00-0000
+PV1||I|^OR^||||P9^Jovais^Christopher^S.^^^||||||||||||BOGUSVST||||||||||||||||||||1|||||201005050900|201005131429
+ORC|RE||7176379^IDXrad||||||201006021057|||P9^Jovais^Christopher^S.^^^|
+OBR|||7176379^IDXrad|DFINGL^FINGER,LEFT^IDXrad|||201006021039||||||000.|||P9^Jovais^Christopher^S.^^^||NOT Mammo|N||M01|201006021056|||F||^^M10*^201006021029^^N|||A||PA0001^Madlansacay^Noel^^^^||||201006021030
+NTE|1|L|testing~|
+NTE|2|L|testing~~|
+ZRP||
+ZTT|100450^BROWN^FREDERICK^^^^|^Recognition^Voice^^^^|^OR^|^OR^|P9^Jovais^Christopher^S.^^^|OB,RAD
+ZTM|DFINGL^FINGER,LEFT^IDXrad||DFINGL^FINGER,LEFT|CR^Computed Radiography
+ZRI|PA0001^Madlansacay^Noel^^^^|||PA0001^Madlansacay^Noel^^^^
+ZAS|7176379|||201006021030|201006021030
+OBX|1|FT|DFINGL&amp;GDT|1|1) Create report in Radhwere.||||||F
+OBX|2|FT|DFINGL&amp;GDT|1|2) Sign/Finalize report in Radwhere||||||F
+OBX|3|FT|DFINGL&amp;GDT|1|||||||F</inboundTemplate>
       <outboundTemplate></outboundTemplate>
       <inboundProtocol>HL7V2</inboundProtocol>
       <outboundProtocol>HL7V2</outboundProtocol>
