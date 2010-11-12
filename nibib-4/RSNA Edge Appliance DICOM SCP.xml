@@ -1,0 +1,204 @@
+<com.webreach.mirth.model.Channel>
+  <id>1b6b5460-0d59-4099-9ce0-0c386ac6b661</id>
+  <name>RSNA Edge Appliance DICOM SCP</name>
+  <description></description>
+  <enabled>true</enabled>
+  <version>1.8.2.4472</version>
+  <lastModified>
+    <time>1284132501441</time>
+    <timezone>America/Chicago</timezone>
+  </lastModified>
+  <revision>36</revision>
+  <sourceConnector>
+    <name>sourceConnector</name>
+    <properties>
+      <property name="noclientauth">1</property>
+      <property name="keystorepw"></property>
+      <property name="sosndbuf">0</property>
+      <property name="bufsize">1</property>
+      <property name="requestto">5</property>
+      <property name="keystore"></property>
+      <property name="pdv1">0</property>
+      <property name="rspdelay">0</property>
+      <property name="defts">0</property>
+      <property name="soclosedelay">50</property>
+      <property name="async">0</property>
+      <property name="localApplicationEntity"></property>
+      <property name="rcvpdulen">16</property>
+      <property name="truststore"></property>
+      <property name="nativeData">1</property>
+      <property name="applicationEntity">RSNA-ISN</property>
+      <property name="nossl2">1</property>
+      <property name="port">4104</property>
+      <property name="dest"></property>
+      <property name="tls">notls</property>
+      <property name="host">0.0.0.0</property>
+      <property name="truststorepw"></property>
+      <property name="releaseto">5</property>
+      <property name="keypw"></property>
+      <property name="localPort"></property>
+      <property name="idleto">60</property>
+      <property name="reaper">10</property>
+      <property name="tcpdelay">1</property>
+      <property name="DataType">DICOM Listener</property>
+      <property name="localHost"></property>
+      <property name="bigendian">0</property>
+      <property name="sorcvbuf">0</property>
+      <property name="sndpdulen">16</property>
+    </properties>
+    <transformer>
+      <steps>
+        <com.webreach.mirth.model.Step>
+          <sequenceNumber>0</sequenceNumber>
+          <name>patientId</name>
+          <script>var mapping;try { mapping = msg[&apos;tag00100020&apos;]; }catch (e) { logger.error(e);  mapping = &apos;&apos;;}channelMap.put(&apos;patientId&apos;, validate( mapping , &apos;PATIENT-ID-UNAVAILABLE&apos;, new Array()));</script>
+          <type>Mapper</type>
+          <data class="map">
+            <entry>
+              <string>Variable</string>
+              <string>patientId</string>
+            </entry>
+            <entry>
+              <string>DefaultValue</string>
+              <string>&apos;PATIENT-ID-UNAVAILABLE&apos;</string>
+            </entry>
+            <entry>
+              <string>RegularExpressions</string>
+              <list/>
+            </entry>
+            <entry>
+              <string>Mapping</string>
+              <string>msg[&apos;tag00100020&apos;]</string>
+            </entry>
+            <entry>
+              <string>isGlobal</string>
+              <string>channel</string>
+            </entry>
+          </data>
+        </com.webreach.mirth.model.Step>
+        <com.webreach.mirth.model.Step>
+          <sequenceNumber>1</sequenceNumber>
+          <name>accessionNumber</name>
+          <script>var mapping;try { mapping = msg[&apos;tag00080050&apos;]; }catch (e) { logger.error(e);  mapping = &apos;&apos;;}channelMap.put(&apos;accessionNumber&apos;, validate( mapping , &apos;ACCESSION-NUMBER-UNAVAILABLE&apos;, new Array()));</script>
+          <type>Mapper</type>
+          <data class="map">
+            <entry>
+              <string>Variable</string>
+              <string>accessionNumber</string>
+            </entry>
+            <entry>
+              <string>DefaultValue</string>
+              <string>&apos;ACCESSION-NUMBER-UNAVAILABLE&apos;</string>
+            </entry>
+            <entry>
+              <string>RegularExpressions</string>
+              <list/>
+            </entry>
+            <entry>
+              <string>Mapping</string>
+              <string>msg[&apos;tag00080050&apos;]</string>
+            </entry>
+            <entry>
+              <string>isGlobal</string>
+              <string>channel</string>
+            </entry>
+          </data>
+        </com.webreach.mirth.model.Step>
+        <com.webreach.mirth.model.Step>
+          <sequenceNumber>2</sequenceNumber>
+          <name>sopInstanceUid</name>
+          <script>var mapping;try { mapping = msg[&apos;tag00080018&apos;]; }catch (e) { logger.error(e);  mapping = &apos;&apos;;}channelMap.put(&apos;sopInstanceUid&apos;, validate( mapping , &apos;&apos;, new Array()));</script>
+          <type>Mapper</type>
+          <data class="map">
+            <entry>
+              <string>Variable</string>
+              <string>sopInstanceUid</string>
+            </entry>
+            <entry>
+              <string>DefaultValue</string>
+              <string></string>
+            </entry>
+            <entry>
+              <string>RegularExpressions</string>
+              <list/>
+            </entry>
+            <entry>
+              <string>Mapping</string>
+              <string>msg[&apos;tag00080018&apos;]</string>
+            </entry>
+            <entry>
+              <string>isGlobal</string>
+              <string>channel</string>
+            </entry>
+          </data>
+        </com.webreach.mirth.model.Step>
+      </steps>
+      <inboundTemplate></inboundTemplate>
+      <outboundTemplate></outboundTemplate>
+      <inboundProtocol>DICOM</inboundProtocol>
+      <outboundProtocol>DICOM</outboundProtocol>
+      <inboundProperties/>
+      <outboundProperties/>
+    </transformer>
+    <filter>
+      <rules/>
+    </filter>
+    <transportName>DICOM Listener</transportName>
+    <mode>SOURCE</mode>
+    <enabled>true</enabled>
+  </sourceConnector>
+  <destinationConnectors>
+    <com.webreach.mirth.model.Connector>
+      <name>File Output</name>
+      <properties>
+        <property name="secure">1</property>
+        <property name="scheme">file</property>
+        <property name="binary">1</property>
+        <property name="username">anonymous</property>
+        <property name="outputPattern">${sopInstanceUid}.dcm</property>
+        <property name="validateConnections">1</property>
+        <property name="DataType">File Writer</property>
+        <property name="directory"></property>
+        <property name="FTPAnonymous">1</property>
+        <property name="charsetEncoding">DEFAULT_ENCODING</property>
+        <property name="password">anonymous</property>
+        <property name="passive">1</property>
+        <property name="template">${DICOMMESSAGE}</property>
+        <property name="outputAppend">0</property>
+        <property name="host">/rsna/dcm/${patientId}/${accessionNumber}/</property>
+      </properties>
+      <transformer>
+        <steps/>
+        <inboundProtocol>DICOM</inboundProtocol>
+        <outboundProtocol>DICOM</outboundProtocol>
+        <inboundProperties/>
+      </transformer>
+      <filter>
+        <rules/>
+      </filter>
+      <transportName>File Writer</transportName>
+      <mode>DESTINATION</mode>
+      <enabled>true</enabled>
+    </com.webreach.mirth.model.Connector>
+  </destinationConnectors>
+  <properties>
+    <property name="initialState">started</property>
+    <property name="synchronous">true</property>
+    <property name="store_messages">true</property>
+    <property name="encryptData">false</property>
+    <property name="transactional">false</property>
+    <property name="max_message_age">-1</property>
+    <property name="dont_store_filtered">false</property>
+    <property name="error_messages_only">true</property>
+  </properties>
+  <preprocessingScript>// Modify the message variable below to pre process data
+return message;</preprocessingScript>
+  <postprocessingScript>// This script executes once after a message has been processed
+return;</postprocessingScript>
+  <deployScript>// This script executes once when the mule engine is started
+// You only have access to the globalMap here to persist data
+return;</deployScript>
+  <shutdownScript>// This script executes once when the mule engine is stopped
+// You only have access to the globalMap here to persist data
+return;</shutdownScript>
+</com.webreach.mirth.model.Channel>
