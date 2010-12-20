@@ -5,10 +5,10 @@
   <enabled>true</enabled>
   <version>1.8.2.4472</version>
   <lastModified>
-    <time>1284663995669</time>
+    <time>1292872913722</time>
     <timezone>America/Chicago</timezone>
   </lastModified>
-  <revision>231</revision>
+  <revision>232</revision>
   <sourceConnector>
     <name>sourceConnector</name>
     <properties>
@@ -32,7 +32,6 @@
       <property name="responseFromTransformer">0</property>
       <property name="segmentEnd">0x0D</property>
       <property name="ackPort"></property>
-      <property name="keepSendSocketOpen">0</property>
       <property name="charsetEncoding">DEFAULT_ENCODING</property>
       <property name="host">0.0.0.0</property>
       <property name="responseValue">None</property>
@@ -851,9 +850,6 @@ while(rs.next())
 
 	var updateJobSets = &quot;UPDATE job_sets SET patient_id = ? WHERE patient_id = ?&quot;;
 	con.executeUpdate(updateJobSets, params);
-
-	var updateRsnaIds = &quot;UPDATE patient_rsna_ids SET patient_id = ? WHERE patient_id = ?&quot;;
-	con.executeUpdate(updateRsnaIds, params);
 
 
 	

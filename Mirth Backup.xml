@@ -1,5 +1,5 @@
 <com.webreach.mirth.model.ServerConfiguration>
-  <date>2010-11-12 09:21:01</date>
+  <date>2010-12-20 12:29:50</date>
   <channels>
     <com.webreach.mirth.model.Channel>
       <id>20873abb-9dd8-4e32-9167-f3a87fd99fbe</id>
@@ -8,10 +8,10 @@
       <enabled>true</enabled>
       <version>1.8.2.4472</version>
       <lastModified>
-        <time>1284663995669</time>
+        <time>1292872913722</time>
         <timezone>America/Chicago</timezone>
       </lastModified>
-      <revision>231</revision>
+      <revision>232</revision>
       <sourceConnector>
         <name>sourceConnector</name>
         <properties>
@@ -35,7 +35,6 @@
           <property name="responseFromTransformer">0</property>
           <property name="segmentEnd">0x0D</property>
           <property name="ackPort"></property>
-          <property name="keepSendSocketOpen">0</property>
           <property name="charsetEncoding">DEFAULT_ENCODING</property>
           <property name="host">0.0.0.0</property>
           <property name="responseValue">None</property>
@@ -855,9 +854,6 @@ while(rs.next())
 	var updateJobSets = &quot;UPDATE job_sets SET patient_id = ? WHERE patient_id = ?&quot;;
 	con.executeUpdate(updateJobSets, params);
 
-	var updateRsnaIds = &quot;UPDATE patient_rsna_ids SET patient_id = ? WHERE patient_id = ?&quot;;
-	con.executeUpdate(updateRsnaIds, params);
-
 
 	
 	params.add($(&apos;mrn&apos;));
@@ -1448,7 +1444,7 @@ function insertStatusChange(exam) {
     <property name="smtp.username"></property>
     <property name="firstlogin">0</property>
     <property name="smtp.host"></property>
-    <property name="stats.time">1285345184529</property>
+    <property name="stats.time">1292872815508</property>
     <property name="update.enabled">1</property>
     <property name="smtp.secure">none</property>
     <property name="smtp.port">25</property>
