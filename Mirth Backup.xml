@@ -1,5 +1,5 @@
 <com.webreach.mirth.model.ServerConfiguration>
-  <date>2010-12-20 12:29:50</date>
+  <date>2011-01-10 17:13:04</date>
   <channels>
     <com.webreach.mirth.model.Channel>
       <id>20873abb-9dd8-4e32-9167-f3a87fd99fbe</id>
@@ -962,10 +962,10 @@ return;</shutdownScript>
       <enabled>true</enabled>
       <version>1.8.2.4472</version>
       <lastModified>
-        <time>1284132501441</time>
+        <time>1294706446240</time>
         <timezone>America/Chicago</timezone>
       </lastModified>
-      <revision>36</revision>
+      <revision>37</revision>
       <sourceConnector>
         <name>sourceConnector</name>
         <properties>
@@ -980,11 +980,10 @@ return;</shutdownScript>
           <property name="defts">0</property>
           <property name="soclosedelay">50</property>
           <property name="async">0</property>
-          <property name="localApplicationEntity"></property>
           <property name="rcvpdulen">16</property>
           <property name="truststore"></property>
           <property name="nativeData">1</property>
-          <property name="applicationEntity">RSNA-ISN</property>
+          <property name="applicationEntity">RSNA-NIBIB-4</property>
           <property name="nossl2">1</property>
           <property name="port">4104</property>
           <property name="dest"></property>
@@ -993,12 +992,9 @@ return;</shutdownScript>
           <property name="truststorepw"></property>
           <property name="releaseto">5</property>
           <property name="keypw"></property>
-          <property name="localPort"></property>
           <property name="idleto">60</property>
           <property name="reaper">10</property>
           <property name="tcpdelay">1</property>
-          <property name="DataType">DICOM Listener</property>
-          <property name="localHost"></property>
           <property name="bigendian">0</property>
           <property name="sorcvbuf">0</property>
           <property name="sndpdulen">16</property>
@@ -1115,7 +1111,6 @@ return;</shutdownScript>
             <property name="outputPattern">${sopInstanceUid}.dcm</property>
             <property name="validateConnections">1</property>
             <property name="DataType">File Writer</property>
-            <property name="directory"></property>
             <property name="FTPAnonymous">1</property>
             <property name="charsetEncoding">DEFAULT_ENCODING</property>
             <property name="password">anonymous</property>
@@ -1181,7 +1176,7 @@ return;</shutdownScript>
 // one function per template is recommended. i.e.) create a new code template for each new function.
 function getConnection() {
 	var con = DatabaseConnectionFactory.createDatabaseConnection(&apos;org.postgresql.Driver&apos;, 
-		&apos;jdbc:postgresql://localhost:5432/rsnadb2&apos;,&apos;edge&apos;,&apos;edge01&apos;);
+		&apos;jdbc:postgresql://localhost:5432/rsnadb&apos;,&apos;edge&apos;,&apos;edge01&apos;);
 
 
 	return con;
@@ -1444,7 +1439,7 @@ function insertStatusChange(exam) {
     <property name="smtp.username"></property>
     <property name="firstlogin">0</property>
     <property name="smtp.host"></property>
-    <property name="stats.time">1292872815508</property>
+    <property name="stats.time">1294706389238</property>
     <property name="update.enabled">1</property>
     <property name="smtp.secure">none</property>
     <property name="smtp.port">25</property>
