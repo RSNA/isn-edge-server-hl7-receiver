@@ -1,6 +1,210 @@
 <com.webreach.mirth.model.ServerConfiguration>
-  <date>2011-01-10 17:13:04</date>
+  <date>2011-06-14 12:24:31</date>
   <channels>
+    <com.webreach.mirth.model.Channel>
+      <id>1b6b5460-0d59-4099-9ce0-0c386ac6b661</id>
+      <name>RSNA Edge Appliance DICOM SCP</name>
+      <description></description>
+      <enabled>true</enabled>
+      <version>1.8.2.4472</version>
+      <lastModified>
+        <time>1308006265305</time>
+        <timezone>America/Los_Angeles</timezone>
+      </lastModified>
+      <revision>53</revision>
+      <sourceConnector>
+        <name>sourceConnector</name>
+        <properties>
+          <property name="noclientauth">1</property>
+          <property name="keystorepw"></property>
+          <property name="sosndbuf">0</property>
+          <property name="bufsize">1000</property>
+          <property name="requestto">5000</property>
+          <property name="keystore"></property>
+          <property name="pdv1">0</property>
+          <property name="rspdelay">0</property>
+          <property name="defts">0</property>
+          <property name="soclosedelay">50</property>
+          <property name="async">0</property>
+          <property name="localApplicationEntity"></property>
+          <property name="rcvpdulen">16</property>
+          <property name="truststore"></property>
+          <property name="nativeData">1</property>
+          <property name="applicationEntity">RSNA-ISN</property>
+          <property name="nossl2">1</property>
+          <property name="port">4104</property>
+          <property name="dest"></property>
+          <property name="tls">notls</property>
+          <property name="host">0.0.0.0</property>
+          <property name="truststorepw"></property>
+          <property name="releaseto">5</property>
+          <property name="keypw"></property>
+          <property name="localPort"></property>
+          <property name="idleto">60000</property>
+          <property name="reaper">10</property>
+          <property name="tcpdelay">1</property>
+          <property name="DataType">DICOM Listener</property>
+          <property name="localHost"></property>
+          <property name="bigendian">0</property>
+          <property name="sorcvbuf">0</property>
+          <property name="sndpdulen">16</property>
+        </properties>
+        <transformer>
+          <steps>
+            <com.webreach.mirth.model.Step>
+              <sequenceNumber>0</sequenceNumber>
+              <name>patientId</name>
+              <script>var mapping;try { mapping = msg[&apos;tag00100020&apos;]; }catch (e) { logger.error(e);  mapping = &apos;&apos;;}channelMap.put(&apos;patientId&apos;, validate( mapping , &apos;PATIENT-ID-UNAVAILABLE&apos;, new Array()));</script>
+              <type>Mapper</type>
+              <data class="map">
+                <entry>
+                  <string>Variable</string>
+                  <string>patientId</string>
+                </entry>
+                <entry>
+                  <string>DefaultValue</string>
+                  <string>&apos;PATIENT-ID-UNAVAILABLE&apos;</string>
+                </entry>
+                <entry>
+                  <string>RegularExpressions</string>
+                  <list/>
+                </entry>
+                <entry>
+                  <string>Mapping</string>
+                  <string>msg[&apos;tag00100020&apos;]</string>
+                </entry>
+                <entry>
+                  <string>isGlobal</string>
+                  <string>channel</string>
+                </entry>
+              </data>
+            </com.webreach.mirth.model.Step>
+            <com.webreach.mirth.model.Step>
+              <sequenceNumber>1</sequenceNumber>
+              <name>accessionNumber</name>
+              <script>var mapping;try { mapping = msg[&apos;tag00080050&apos;]; }catch (e) { logger.error(e);  mapping = &apos;&apos;;}channelMap.put(&apos;accessionNumber&apos;, validate( mapping , &apos;ACCESSION-NUMBER-UNAVAILABLE&apos;, new Array()));</script>
+              <type>Mapper</type>
+              <data class="map">
+                <entry>
+                  <string>Variable</string>
+                  <string>accessionNumber</string>
+                </entry>
+                <entry>
+                  <string>DefaultValue</string>
+                  <string>&apos;ACCESSION-NUMBER-UNAVAILABLE&apos;</string>
+                </entry>
+                <entry>
+                  <string>RegularExpressions</string>
+                  <list/>
+                </entry>
+                <entry>
+                  <string>Mapping</string>
+                  <string>msg[&apos;tag00080050&apos;]</string>
+                </entry>
+                <entry>
+                  <string>isGlobal</string>
+                  <string>channel</string>
+                </entry>
+              </data>
+            </com.webreach.mirth.model.Step>
+            <com.webreach.mirth.model.Step>
+              <sequenceNumber>2</sequenceNumber>
+              <name>sopInstanceUid</name>
+              <script>var mapping;try { mapping = msg[&apos;tag00080018&apos;]; }catch (e) { logger.error(e);  mapping = &apos;&apos;;}channelMap.put(&apos;sopInstanceUid&apos;, validate( mapping , &apos;&apos;, new Array()));</script>
+              <type>Mapper</type>
+              <data class="map">
+                <entry>
+                  <string>Variable</string>
+                  <string>sopInstanceUid</string>
+                </entry>
+                <entry>
+                  <string>DefaultValue</string>
+                  <string></string>
+                </entry>
+                <entry>
+                  <string>RegularExpressions</string>
+                  <list/>
+                </entry>
+                <entry>
+                  <string>Mapping</string>
+                  <string>msg[&apos;tag00080018&apos;]</string>
+                </entry>
+                <entry>
+                  <string>isGlobal</string>
+                  <string>channel</string>
+                </entry>
+              </data>
+            </com.webreach.mirth.model.Step>
+          </steps>
+          <inboundTemplate></inboundTemplate>
+          <outboundTemplate></outboundTemplate>
+          <inboundProtocol>DICOM</inboundProtocol>
+          <outboundProtocol>DICOM</outboundProtocol>
+          <inboundProperties/>
+          <outboundProperties/>
+        </transformer>
+        <filter>
+          <rules/>
+        </filter>
+        <transportName>DICOM Listener</transportName>
+        <mode>SOURCE</mode>
+        <enabled>true</enabled>
+      </sourceConnector>
+      <destinationConnectors>
+        <com.webreach.mirth.model.Connector>
+          <name>File Output</name>
+          <properties>
+            <property name="secure">1</property>
+            <property name="scheme">file</property>
+            <property name="binary">1</property>
+            <property name="username">anonymous</property>
+            <property name="outputPattern">${sopInstanceUid}.dcm</property>
+            <property name="validateConnections">1</property>
+            <property name="DataType">File Writer</property>
+            <property name="directory"></property>
+            <property name="FTPAnonymous">1</property>
+            <property name="charsetEncoding">DEFAULT_ENCODING</property>
+            <property name="password">anonymous</property>
+            <property name="passive">1</property>
+            <property name="template">${DICOMMESSAGE}</property>
+            <property name="outputAppend">0</property>
+            <property name="host">/data/rsna/dcm/${patientId}/${accessionNumber}/</property>
+          </properties>
+          <transformer>
+            <steps/>
+            <inboundProtocol>DICOM</inboundProtocol>
+            <outboundProtocol>DICOM</outboundProtocol>
+            <inboundProperties/>
+          </transformer>
+          <filter>
+            <rules/>
+          </filter>
+          <transportName>File Writer</transportName>
+          <mode>DESTINATION</mode>
+          <enabled>true</enabled>
+        </com.webreach.mirth.model.Connector>
+      </destinationConnectors>
+      <properties>
+        <property name="initialState">started</property>
+        <property name="synchronous">true</property>
+        <property name="store_messages">true</property>
+        <property name="encryptData">false</property>
+        <property name="transactional">false</property>
+        <property name="max_message_age">-1</property>
+        <property name="dont_store_filtered">false</property>
+        <property name="error_messages_only">false</property>
+      </properties>
+      <preprocessingScript>// Modify the message variable below to pre process data
+return message;</preprocessingScript>
+      <postprocessingScript>// This script executes once after a message has been processed
+return;</postprocessingScript>
+      <deployScript>// This script executes once when the mule engine is started
+// You only have access to the globalMap here to persist data
+return;</deployScript>
+      <shutdownScript>// This script executes once when the mule engine is stopped
+// You only have access to the globalMap here to persist data
+return;</shutdownScript>
+    </com.webreach.mirth.model.Channel>
     <com.webreach.mirth.model.Channel>
       <id>20873abb-9dd8-4e32-9167-f3a87fd99fbe</id>
       <name>Edge Server HL7 Receiver</name>
@@ -8,10 +212,10 @@
       <enabled>true</enabled>
       <version>1.8.2.4472</version>
       <lastModified>
-        <time>1292872913722</time>
-        <timezone>America/Chicago</timezone>
+        <time>1307743826835</time>
+        <timezone>America/Los_Angeles</timezone>
       </lastModified>
-      <revision>232</revision>
+      <revision>243</revision>
       <sourceConnector>
         <name>sourceConnector</name>
         <properties>
@@ -35,6 +239,7 @@
           <property name="responseFromTransformer">0</property>
           <property name="segmentEnd">0x0D</property>
           <property name="ackPort"></property>
+          <property name="keepSendSocketOpen">0</property>
           <property name="charsetEncoding">DEFAULT_ENCODING</property>
           <property name="host">0.0.0.0</property>
           <property name="responseValue">None</property>
@@ -167,12 +372,12 @@ channelMap.put(&quot;dob&quot;, dob);</string>
                   <string></string>
                 </entry>
                 <entry>
-                  <string>Mapping</string>
-                  <string>msg[&apos;PID&apos;][&apos;PID.8&apos;][&apos;PID.8.1&apos;].toString()</string>
-                </entry>
-                <entry>
                   <string>RegularExpressions</string>
                   <list/>
+                </entry>
+                <entry>
+                  <string>Mapping</string>
+                  <string>msg[&apos;PID&apos;][&apos;PID.8&apos;][&apos;PID.8.1&apos;].toString()</string>
                 </entry>
                 <entry>
                   <string>isGlobal</string>
@@ -195,12 +400,12 @@ channelMap.put(&quot;dob&quot;, dob);</string>
                   <string></string>
                 </entry>
                 <entry>
-                  <string>Mapping</string>
-                  <string>msg[&apos;PID&apos;][&apos;PID.11&apos;][&apos;PID.11.1&apos;].toString()</string>
-                </entry>
-                <entry>
                   <string>RegularExpressions</string>
                   <list/>
+                </entry>
+                <entry>
+                  <string>Mapping</string>
+                  <string>msg[&apos;PID&apos;][&apos;PID.11&apos;][&apos;PID.11.1&apos;].toString()</string>
                 </entry>
                 <entry>
                   <string>isGlobal</string>
@@ -223,12 +428,12 @@ channelMap.put(&quot;dob&quot;, dob);</string>
                   <string></string>
                 </entry>
                 <entry>
-                  <string>Mapping</string>
-                  <string>msg[&apos;PID&apos;][&apos;PID.11&apos;][&apos;PID.11.3&apos;].toString()</string>
-                </entry>
-                <entry>
                   <string>RegularExpressions</string>
                   <list/>
+                </entry>
+                <entry>
+                  <string>Mapping</string>
+                  <string>msg[&apos;PID&apos;][&apos;PID.11&apos;][&apos;PID.11.3&apos;].toString()</string>
                 </entry>
                 <entry>
                   <string>isGlobal</string>
@@ -251,12 +456,12 @@ channelMap.put(&quot;dob&quot;, dob);</string>
                   <string></string>
                 </entry>
                 <entry>
-                  <string>Mapping</string>
-                  <string>msg[&apos;PID&apos;][&apos;PID.11&apos;][&apos;PID.11.4&apos;].toString()</string>
-                </entry>
-                <entry>
                   <string>RegularExpressions</string>
                   <list/>
+                </entry>
+                <entry>
+                  <string>Mapping</string>
+                  <string>msg[&apos;PID&apos;][&apos;PID.11&apos;][&apos;PID.11.4&apos;].toString()</string>
                 </entry>
                 <entry>
                   <string>isGlobal</string>
@@ -333,12 +538,12 @@ channelMap.put(&quot;dob&quot;, dob);</string>
                   <string></string>
                 </entry>
                 <entry>
-                  <string>Mapping</string>
-                  <string>msg[&apos;OBR&apos;][&apos;OBR.3&apos;][&apos;OBR.3.1&apos;].toString()</string>
-                </entry>
-                <entry>
                   <string>RegularExpressions</string>
                   <list/>
+                </entry>
+                <entry>
+                  <string>Mapping</string>
+                  <string>msg[&apos;OBR&apos;][&apos;OBR.3&apos;][&apos;OBR.3.1&apos;].toString()</string>
                 </entry>
                 <entry>
                   <string>isGlobal</string>
@@ -361,12 +566,12 @@ channelMap.put(&quot;dob&quot;, dob);</string>
                   <string></string>
                 </entry>
                 <entry>
-                  <string>Mapping</string>
-                  <string>msg[&apos;OBR&apos;][&apos;OBR.4&apos;][&apos;OBR.4.2&apos;].toString()</string>
-                </entry>
-                <entry>
                   <string>RegularExpressions</string>
                   <list/>
+                </entry>
+                <entry>
+                  <string>Mapping</string>
+                  <string>msg[&apos;OBR&apos;][&apos;OBR.4&apos;][&apos;OBR.4.2&apos;].toString()</string>
                 </entry>
                 <entry>
                   <string>isGlobal</string>
@@ -410,6 +615,9 @@ else if (status == &quot;RE&quot; ) {
 else if (status == &quot;A&quot; ) {
 	channelMap.put(&quot;status&quot;, &quot;ADDENDED&quot;);
 }
+else if (status == &quot;N&quot; ) {
+	channelMap.put(&quot;status&quot;, &quot;NON-REPORTABLE&quot;);
+}
 else if (status == &quot;X&quot; || status ==&quot;CA&quot;) {
 	channelMap.put(&quot;status&quot;, &quot;CANCELED&quot;);
 }</script>
@@ -449,6 +657,9 @@ else if (status == &quot;RE&quot; ) {
 }
 else if (status == &quot;A&quot; ) {
 	channelMap.put(&quot;status&quot;, &quot;ADDENDED&quot;);
+}
+else if (status == &quot;N&quot; ) {
+	channelMap.put(&quot;status&quot;, &quot;NON-REPORTABLE&quot;);
 }
 else if (status == &quot;X&quot; || status ==&quot;CA&quot;) {
 	channelMap.put(&quot;status&quot;, &quot;CANCELED&quot;);
@@ -775,7 +986,75 @@ OBX|3|FT|DFINGL&amp;GDT|1|||||||F</inboundTemplate>
           <outboundProperties/>
         </transformer>
         <filter>
-          <rules/>
+          <rules>
+            <com.webreach.mirth.model.Rule>
+              <sequenceNumber>0</sequenceNumber>
+              <name>Timestamp check</name>
+              <data class="map">
+                <entry>
+                  <string>Script</string>
+                  <string>try
+{
+	var str = msg[&apos;OBR&apos;][&apos;OBR.22&apos;][&apos;OBR.22.1&apos;].toString();
+
+	if(str == &quot;&quot;) 
+	{
+		str = msg[&apos;ORC&apos;][&apos;ORC.15&apos;][&apos;ORC.15.1&apos;].toString();
+	}
+
+
+	if(str != &quot;&quot;)
+	{
+		var date = DateUtil.getDate(&quot;yyyyMMddHHmm&quot;, str);
+		var timestamp = new java.sql.Timestamp(date.getTime());
+
+		return true;
+	}
+	else
+	{
+		return false;
+	}	
+}
+catch(ex)
+{
+	alerts.sendAlert(&quot;Message rejected due to missing timestamp. Acc #:&quot; + msg[&apos;OBR&apos;][&apos;OBR.3&apos;][&apos;OBR.3.1&apos;].toString());
+
+	return false;
+}</string>
+                </entry>
+              </data>
+              <type>JavaScript</type>
+              <script>try
+{
+	var str = msg[&apos;OBR&apos;][&apos;OBR.22&apos;][&apos;OBR.22.1&apos;].toString();
+
+	if(str == &quot;&quot;) 
+	{
+		str = msg[&apos;ORC&apos;][&apos;ORC.15&apos;][&apos;ORC.15.1&apos;].toString();
+	}
+
+
+	if(str != &quot;&quot;)
+	{
+		var date = DateUtil.getDate(&quot;yyyyMMddHHmm&quot;, str);
+		var timestamp = new java.sql.Timestamp(date.getTime());
+
+		return true;
+	}
+	else
+	{
+		return false;
+	}	
+}
+catch(ex)
+{
+	alerts.sendAlert(&quot;Message rejected due to missing timestamp. Acc #:&quot; + msg[&apos;OBR&apos;][&apos;OBR.3&apos;][&apos;OBR.3.1&apos;].toString());
+
+	return false;
+}</script>
+              <operator>NONE</operator>
+            </com.webreach.mirth.model.Rule>
+          </rules>
         </filter>
         <transportName>LLP Listener</transportName>
         <mode>SOURCE</mode>
@@ -878,6 +1157,8 @@ params.add($(&apos;priorMrn&apos;));
 con.executeUpdate(del, params);
 
 
+con.close();
+
 
 
 logger.warn(&quot;Merged patient &quot; + $(&apos;priorMrn&apos;) + &quot; with patient &quot; + $(&apos;mrn&apos;));</property>
@@ -955,205 +1236,6 @@ return;</deployScript>
 // You only have access to the globalMap here to persist data
 return;</shutdownScript>
     </com.webreach.mirth.model.Channel>
-    <com.webreach.mirth.model.Channel>
-      <id>1b6b5460-0d59-4099-9ce0-0c386ac6b661</id>
-      <name>RSNA Edge Appliance DICOM SCP</name>
-      <description></description>
-      <enabled>true</enabled>
-      <version>1.8.2.4472</version>
-      <lastModified>
-        <time>1294706446240</time>
-        <timezone>America/Chicago</timezone>
-      </lastModified>
-      <revision>37</revision>
-      <sourceConnector>
-        <name>sourceConnector</name>
-        <properties>
-          <property name="noclientauth">1</property>
-          <property name="keystorepw"></property>
-          <property name="sosndbuf">0</property>
-          <property name="bufsize">1</property>
-          <property name="requestto">5</property>
-          <property name="keystore"></property>
-          <property name="pdv1">0</property>
-          <property name="rspdelay">0</property>
-          <property name="defts">0</property>
-          <property name="soclosedelay">50</property>
-          <property name="async">0</property>
-          <property name="rcvpdulen">16</property>
-          <property name="truststore"></property>
-          <property name="nativeData">1</property>
-          <property name="applicationEntity">RSNA-NIBIB-4</property>
-          <property name="nossl2">1</property>
-          <property name="port">4104</property>
-          <property name="dest"></property>
-          <property name="tls">notls</property>
-          <property name="host">0.0.0.0</property>
-          <property name="truststorepw"></property>
-          <property name="releaseto">5</property>
-          <property name="keypw"></property>
-          <property name="idleto">60</property>
-          <property name="reaper">10</property>
-          <property name="tcpdelay">1</property>
-          <property name="bigendian">0</property>
-          <property name="sorcvbuf">0</property>
-          <property name="sndpdulen">16</property>
-        </properties>
-        <transformer>
-          <steps>
-            <com.webreach.mirth.model.Step>
-              <sequenceNumber>0</sequenceNumber>
-              <name>patientId</name>
-              <script>var mapping;try { mapping = msg[&apos;tag00100020&apos;]; }catch (e) { logger.error(e);  mapping = &apos;&apos;;}channelMap.put(&apos;patientId&apos;, validate( mapping , &apos;PATIENT-ID-UNAVAILABLE&apos;, new Array()));</script>
-              <type>Mapper</type>
-              <data class="map">
-                <entry>
-                  <string>Variable</string>
-                  <string>patientId</string>
-                </entry>
-                <entry>
-                  <string>DefaultValue</string>
-                  <string>&apos;PATIENT-ID-UNAVAILABLE&apos;</string>
-                </entry>
-                <entry>
-                  <string>RegularExpressions</string>
-                  <list/>
-                </entry>
-                <entry>
-                  <string>Mapping</string>
-                  <string>msg[&apos;tag00100020&apos;]</string>
-                </entry>
-                <entry>
-                  <string>isGlobal</string>
-                  <string>channel</string>
-                </entry>
-              </data>
-            </com.webreach.mirth.model.Step>
-            <com.webreach.mirth.model.Step>
-              <sequenceNumber>1</sequenceNumber>
-              <name>accessionNumber</name>
-              <script>var mapping;try { mapping = msg[&apos;tag00080050&apos;]; }catch (e) { logger.error(e);  mapping = &apos;&apos;;}channelMap.put(&apos;accessionNumber&apos;, validate( mapping , &apos;ACCESSION-NUMBER-UNAVAILABLE&apos;, new Array()));</script>
-              <type>Mapper</type>
-              <data class="map">
-                <entry>
-                  <string>Variable</string>
-                  <string>accessionNumber</string>
-                </entry>
-                <entry>
-                  <string>DefaultValue</string>
-                  <string>&apos;ACCESSION-NUMBER-UNAVAILABLE&apos;</string>
-                </entry>
-                <entry>
-                  <string>RegularExpressions</string>
-                  <list/>
-                </entry>
-                <entry>
-                  <string>Mapping</string>
-                  <string>msg[&apos;tag00080050&apos;]</string>
-                </entry>
-                <entry>
-                  <string>isGlobal</string>
-                  <string>channel</string>
-                </entry>
-              </data>
-            </com.webreach.mirth.model.Step>
-            <com.webreach.mirth.model.Step>
-              <sequenceNumber>2</sequenceNumber>
-              <name>sopInstanceUid</name>
-              <script>var mapping;try { mapping = msg[&apos;tag00080018&apos;]; }catch (e) { logger.error(e);  mapping = &apos;&apos;;}channelMap.put(&apos;sopInstanceUid&apos;, validate( mapping , &apos;&apos;, new Array()));</script>
-              <type>Mapper</type>
-              <data class="map">
-                <entry>
-                  <string>Variable</string>
-                  <string>sopInstanceUid</string>
-                </entry>
-                <entry>
-                  <string>DefaultValue</string>
-                  <string></string>
-                </entry>
-                <entry>
-                  <string>RegularExpressions</string>
-                  <list/>
-                </entry>
-                <entry>
-                  <string>Mapping</string>
-                  <string>msg[&apos;tag00080018&apos;]</string>
-                </entry>
-                <entry>
-                  <string>isGlobal</string>
-                  <string>channel</string>
-                </entry>
-              </data>
-            </com.webreach.mirth.model.Step>
-          </steps>
-          <inboundTemplate></inboundTemplate>
-          <outboundTemplate></outboundTemplate>
-          <inboundProtocol>DICOM</inboundProtocol>
-          <outboundProtocol>DICOM</outboundProtocol>
-          <inboundProperties/>
-          <outboundProperties/>
-        </transformer>
-        <filter>
-          <rules/>
-        </filter>
-        <transportName>DICOM Listener</transportName>
-        <mode>SOURCE</mode>
-        <enabled>true</enabled>
-      </sourceConnector>
-      <destinationConnectors>
-        <com.webreach.mirth.model.Connector>
-          <name>File Output</name>
-          <properties>
-            <property name="secure">1</property>
-            <property name="scheme">file</property>
-            <property name="binary">1</property>
-            <property name="username">anonymous</property>
-            <property name="outputPattern">${sopInstanceUid}.dcm</property>
-            <property name="validateConnections">1</property>
-            <property name="DataType">File Writer</property>
-            <property name="FTPAnonymous">1</property>
-            <property name="charsetEncoding">DEFAULT_ENCODING</property>
-            <property name="password">anonymous</property>
-            <property name="passive">1</property>
-            <property name="template">${DICOMMESSAGE}</property>
-            <property name="outputAppend">0</property>
-            <property name="host">/rsna/dcm/${patientId}/${accessionNumber}/</property>
-          </properties>
-          <transformer>
-            <steps/>
-            <inboundProtocol>DICOM</inboundProtocol>
-            <outboundProtocol>DICOM</outboundProtocol>
-            <inboundProperties/>
-          </transformer>
-          <filter>
-            <rules/>
-          </filter>
-          <transportName>File Writer</transportName>
-          <mode>DESTINATION</mode>
-          <enabled>true</enabled>
-        </com.webreach.mirth.model.Connector>
-      </destinationConnectors>
-      <properties>
-        <property name="initialState">started</property>
-        <property name="synchronous">true</property>
-        <property name="store_messages">true</property>
-        <property name="encryptData">false</property>
-        <property name="transactional">false</property>
-        <property name="max_message_age">-1</property>
-        <property name="dont_store_filtered">false</property>
-        <property name="error_messages_only">true</property>
-      </properties>
-      <preprocessingScript>// Modify the message variable below to pre process data
-return message;</preprocessingScript>
-      <postprocessingScript>// This script executes once after a message has been processed
-return;</postprocessingScript>
-      <deployScript>// This script executes once when the mule engine is started
-// You only have access to the globalMap here to persist data
-return;</deployScript>
-      <shutdownScript>// This script executes once when the mule engine is stopped
-// You only have access to the globalMap here to persist data
-return;</shutdownScript>
-    </com.webreach.mirth.model.Channel>
   </channels>
   <alerts>
     <com.webreach.mirth.model.Alert>
@@ -1162,28 +1244,17 @@ return;</shutdownScript>
       <expression>ERROR</expression>
       <template>${ERROR}</template>
       <enabled>true</enabled>
-      <subject></subject>
-      <channels/>
-      <emails/>
+      <subject>RSNA-ISN Error</subject>
+      <channels>
+        <string>1b6b5460-0d59-4099-9ce0-0c386ac6b661</string>
+        <string>20873abb-9dd8-4e32-9167-f3a87fd99fbe</string>
+      </channels>
+      <emails>
+        <string>wyatt.tellis@ucsf.edu</string>
+      </emails>
     </com.webreach.mirth.model.Alert>
   </alerts>
   <codeTemplates>
-    <com.webreach.mirth.model.CodeTemplate>
-      <id>c0122134-078d-403b-a860-a8951b978da8</id>
-      <name>Get Database Connection</name>
-      <tooltip>Returns a connection to the RSNA results database</tooltip>
-      <code>// modify function_name and parameters as you wish.
-// one function per template is recommended. i.e.) create a new code template for each new function.
-function getConnection() {
-	var con = DatabaseConnectionFactory.createDatabaseConnection(&apos;org.postgresql.Driver&apos;, 
-		&apos;jdbc:postgresql://localhost:5432/rsnadb&apos;,&apos;edge&apos;,&apos;edge01&apos;);
-
-
-	return con;
-}</code>
-      <type>FUNCTION</type>
-      <scope>0</scope>
-    </com.webreach.mirth.model.CodeTemplate>
     <com.webreach.mirth.model.CodeTemplate>
       <id>e503f004-5160-4781-83c9-8120b8d259e6</id>
       <name>Insert or Update Patient</name>
@@ -1192,149 +1263,69 @@ function getConnection() {
 function insertOrUpdatePatient(patient) {
 	var con = getConnection();
 
-	var update = &quot;UPDATE patients SET patient_name = ?, &quot;;
-	update += &quot;dob = ?, &quot;;
-	update += &quot;sex = ?, &quot;;
-	update += &quot;street = ?, &quot;;
-	update += &quot;city = ?, &quot;;
-	update += &quot;state = ?, &quot;;
-	update += &quot;zip_code = ? &quot;;
-	update += &quot;WHERE mrn = ?&quot;;
+	try
+	{
+		var update = &quot;UPDATE patients SET patient_name = ?, &quot;;
+		update += &quot;dob = ?, &quot;;
+		update += &quot;sex = ?, &quot;;
+		update += &quot;street = ?, &quot;;
+		update += &quot;city = ?, &quot;;
+		update += &quot;state = ?, &quot;;
+		update += &quot;zip_code = ? &quot;;
+		update += &quot;WHERE mrn = ?&quot;;
 
 
-	var params = new java.util.ArrayList();
-	params.add(patient.get(&quot;name&quot;));
-	params.add(patient.get(&quot;dob&quot;));
-	params.add(patient.get(&quot;sex&quot;));
-	params.add(patient.get(&quot;street&quot;));
-	params.add(patient.get(&quot;city&quot;));
-	params.add(patient.get(&quot;state&quot;));
-	params.add(patient.get(&quot;zipCode&quot;));
-	params.add(patient.get(&quot;mrn&quot;));
-
-
-	var count = con.executeUpdate(update, params);
-
-	if(count &gt;= 1) {
-		logger.warn(&quot;Updated patient: &quot; + patient.get(&quot;mrn&quot;));
-
-		return false;
-	}
-	else {
-		var insert = &quot;INSERT INTO patients (&quot;;
-		insert += &quot;patient_name, &quot;;
-		insert += &quot;mrn, &quot;;
-		insert += &quot;dob, &quot;;
-		insert += &quot;sex, &quot;;
-		insert += &quot;street, &quot;;
-		insert += &quot;city, &quot;;
-		insert += &quot;state, &quot;;
-		insert += &quot;zip_code&quot;;
-		insert += &quot;) VALUES (?, ?, ?, ?, ?, ?, ?, ?)&quot;;
-
-		params.clear();
+		var params = new java.util.ArrayList();
 		params.add(patient.get(&quot;name&quot;));
-		params.add(patient.get(&quot;mrn&quot;));
 		params.add(patient.get(&quot;dob&quot;));
 		params.add(patient.get(&quot;sex&quot;));
 		params.add(patient.get(&quot;street&quot;));
 		params.add(patient.get(&quot;city&quot;));
 		params.add(patient.get(&quot;state&quot;));
 		params.add(patient.get(&quot;zipCode&quot;));
-
-		con.executeUpdate(insert, params);
-
-		logger.warn(&quot;Added new patient: &quot; + patient.get(&quot;mrn&quot;));
-
-		return true;
-	}
-
-	con.close();
-}</code>
-      <type>FUNCTION</type>
-      <scope>1</scope>
-    </com.webreach.mirth.model.CodeTemplate>
-    <com.webreach.mirth.model.CodeTemplate>
-      <id>1b6b4712-4043-4b4e-adf8-998a56dfd4ff</id>
-      <name>Insert or Update Exam</name>
-      <tooltip>Adds a new exam or updates an existing exam.</tooltip>
-      <code>
-function insertOrUpdateExam(exam) {
-	var patient = exam.get(&quot;patient&quot;);
+		params.add(patient.get(&quot;mrn&quot;));
 
 
-	var con = getConnection();
-	var params = new java.util.ArrayList();
-	var select = &quot;SELECT patient_id FROM patients WHERE &quot; 
-		+ &quot;patient_name = ? AND &quot;
-		+ &quot;mrn = ? AND &quot;
-		+ &quot;dob = ?&quot;;
-
-
-	params.add(patient.get(&quot;name&quot;));
-	params.add(patient.get(&quot;mrn&quot;));
-	params.add(patient.get(&quot;dob&quot;));
-
-	var rs = con.executeCachedQuery(select, params);
-	if(rs.next())
-	{
-		var patientId = rs.getInt(&quot;patient_id&quot;);
-
-		var update = &quot;UPDATE exams SET exam_description = ? &quot;
-				+ &quot;WHERE accession_number = ? AND patient_id = ?&quot;;
-
-		params.clear();
-		params.add(exam.get(&quot;studyDescription&quot;));
-		params.add(exam.get(&quot;accNum&quot;));
-		params.add(patientId);
-	
 		var count = con.executeUpdate(update, params);
 
-		if(count &gt;= 1) 
-		{
-			logger.warn(&quot;Updated exam: &quot; + exam.get(&quot;accNum&quot;));
+		if(count &gt;= 1) {
+			logger.warn(&quot;Updated patient: &quot; + patient.get(&quot;mrn&quot;));
 
 			return false;
 		}
-		else 
-		{
-			var insert = &quot;INSERT INTO exams (&quot;;
-			insert += &quot;accession_number, &quot;;
-			insert += &quot;exam_description, &quot;;
-			insert += &quot;patient_id&quot;;
-			insert += &quot;) VALUES (?, ?, ?)&quot;;
-
+		else {
+			var insert = &quot;INSERT INTO patients (&quot;;
+			insert += &quot;patient_name, &quot;;
+			insert += &quot;mrn, &quot;;
+			insert += &quot;dob, &quot;;
+			insert += &quot;sex, &quot;;
+			insert += &quot;street, &quot;;
+			insert += &quot;city, &quot;;
+			insert += &quot;state, &quot;;
+			insert += &quot;zip_code&quot;;
+			insert += &quot;) VALUES (?, ?, ?, ?, ?, ?, ?, ?)&quot;;
 
 			params.clear();
-			params.add(exam.get(&quot;accNum&quot;));
-			params.add(exam.get(&quot;studyDescription&quot;));
-			params.add(patientId);
+			params.add(patient.get(&quot;name&quot;));
+			params.add(patient.get(&quot;mrn&quot;));
+			params.add(patient.get(&quot;dob&quot;));
+			params.add(patient.get(&quot;sex&quot;));
+			params.add(patient.get(&quot;street&quot;));
+			params.add(patient.get(&quot;city&quot;));
+			params.add(patient.get(&quot;state&quot;));
+			params.add(patient.get(&quot;zipCode&quot;));
 
 			con.executeUpdate(insert, params);
 
-			logger.warn(&quot;Added new exam: &quot; + exam.get(&quot;accNum&quot;));
-		}
+			logger.warn(&quot;Added new patient: &quot; + patient.get(&quot;mrn&quot;));
 
-		con.close();
+			return true;
+		}
 	}
-	else
+	finally
 	{
 		con.close();
-
-		throw &quot;Unable to get patient_id for patient &quot; 
-			+ patient.get(&quot;name&quot;) 
-			+ &quot; with MRN &quot; 
-			+ patient.get(&quot;mrn&quot;);
 	}
-
-
-	
-
-	
-
-
-
-	
 }</code>
       <type>FUNCTION</type>
       <scope>1</scope>
@@ -1349,85 +1340,184 @@ function insertStatusChange(exam) {
 
 
 	var con = getConnection();
-	var params = new java.util.ArrayList();
-	var selectExamId = &quot;SELECT exam_id FROM &quot; 
-		+ &quot;exams INNER JOIN patients ON exams.patient_id = patients.patient_id WHERE &quot; 
-		+ &quot;patient_name = ? AND &quot;
-		+ &quot;mrn = ? AND &quot;
-		+ &quot;dob = ? AND &quot;
-		+ &quot;accession_number = ?&quot;;
-
-	params.add(patient.get(&quot;name&quot;));
-	params.add(patient.get(&quot;mrn&quot;));
-	params.add(patient.get(&quot;dob&quot;));
-	params.add(exam.get(&quot;accNum&quot;));
-
-	var rs = con.executeCachedQuery(selectExamId, params);
-	if(rs.next())
+	try
 	{
-		var examId = rs.getInt(&quot;exam_id&quot;);
+		var params = new java.util.ArrayList();
+		var selectExamId = &quot;SELECT exam_id FROM &quot; 
+			+ &quot;exams INNER JOIN patients ON exams.patient_id = patients.patient_id WHERE &quot; 
+			+ &quot;patient_name = ? AND &quot;
+			+ &quot;mrn = ? AND &quot;
+			+ &quot;dob = ? AND &quot;
+			+ &quot;accession_number = ?&quot;;
 
-		// Make sure we don&apos;t already have this status.
-		// This can happen if a message is retransmitted.
-		var selectCount = &quot;SELECT count(*) AS status_count FROM reports WHERE &quot;
-			+ &quot;exam_id = ? AND &quot;
-			+ &quot;status = ? AND &quot;
-			+ &quot;status_timestamp = ?&quot;
+		params.add(patient.get(&quot;name&quot;));
+		params.add(patient.get(&quot;mrn&quot;));
+		params.add(patient.get(&quot;dob&quot;));
+		params.add(exam.get(&quot;accNum&quot;));
 
-		params.clear();
-		params.add(examId);
-		params.add(exam.get(&quot;status&quot;));
-		params.add(exam.get(&quot;statusChangeTimestamp&quot;));
-
-		var rs2 = con.executeCachedQuery(selectCount, params);
-		rs2.next();
-		
-		var count = rs2.getInt(&quot;status_count&quot;);
-		if(count == 0)
+		var rs = con.executeCachedQuery(selectExamId, params);
+		if(rs.next())
 		{
-			var insert = &quot;INSERT INTO reports &quot; 
-				+ &quot;(exam_id, status, status_timestamp, report_text, signer, dictator, transcriber) &quot; 
-				+ &quot;VALUES (?, ?, ?, ?, ?, ?, ?)&quot;;
+			var examId = rs.getInt(&quot;exam_id&quot;);
 
+			// Make sure we don&apos;t already have this status.
+			// This can happen if a message is retransmitted.
+			var selectCount = &quot;SELECT count(*) AS status_count FROM reports WHERE &quot;
+				+ &quot;exam_id = ? AND &quot;
+				+ &quot;status = ? AND &quot;
+				+ &quot;status_timestamp = ?&quot;
 
 			params.clear();
 			params.add(examId);
 			params.add(exam.get(&quot;status&quot;));
 			params.add(exam.get(&quot;statusChangeTimestamp&quot;));
-			params.add(exam.get(&quot;report&quot;));
-			params.add(exam.get(&quot;signer&quot;));
-			params.add(exam.get(&quot;dictator&quot;));
-			params.add(exam.get(&quot;transcriber&quot;));
+
+			var rs2 = con.executeCachedQuery(selectCount, params);
+			rs2.next();
+		
+			var count = rs2.getInt(&quot;status_count&quot;);
+			if(count == 0)
+			{
+				var insert = &quot;INSERT INTO reports &quot; 
+					+ &quot;(exam_id, status, status_timestamp, report_text, signer, dictator, transcriber) &quot; 
+					+ &quot;VALUES (?, ?, ?, ?, ?, ?, ?)&quot;;
 
 
-			con.executeUpdate(insert, params);
+				params.clear();
+				params.add(examId);
+				params.add(exam.get(&quot;status&quot;));
+				params.add(exam.get(&quot;statusChangeTimestamp&quot;));
+				params.add(exam.get(&quot;report&quot;));
+				params.add(exam.get(&quot;signer&quot;));
+				params.add(exam.get(&quot;dictator&quot;));
+				params.add(exam.get(&quot;transcriber&quot;));
 
 
-			logger.warn(&quot;Updated status for exam &quot; + exam.get(&quot;accNum&quot;) + &quot; to &quot; + exam.get(&quot;status&quot;));
+				con.executeUpdate(insert, params);
+
+
+				logger.warn(&quot;Updated status for exam &quot; + exam.get(&quot;accNum&quot;) + &quot; to &quot; + exam.get(&quot;status&quot;));
+			}
+			else
+			{
+				logger.warn(&quot;Received duplicate status update for exam &quot; 
+					+ exam.get(&quot;accNum&quot;) 
+					+ &quot;, status: &quot; + exam.get(&quot;status&quot;) );
+			}		
+		}
+		else
+		{	
+			throw &quot;Unable to find exam id for exam with name = &quot; 
+				+ patient.get(&quot;name&quot;) 
+				+ &quot;, mrn = &quot;
+				+ patient.get(&quot;mrn&quot;)
+				+ &quot;, dob = &quot;
+				+ patient.get(&quot;dob&quot;)
+				+ &quot;, acc num = &quot;
+				+ patient.get(&quot;accNum&quot;);
+		}
+	}
+	finally
+	{
+		con.close();
+	}
+}</code>
+      <type>FUNCTION</type>
+      <scope>1</scope>
+    </com.webreach.mirth.model.CodeTemplate>
+    <com.webreach.mirth.model.CodeTemplate>
+      <id>c0122134-078d-403b-a860-a8951b978da8</id>
+      <name>Get Database Connection</name>
+      <tooltip>Returns a connection to the RSNA results database</tooltip>
+      <code>// modify function_name and parameters as you wish.
+// one function per template is recommended. i.e.) create a new code template for each new function.
+function getConnection() {
+	var con = DatabaseConnectionFactory.createDatabaseConnection(&apos;org.postgresql.Driver&apos;, 
+		&apos;jdbc:postgresql://localhost:5432/rsnadb&apos;,&apos;edge&apos;,&apos;d17bK4#M&apos;);
+
+
+	return con;
+}</code>
+      <type>FUNCTION</type>
+      <scope>0</scope>
+    </com.webreach.mirth.model.CodeTemplate>
+    <com.webreach.mirth.model.CodeTemplate>
+      <id>1b6b4712-4043-4b4e-adf8-998a56dfd4ff</id>
+      <name>Insert or Update Exam</name>
+      <tooltip>Adds a new exam or updates an existing exam.</tooltip>
+      <code>
+function insertOrUpdateExam(exam) {
+	var patient = exam.get(&quot;patient&quot;);
+
+
+	var con = getConnection();
+	try
+	{
+		var params = new java.util.ArrayList();
+		var select = &quot;SELECT patient_id FROM patients WHERE &quot; 
+			+ &quot;patient_name = ? AND &quot;
+			+ &quot;mrn = ? AND &quot;
+			+ &quot;dob = ?&quot;;
+
+
+		params.add(patient.get(&quot;name&quot;));
+		params.add(patient.get(&quot;mrn&quot;));
+		params.add(patient.get(&quot;dob&quot;));
+
+		var rs = con.executeCachedQuery(select, params);
+		if(rs.next())
+		{
+			var patientId = rs.getInt(&quot;patient_id&quot;);
+
+			var update = &quot;UPDATE exams SET exam_description = ? &quot;
+					+ &quot;WHERE accession_number = ? AND patient_id = ?&quot;;
+
+			params.clear();
+			params.add(exam.get(&quot;studyDescription&quot;));
+			params.add(exam.get(&quot;accNum&quot;));
+			params.add(patientId);
+	
+			var count = con.executeUpdate(update, params);
+
+			if(count &gt;= 1) 
+			{
+				logger.warn(&quot;Updated exam: &quot; + exam.get(&quot;accNum&quot;));
+
+				return false;
+			}
+			else 
+			{
+				var insert = &quot;INSERT INTO exams (&quot;;
+				insert += &quot;accession_number, &quot;;
+				insert += &quot;exam_description, &quot;;
+				insert += &quot;patient_id&quot;;
+				insert += &quot;) VALUES (?, ?, ?)&quot;;
+
+
+				params.clear();
+				params.add(exam.get(&quot;accNum&quot;));
+				params.add(exam.get(&quot;studyDescription&quot;));
+				params.add(patientId);
+
+				con.executeUpdate(insert, params);
+
+				logger.warn(&quot;Added new exam: &quot; + exam.get(&quot;accNum&quot;));
+			}
 		}
 		else
 		{
-			logger.warn(&quot;Received duplicate status update for exam &quot; 
-				+ exam.get(&quot;accNum&quot;) 
-				+ &quot;, status: &quot; + exam.get(&quot;status&quot;) );
+
+			throw &quot;Unable to get patient_id for patient &quot; 
+				+ patient.get(&quot;name&quot;) 
+				+ &quot; with MRN &quot; 
+				+ patient.get(&quot;mrn&quot;);
 		}
 
-
-		con.close();		
 	}
-	else
+	finally
 	{
 		con.close();
-	
-		throw &quot;Unable to find exam id for exam with name = &quot; 
-			+ patient.get(&quot;name&quot;) 
-			+ &quot;, mrn = &quot;
-			+ patient.get(&quot;mrn&quot;)
-			+ &quot;, dob = &quot;
-			+ patient.get(&quot;dob&quot;)
-			+ &quot;, acc num = &quot;
-			+ patient.get(&quot;accNum&quot;);
-	}
+	}	
 }</code>
       <type>FUNCTION</type>
       <scope>1</scope>
@@ -1439,13 +1529,13 @@ function insertStatusChange(exam) {
     <property name="smtp.username"></property>
     <property name="firstlogin">0</property>
     <property name="smtp.host"></property>
-    <property name="stats.time">1294706389238</property>
-    <property name="update.enabled">1</property>
+    <property name="stats.time">1307645357920</property>
+    <property name="update.enabled">0</property>
     <property name="smtp.secure">none</property>
     <property name="smtp.port">25</property>
     <property name="smtp.auth">0</property>
     <property name="smtp.password"></property>
-    <property name="stats.enabled">1</property>
+    <property name="stats.enabled">0</property>
     <property name="update.url">http://updates.mirthcorp.com</property>
   </properties>
   <globalScripts>
