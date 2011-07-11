@@ -1,5 +1,5 @@
 <com.webreach.mirth.model.ServerConfiguration>
-  <date>2011-06-14 12:24:31</date>
+  <date>2011-07-11 11:21:56</date>
   <channels>
     <com.webreach.mirth.model.Channel>
       <id>1b6b5460-0d59-4099-9ce0-0c386ac6b661</id>
@@ -8,10 +8,10 @@
       <enabled>true</enabled>
       <version>1.8.2.4472</version>
       <lastModified>
-        <time>1308006265305</time>
+        <time>1310408449319</time>
         <timezone>America/Los_Angeles</timezone>
       </lastModified>
-      <revision>53</revision>
+      <revision>55</revision>
       <sourceConnector>
         <name>sourceConnector</name>
         <properties>
@@ -26,7 +26,6 @@
           <property name="defts">0</property>
           <property name="soclosedelay">50</property>
           <property name="async">0</property>
-          <property name="localApplicationEntity"></property>
           <property name="rcvpdulen">16</property>
           <property name="truststore"></property>
           <property name="nativeData">1</property>
@@ -39,12 +38,9 @@
           <property name="truststorepw"></property>
           <property name="releaseto">5</property>
           <property name="keypw"></property>
-          <property name="localPort"></property>
           <property name="idleto">60000</property>
           <property name="reaper">10</property>
           <property name="tcpdelay">1</property>
-          <property name="DataType">DICOM Listener</property>
-          <property name="localHost"></property>
           <property name="bigendian">0</property>
           <property name="sorcvbuf">0</property>
           <property name="sndpdulen">16</property>
@@ -161,14 +157,13 @@
             <property name="outputPattern">${sopInstanceUid}.dcm</property>
             <property name="validateConnections">1</property>
             <property name="DataType">File Writer</property>
-            <property name="directory"></property>
             <property name="FTPAnonymous">1</property>
             <property name="charsetEncoding">DEFAULT_ENCODING</property>
             <property name="password">anonymous</property>
             <property name="passive">1</property>
             <property name="template">${DICOMMESSAGE}</property>
             <property name="outputAppend">0</property>
-            <property name="host">/data/rsna/dcm/${patientId}/${accessionNumber}/</property>
+            <property name="host">/rsna/dcm/${patientId}/${accessionNumber}/</property>
           </properties>
           <transformer>
             <steps/>
@@ -212,10 +207,10 @@ return;</shutdownScript>
       <enabled>true</enabled>
       <version>1.8.2.4472</version>
       <lastModified>
-        <time>1307743826835</time>
+        <time>1310408360976</time>
         <timezone>America/Los_Angeles</timezone>
       </lastModified>
-      <revision>243</revision>
+      <revision>245</revision>
       <sourceConnector>
         <name>sourceConnector</name>
         <properties>
@@ -239,7 +234,6 @@ return;</shutdownScript>
           <property name="responseFromTransformer">0</property>
           <property name="segmentEnd">0x0D</property>
           <property name="ackPort"></property>
-          <property name="keepSendSocketOpen">0</property>
           <property name="charsetEncoding">DEFAULT_ENCODING</property>
           <property name="host">0.0.0.0</property>
           <property name="responseValue">None</property>
@@ -986,75 +980,7 @@ OBX|3|FT|DFINGL&amp;GDT|1|||||||F</inboundTemplate>
           <outboundProperties/>
         </transformer>
         <filter>
-          <rules>
-            <com.webreach.mirth.model.Rule>
-              <sequenceNumber>0</sequenceNumber>
-              <name>Timestamp check</name>
-              <data class="map">
-                <entry>
-                  <string>Script</string>
-                  <string>try
-{
-	var str = msg[&apos;OBR&apos;][&apos;OBR.22&apos;][&apos;OBR.22.1&apos;].toString();
-
-	if(str == &quot;&quot;) 
-	{
-		str = msg[&apos;ORC&apos;][&apos;ORC.15&apos;][&apos;ORC.15.1&apos;].toString();
-	}
-
-
-	if(str != &quot;&quot;)
-	{
-		var date = DateUtil.getDate(&quot;yyyyMMddHHmm&quot;, str);
-		var timestamp = new java.sql.Timestamp(date.getTime());
-
-		return true;
-	}
-	else
-	{
-		return false;
-	}	
-}
-catch(ex)
-{
-	alerts.sendAlert(&quot;Message rejected due to missing timestamp. Acc #:&quot; + msg[&apos;OBR&apos;][&apos;OBR.3&apos;][&apos;OBR.3.1&apos;].toString());
-
-	return false;
-}</string>
-                </entry>
-              </data>
-              <type>JavaScript</type>
-              <script>try
-{
-	var str = msg[&apos;OBR&apos;][&apos;OBR.22&apos;][&apos;OBR.22.1&apos;].toString();
-
-	if(str == &quot;&quot;) 
-	{
-		str = msg[&apos;ORC&apos;][&apos;ORC.15&apos;][&apos;ORC.15.1&apos;].toString();
-	}
-
-
-	if(str != &quot;&quot;)
-	{
-		var date = DateUtil.getDate(&quot;yyyyMMddHHmm&quot;, str);
-		var timestamp = new java.sql.Timestamp(date.getTime());
-
-		return true;
-	}
-	else
-	{
-		return false;
-	}	
-}
-catch(ex)
-{
-	alerts.sendAlert(&quot;Message rejected due to missing timestamp. Acc #:&quot; + msg[&apos;OBR&apos;][&apos;OBR.3&apos;][&apos;OBR.3.1&apos;].toString());
-
-	return false;
-}</script>
-              <operator>NONE</operator>
-            </com.webreach.mirth.model.Rule>
-          </rules>
+          <rules/>
         </filter>
         <transportName>LLP Listener</transportName>
         <mode>SOURCE</mode>
@@ -1245,13 +1171,8 @@ return;</shutdownScript>
       <template>${ERROR}</template>
       <enabled>true</enabled>
       <subject>RSNA-ISN Error</subject>
-      <channels>
-        <string>1b6b5460-0d59-4099-9ce0-0c386ac6b661</string>
-        <string>20873abb-9dd8-4e32-9167-f3a87fd99fbe</string>
-      </channels>
-      <emails>
-        <string>wyatt.tellis@ucsf.edu</string>
-      </emails>
+      <channels/>
+      <emails/>
     </com.webreach.mirth.model.Alert>
   </alerts>
   <codeTemplates>
