@@ -1,0 +1,1810 @@
+<channel version="3.4.0">
+  <id>20873abb-9dd8-4e32-9167-f3a87fd99fbe</id>
+  <nextMetaDataId>3</nextMetaDataId>
+  <name>Edge Server HL7 Receiver</name>
+  <description></description>
+  <enabled>true</enabled>
+  <lastModified>
+    <time>1310393960976</time>
+    <timezone>GMT</timezone>
+  </lastModified>
+  <revision>1</revision>
+  <sourceConnector version="3.4.0">
+    <metaDataId>0</metaDataId>
+    <name>sourceConnector</name>
+    <properties class="com.mirth.connect.connectors.tcp.TcpReceiverProperties" version="3.4.0">
+      <listenerConnectorProperties version="3.4.0">
+        <host>0.0.0.0</host>
+        <port>20000</port>
+      </listenerConnectorProperties>
+      <sourceConnectorProperties version="3.4.0">
+        <responseVariable>Auto-generate (After source transformer)</responseVariable>
+        <respondAfterProcessing>true</respondAfterProcessing>
+        <processBatch>false</processBatch>
+        <firstResponse>true</firstResponse>
+        <processingThreads>1</processingThreads>
+        <resourceIds class="linked-hash-map">
+          <entry>
+            <string>Default Resource</string>
+            <string>[Default Resource]</string>
+          </entry>
+        </resourceIds>
+        <queueBufferSize>0</queueBufferSize>
+      </sourceConnectorProperties>
+      <transmissionModeProperties class="com.mirth.connect.model.transmission.framemode.FrameModeProperties">
+        <pluginPointName>MLLP</pluginPointName>
+        <startOfMessageBytes>0B</startOfMessageBytes>
+        <endOfMessageBytes>1C0D</endOfMessageBytes>
+      </transmissionModeProperties>
+      <serverMode>true</serverMode>
+      <remoteAddress></remoteAddress>
+      <remotePort></remotePort>
+      <overrideLocalBinding>false</overrideLocalBinding>
+      <reconnectInterval>5000</reconnectInterval>
+      <receiveTimeout>0</receiveTimeout>
+      <bufferSize>65536</bufferSize>
+      <maxConnections>10</maxConnections>
+      <keepConnectionOpen>true</keepConnectionOpen>
+      <dataTypeBinary>false</dataTypeBinary>
+      <charsetEncoding>DEFAULT_ENCODING</charsetEncoding>
+      <respondOnNewConnection>0</respondOnNewConnection>
+      <responseAddress></responseAddress>
+      <responsePort></responsePort>
+    </properties>
+    <transformer version="3.4.0">
+      <steps>
+        <step>
+          <sequenceNumber>0</sequenceNumber>
+          <name>event</name>
+          <script>var type = msg[&apos;MSH&apos;][&apos;MSH.9&apos;][&apos;MSH.9.1&apos;].toString() + &quot;^&quot; + msg[&apos;MSH&apos;][&apos;MSH.9&apos;][&apos;MSH.9.2&apos;].toString();
+
+
+if(type == &quot;ADT^A18&quot; || type == &quot;ADT^A40&quot; ) {
+	channelMap.put(&quot;event&quot;, &quot;MERGE&quot;);
+}
+else if(type == &quot;ORM^O01&quot; || type == &quot;ORU^R01&quot; ) {
+	channelMap.put(&quot;event&quot;, &quot;UPDATE&quot;);
+}</script>
+          <type>JavaScript</type>
+          <data>
+            <entry>
+              <string>Script</string>
+              <string>var type = msg[&apos;MSH&apos;][&apos;MSH.9&apos;][&apos;MSH.9.1&apos;].toString() + &quot;^&quot; + msg[&apos;MSH&apos;][&apos;MSH.9&apos;][&apos;MSH.9.2&apos;].toString();
+
+
+if(type == &quot;ADT^A18&quot; || type == &quot;ADT^A40&quot; ) {
+	channelMap.put(&quot;event&quot;, &quot;MERGE&quot;);
+}
+else if(type == &quot;ORM^O01&quot; || type == &quot;ORU^R01&quot; ) {
+	channelMap.put(&quot;event&quot;, &quot;UPDATE&quot;);
+}</string>
+            </entry>
+          </data>
+        </step>
+        <step>
+          <sequenceNumber>1</sequenceNumber>
+          <name>name</name>
+          <script>var mapping;try { mapping = msg[&apos;PID&apos;][&apos;PID.5&apos;][&apos;PID.5.1&apos;].toString() + &quot;^&quot; + msg[&apos;PID&apos;][&apos;PID.5&apos;][&apos;PID.5.2&apos;].toString() +&quot;^&quot; + msg[&apos;PID&apos;][&apos;PID.5&apos;][&apos;PID.5.3&apos;].toString(); }catch (e) { logger.error(e);  mapping = &apos;&apos;;}channelMap.put(&apos;name&apos;, validate( mapping , &apos;&apos;, new Array()));</script>
+          <type>Mapper</type>
+          <data>
+            <entry>
+              <string>Variable</string>
+              <string>name</string>
+            </entry>
+            <entry>
+              <string>DefaultValue</string>
+              <string></string>
+            </entry>
+            <entry>
+              <string>RegularExpressions</string>
+              <list/>
+            </entry>
+            <entry>
+              <string>Mapping</string>
+              <string>msg[&apos;PID&apos;][&apos;PID.5&apos;][&apos;PID.5.1&apos;].toString() + &quot;^&quot; + msg[&apos;PID&apos;][&apos;PID.5&apos;][&apos;PID.5.2&apos;].toString() +&quot;^&quot; + msg[&apos;PID&apos;][&apos;PID.5&apos;][&apos;PID.5.3&apos;].toString()</string>
+            </entry>
+            <entry>
+              <string>isGlobal</string>
+              <string>channel</string>
+            </entry>
+          </data>
+        </step>
+        <step>
+          <sequenceNumber>2</sequenceNumber>
+          <name>mrn</name>
+          <script>var mapping;try { mapping = msg[&apos;PID&apos;][&apos;PID.3&apos;][&apos;PID.3.1&apos;].toString(); }catch (e) { logger.error(e);  mapping = &apos;&apos;;}channelMap.put(&apos;mrn&apos;, validate( mapping , &apos;&apos;, new Array()));</script>
+          <type>Mapper</type>
+          <data>
+            <entry>
+              <string>Variable</string>
+              <string>mrn</string>
+            </entry>
+            <entry>
+              <string>DefaultValue</string>
+              <string></string>
+            </entry>
+            <entry>
+              <string>RegularExpressions</string>
+              <list/>
+            </entry>
+            <entry>
+              <string>Mapping</string>
+              <string>msg[&apos;PID&apos;][&apos;PID.3&apos;][&apos;PID.3.1&apos;].toString()</string>
+            </entry>
+            <entry>
+              <string>isGlobal</string>
+              <string>channel</string>
+            </entry>
+          </data>
+        </step>
+        <step>
+          <sequenceNumber>3</sequenceNumber>
+          <name>dob</name>
+          <script>var date = DateUtil.getDate(&quot;yyyyMMdd&quot;, msg[&apos;PID&apos;][&apos;PID.7&apos;][&apos;PID.7.1&apos;].toString());
+
+var dob = new java.sql.Date(date.getTime());
+
+channelMap.put(&quot;dob&quot;, dob);</script>
+          <type>JavaScript</type>
+          <data>
+            <entry>
+              <string>Script</string>
+              <string>var date = DateUtil.getDate(&quot;yyyyMMdd&quot;, msg[&apos;PID&apos;][&apos;PID.7&apos;][&apos;PID.7.1&apos;].toString());
+
+var dob = new java.sql.Date(date.getTime());
+
+channelMap.put(&quot;dob&quot;, dob);</string>
+            </entry>
+          </data>
+        </step>
+        <step>
+          <sequenceNumber>4</sequenceNumber>
+          <name>sex</name>
+          <script>var mapping;try { mapping = msg[&apos;PID&apos;][&apos;PID.8&apos;][&apos;PID.8.1&apos;].toString(); }catch (e) { logger.error(e);  mapping = &apos;&apos;;}channelMap.put(&apos;sex&apos;, validate( mapping , &apos;&apos;, new Array()));</script>
+          <type>Mapper</type>
+          <data>
+            <entry>
+              <string>Variable</string>
+              <string>sex</string>
+            </entry>
+            <entry>
+              <string>DefaultValue</string>
+              <string></string>
+            </entry>
+            <entry>
+              <string>RegularExpressions</string>
+              <list/>
+            </entry>
+            <entry>
+              <string>Mapping</string>
+              <string>msg[&apos;PID&apos;][&apos;PID.8&apos;][&apos;PID.8.1&apos;].toString()</string>
+            </entry>
+            <entry>
+              <string>isGlobal</string>
+              <string>channel</string>
+            </entry>
+          </data>
+        </step>
+        <step>
+          <sequenceNumber>5</sequenceNumber>
+          <name>street</name>
+          <script>var mapping;try { mapping = msg[&apos;PID&apos;][&apos;PID.11&apos;][&apos;PID.11.1&apos;].toString(); }catch (e) { logger.error(e);  mapping = &apos;&apos;;}channelMap.put(&apos;street&apos;, validate( mapping , &apos;&apos;, new Array()));</script>
+          <type>Mapper</type>
+          <data>
+            <entry>
+              <string>Variable</string>
+              <string>street</string>
+            </entry>
+            <entry>
+              <string>DefaultValue</string>
+              <string></string>
+            </entry>
+            <entry>
+              <string>RegularExpressions</string>
+              <list/>
+            </entry>
+            <entry>
+              <string>Mapping</string>
+              <string>msg[&apos;PID&apos;][&apos;PID.11&apos;][&apos;PID.11.1&apos;].toString()</string>
+            </entry>
+            <entry>
+              <string>isGlobal</string>
+              <string>channel</string>
+            </entry>
+          </data>
+        </step>
+        <step>
+          <sequenceNumber>6</sequenceNumber>
+          <name>city</name>
+          <script>var mapping;try { mapping = msg[&apos;PID&apos;][&apos;PID.11&apos;][&apos;PID.11.3&apos;].toString(); }catch (e) { logger.error(e);  mapping = &apos;&apos;;}channelMap.put(&apos;city&apos;, validate( mapping , &apos;&apos;, new Array()));</script>
+          <type>Mapper</type>
+          <data>
+            <entry>
+              <string>Variable</string>
+              <string>city</string>
+            </entry>
+            <entry>
+              <string>DefaultValue</string>
+              <string></string>
+            </entry>
+            <entry>
+              <string>RegularExpressions</string>
+              <list/>
+            </entry>
+            <entry>
+              <string>Mapping</string>
+              <string>msg[&apos;PID&apos;][&apos;PID.11&apos;][&apos;PID.11.3&apos;].toString()</string>
+            </entry>
+            <entry>
+              <string>isGlobal</string>
+              <string>channel</string>
+            </entry>
+          </data>
+        </step>
+        <step>
+          <sequenceNumber>7</sequenceNumber>
+          <name>state</name>
+          <script>var mapping;try { mapping = msg[&apos;PID&apos;][&apos;PID.11&apos;][&apos;PID.11.4&apos;].toString(); }catch (e) { logger.error(e);  mapping = &apos;&apos;;}channelMap.put(&apos;state&apos;, validate( mapping , &apos;&apos;, new Array()));</script>
+          <type>Mapper</type>
+          <data>
+            <entry>
+              <string>Variable</string>
+              <string>state</string>
+            </entry>
+            <entry>
+              <string>DefaultValue</string>
+              <string></string>
+            </entry>
+            <entry>
+              <string>RegularExpressions</string>
+              <list/>
+            </entry>
+            <entry>
+              <string>Mapping</string>
+              <string>msg[&apos;PID&apos;][&apos;PID.11&apos;][&apos;PID.11.4&apos;].toString()</string>
+            </entry>
+            <entry>
+              <string>isGlobal</string>
+              <string>channel</string>
+            </entry>
+          </data>
+        </step>
+        <step>
+          <sequenceNumber>8</sequenceNumber>
+          <name>zipCode</name>
+          <script>var mapping;try { mapping = msg[&apos;PID&apos;][&apos;PID.11&apos;][&apos;PID.11.5&apos;].toString(); }catch (e) { logger.error(e);  mapping = &apos;&apos;;}channelMap.put(&apos;zipCode&apos;, validate( mapping , &apos;&apos;, new Array()));</script>
+          <type>Mapper</type>
+          <data>
+            <entry>
+              <string>Variable</string>
+              <string>zipCode</string>
+            </entry>
+            <entry>
+              <string>DefaultValue</string>
+              <string></string>
+            </entry>
+            <entry>
+              <string>RegularExpressions</string>
+              <list/>
+            </entry>
+            <entry>
+              <string>Mapping</string>
+              <string>msg[&apos;PID&apos;][&apos;PID.11&apos;][&apos;PID.11.5&apos;].toString()</string>
+            </entry>
+            <entry>
+              <string>isGlobal</string>
+              <string>channel</string>
+            </entry>
+          </data>
+        </step>
+        <step>
+          <sequenceNumber>9</sequenceNumber>
+          <name>priorMrn</name>
+          <script>if($(&apos;event&apos;) == &quot;MERGE&quot; ) {
+	var priorMrn = msg[&apos;MRG&apos;][&apos;MRG.1&apos;][&apos;MRG.1.1&apos;].toString();
+
+	if (priorMrn == &quot;&quot; )
+		priorMrn = msg[&apos;PID&apos;][&apos;PID.4&apos;][&apos;PID.4.1&apos;].toString();
+
+	channelMap.put(&quot;priorMrn&quot;, priorMrn);
+}</script>
+          <type>JavaScript</type>
+          <data>
+            <entry>
+              <string>Script</string>
+              <string>if($(&apos;event&apos;) == &quot;MERGE&quot; ) {
+	var priorMrn = msg[&apos;MRG&apos;][&apos;MRG.1&apos;][&apos;MRG.1.1&apos;].toString();
+
+	if (priorMrn == &quot;&quot; )
+		priorMrn = msg[&apos;PID&apos;][&apos;PID.4&apos;][&apos;PID.4.1&apos;].toString();
+
+	channelMap.put(&quot;priorMrn&quot;, priorMrn);
+}</string>
+            </entry>
+          </data>
+        </step>
+        <step>
+          <sequenceNumber>10</sequenceNumber>
+          <name>accNum</name>
+          <script>var mapping;try { mapping = msg[&apos;OBR&apos;][&apos;OBR.3&apos;][&apos;OBR.3.1&apos;].toString(); }catch (e) { logger.error(e);  mapping = &apos;&apos;;}channelMap.put(&apos;accNum&apos;, validate( mapping , &apos;&apos;, new Array()));</script>
+          <type>Mapper</type>
+          <data>
+            <entry>
+              <string>Variable</string>
+              <string>accNum</string>
+            </entry>
+            <entry>
+              <string>DefaultValue</string>
+              <string></string>
+            </entry>
+            <entry>
+              <string>RegularExpressions</string>
+              <list/>
+            </entry>
+            <entry>
+              <string>Mapping</string>
+              <string>msg[&apos;OBR&apos;][&apos;OBR.3&apos;][&apos;OBR.3.1&apos;].toString()</string>
+            </entry>
+            <entry>
+              <string>isGlobal</string>
+              <string>channel</string>
+            </entry>
+          </data>
+        </step>
+        <step>
+          <sequenceNumber>11</sequenceNumber>
+          <name>studyDescription</name>
+          <script>var mapping;try { mapping = msg[&apos;OBR&apos;][&apos;OBR.4&apos;][&apos;OBR.4.2&apos;].toString(); }catch (e) { logger.error(e);  mapping = &apos;&apos;;}channelMap.put(&apos;studyDescription&apos;, validate( mapping , &apos;&apos;, new Array()));</script>
+          <type>Mapper</type>
+          <data>
+            <entry>
+              <string>Variable</string>
+              <string>studyDescription</string>
+            </entry>
+            <entry>
+              <string>DefaultValue</string>
+              <string></string>
+            </entry>
+            <entry>
+              <string>RegularExpressions</string>
+              <list/>
+            </entry>
+            <entry>
+              <string>Mapping</string>
+              <string>msg[&apos;OBR&apos;][&apos;OBR.4&apos;][&apos;OBR.4.2&apos;].toString()</string>
+            </entry>
+            <entry>
+              <string>isGlobal</string>
+              <string>channel</string>
+            </entry>
+          </data>
+        </step>
+        <step>
+          <sequenceNumber>12</sequenceNumber>
+          <name>status</name>
+          <script>var status = msg[&apos;OBR&apos;][&apos;OBR.25&apos;][&apos;OBR.25.1&apos;].toString();
+
+if(status == &quot;&quot;)
+	status = msg[&apos;ORC&apos;][&apos;ORC.5&apos;][&apos;ORC.5.1&apos;].toString();
+
+
+if(status == &quot;O&quot;) {
+	channelMap.put(&quot;status&quot;, &quot;ORDERED&quot;);
+}
+else if(status == &quot;S&quot; || status == &quot;SC&quot;) {
+	channelMap.put(&quot;status&quot;, &quot;SCHEDULED&quot;);
+}
+else if (status == &quot;I&quot; ) {
+	channelMap.put(&quot;status&quot;, &quot;IN-PROGRESS&quot;);
+}
+else if (status == &quot;C&quot; || status == &quot;CM&quot;) {
+	channelMap.put(&quot;status&quot;, &quot;COMPLETED&quot;);
+}
+else if (status == &quot;D&quot; ) {
+	channelMap.put(&quot;status&quot;, &quot;DICTATED&quot;);
+}
+else if (status == &quot;P&quot; ) {
+	channelMap.put(&quot;status&quot;, &quot;PRELIMINARY&quot;);
+}
+else if (status == &quot;F&quot; ) {
+	channelMap.put(&quot;status&quot;, &quot;FINALIZED&quot;);
+}
+else if (status == &quot;RE&quot; ) {
+	channelMap.put(&quot;status&quot;, &quot;REVISED&quot;);
+}
+else if (status == &quot;A&quot; ) {
+	channelMap.put(&quot;status&quot;, &quot;ADDENDED&quot;);
+}
+else if (status == &quot;N&quot; ) {
+	channelMap.put(&quot;status&quot;, &quot;NON-REPORTABLE&quot;);
+}
+else if (status == &quot;X&quot; || status ==&quot;CA&quot;) {
+	channelMap.put(&quot;status&quot;, &quot;CANCELED&quot;);
+}</script>
+          <type>JavaScript</type>
+          <data>
+            <entry>
+              <string>Script</string>
+              <string>var status = msg[&apos;OBR&apos;][&apos;OBR.25&apos;][&apos;OBR.25.1&apos;].toString();
+
+if(status == &quot;&quot;)
+	status = msg[&apos;ORC&apos;][&apos;ORC.5&apos;][&apos;ORC.5.1&apos;].toString();
+
+
+if(status == &quot;O&quot;) {
+	channelMap.put(&quot;status&quot;, &quot;ORDERED&quot;);
+}
+else if(status == &quot;S&quot; || status == &quot;SC&quot;) {
+	channelMap.put(&quot;status&quot;, &quot;SCHEDULED&quot;);
+}
+else if (status == &quot;I&quot; ) {
+	channelMap.put(&quot;status&quot;, &quot;IN-PROGRESS&quot;);
+}
+else if (status == &quot;C&quot; || status == &quot;CM&quot;) {
+	channelMap.put(&quot;status&quot;, &quot;COMPLETED&quot;);
+}
+else if (status == &quot;D&quot; ) {
+	channelMap.put(&quot;status&quot;, &quot;DICTATED&quot;);
+}
+else if (status == &quot;P&quot; ) {
+	channelMap.put(&quot;status&quot;, &quot;PRELIMINARY&quot;);
+}
+else if (status == &quot;F&quot; ) {
+	channelMap.put(&quot;status&quot;, &quot;FINALIZED&quot;);
+}
+else if (status == &quot;RE&quot; ) {
+	channelMap.put(&quot;status&quot;, &quot;REVISED&quot;);
+}
+else if (status == &quot;A&quot; ) {
+	channelMap.put(&quot;status&quot;, &quot;ADDENDED&quot;);
+}
+else if (status == &quot;N&quot; ) {
+	channelMap.put(&quot;status&quot;, &quot;NON-REPORTABLE&quot;);
+}
+else if (status == &quot;X&quot; || status ==&quot;CA&quot;) {
+	channelMap.put(&quot;status&quot;, &quot;CANCELED&quot;);
+}</string>
+            </entry>
+          </data>
+        </step>
+        <step>
+          <sequenceNumber>13</sequenceNumber>
+          <name>statusChangeTimestamp</name>
+          <script>var str = msg[&apos;OBR&apos;][&apos;OBR.22&apos;][&apos;OBR.22.1&apos;].toString();
+
+if(str == &quot;&quot;) {
+	str = msg[&apos;ORC&apos;][&apos;ORC.15&apos;][&apos;ORC.15.1&apos;].toString();
+}
+
+
+if(str != &quot;&quot;)
+{
+	var date = DateUtil.getDate(&quot;yyyyMMddHHmm&quot;, str);
+	var timestamp = new java.sql.Timestamp(date.getTime());
+
+	channelMap.put(&quot;statusChangeTimestamp&quot;, timestamp);
+}</script>
+          <type>JavaScript</type>
+          <data>
+            <entry>
+              <string>Script</string>
+              <string>var str = msg[&apos;OBR&apos;][&apos;OBR.22&apos;][&apos;OBR.22.1&apos;].toString();
+
+if(str == &quot;&quot;) {
+	str = msg[&apos;ORC&apos;][&apos;ORC.15&apos;][&apos;ORC.15.1&apos;].toString();
+}
+
+
+if(str != &quot;&quot;)
+{
+	var date = DateUtil.getDate(&quot;yyyyMMddHHmm&quot;, str);
+	var timestamp = new java.sql.Timestamp(date.getTime());
+
+	channelMap.put(&quot;statusChangeTimestamp&quot;, timestamp);
+}</string>
+            </entry>
+          </data>
+        </step>
+        <step>
+          <sequenceNumber>14</sequenceNumber>
+          <name>report</name>
+          <script>var report = &quot;&quot;;
+
+for each (var seg in msg..OBX)
+{
+	report+= seg[&apos;OBX.5&apos;][&apos;OBX.5.1&apos;].toString()+&quot;\r\n&quot;;
+}
+
+channelMap.put(&quot;report&quot;, report);</script>
+          <type>JavaScript</type>
+          <data>
+            <entry>
+              <string>Script</string>
+              <string>var report = &quot;&quot;;
+
+for each (var seg in msg..OBX)
+{
+	report+= seg[&apos;OBX.5&apos;][&apos;OBX.5.1&apos;].toString()+&quot;\r\n&quot;;
+}
+
+channelMap.put(&quot;report&quot;, report);</string>
+            </entry>
+          </data>
+        </step>
+        <step>
+          <sequenceNumber>15</sequenceNumber>
+          <name>patient</name>
+          <script>var patient = new java.util.LinkedHashMap();
+
+
+patient.put(&quot;name&quot;, $(&apos;name&apos;));
+patient.put(&quot;mrn&quot;, $(&apos;mrn&apos;));
+patient.put(&quot;dob&quot;, $(&apos;dob&apos;));
+patient.put(&quot;sex&quot;, $(&apos;sex&apos;));
+patient.put(&quot;street&quot;, $(&apos;street&apos;));
+patient.put(&quot;city&quot;, $(&apos;city&apos;));
+patient.put(&quot;state&quot;, $(&apos;state&apos;));
+patient.put(&quot;zipCode&quot;, $(&apos;zipCode&apos;));
+
+
+channelMap.put(&quot;patient&quot;, patient);</script>
+          <type>JavaScript</type>
+          <data>
+            <entry>
+              <string>Script</string>
+              <string>var patient = new java.util.LinkedHashMap();
+
+
+patient.put(&quot;name&quot;, $(&apos;name&apos;));
+patient.put(&quot;mrn&quot;, $(&apos;mrn&apos;));
+patient.put(&quot;dob&quot;, $(&apos;dob&apos;));
+patient.put(&quot;sex&quot;, $(&apos;sex&apos;));
+patient.put(&quot;street&quot;, $(&apos;street&apos;));
+patient.put(&quot;city&quot;, $(&apos;city&apos;));
+patient.put(&quot;state&quot;, $(&apos;state&apos;));
+patient.put(&quot;zipCode&quot;, $(&apos;zipCode&apos;));
+
+
+channelMap.put(&quot;patient&quot;, patient);</string>
+            </entry>
+          </data>
+        </step>
+        <step>
+          <sequenceNumber>16</sequenceNumber>
+          <name>signer</name>
+          <script>var signer = &quot;&quot;;
+
+if(!msg[&apos;OBR&apos;][&apos;OBR.32&apos;][&apos;OBR.32.2&apos;].toString().equals(&quot;&quot;))
+{
+	signer += msg[&apos;OBR&apos;][&apos;OBR.32&apos;][&apos;OBR.32.1&apos;].toString() + &quot;^&quot;; // ID number
+	signer += msg[&apos;OBR&apos;][&apos;OBR.32&apos;][&apos;OBR.32.2&apos;].toString() + &quot;^&quot;; // Family name
+	signer += msg[&apos;OBR&apos;][&apos;OBR.32&apos;][&apos;OBR.32.3&apos;].toString() + &quot;^&quot;; // Given name
+	signer += msg[&apos;OBR&apos;][&apos;OBR.32&apos;][&apos;OBR.32.4&apos;].toString() + &quot;^&quot;; // Middle name
+	signer += msg[&apos;OBR&apos;][&apos;OBR.32&apos;][&apos;OBR.32.5&apos;].toString() + &quot;^&quot;; // Suffix
+	signer += msg[&apos;OBR&apos;][&apos;OBR.32&apos;][&apos;OBR.32.6&apos;].toString(); // Prefix
+}
+
+
+channelMap.put(&quot;signer&quot;, signer);</script>
+          <type>JavaScript</type>
+          <data>
+            <entry>
+              <string>Script</string>
+              <string>var signer = &quot;&quot;;
+
+if(!msg[&apos;OBR&apos;][&apos;OBR.32&apos;][&apos;OBR.32.2&apos;].toString().equals(&quot;&quot;))
+{
+	signer += msg[&apos;OBR&apos;][&apos;OBR.32&apos;][&apos;OBR.32.1&apos;].toString() + &quot;^&quot;; // ID number
+	signer += msg[&apos;OBR&apos;][&apos;OBR.32&apos;][&apos;OBR.32.2&apos;].toString() + &quot;^&quot;; // Family name
+	signer += msg[&apos;OBR&apos;][&apos;OBR.32&apos;][&apos;OBR.32.3&apos;].toString() + &quot;^&quot;; // Given name
+	signer += msg[&apos;OBR&apos;][&apos;OBR.32&apos;][&apos;OBR.32.4&apos;].toString() + &quot;^&quot;; // Middle name
+	signer += msg[&apos;OBR&apos;][&apos;OBR.32&apos;][&apos;OBR.32.5&apos;].toString() + &quot;^&quot;; // Suffix
+	signer += msg[&apos;OBR&apos;][&apos;OBR.32&apos;][&apos;OBR.32.6&apos;].toString(); // Prefix
+}
+
+
+channelMap.put(&quot;signer&quot;, signer);</string>
+            </entry>
+          </data>
+        </step>
+        <step>
+          <sequenceNumber>17</sequenceNumber>
+          <name>dictator</name>
+          <script>var dictator = &quot;&quot;;
+
+// UCSF specific
+
+if(!msg[&apos;ZRI&apos;][&apos;ZRI.2&apos;][&apos;ZRI.2.2&apos;].toString().equals(&quot;&quot;))
+{
+	dictator += msg[&apos;ZRI&apos;][&apos;ZRI.2&apos;][&apos;ZRI.2.1&apos;].toString() + &quot;^&quot;; // Id number
+	dictator += msg[&apos;ZRI&apos;][&apos;ZRI.2&apos;][&apos;ZRI.2.2&apos;].toString() + &quot;^&quot;; // Family name
+	dictator += msg[&apos;ZRI&apos;][&apos;ZRI.2&apos;][&apos;ZRI.2.3&apos;].toString() + &quot;^&quot;; // Given name
+	dictator += msg[&apos;ZRI&apos;][&apos;ZRI.2&apos;][&apos;ZRI.2.4&apos;].toString() + &quot;^&quot;; // Middle name
+	dictator += msg[&apos;ZRI&apos;][&apos;ZRI.2&apos;][&apos;ZRI.2.5&apos;].toString() + &quot;^&quot;; // Suffix
+	dictator += msg[&apos;ZRI&apos;][&apos;ZRI.2&apos;][&apos;ZRI.2.6&apos;].toString(); // Prefix
+
+
+	if(!msg[&apos;ZRI&apos;][&apos;ZRI.3&apos;][&apos;ZRI.3.2&apos;].toString().equals(&quot;&quot;))
+	{
+		dictator += &quot;\\&quot;;
+		dictator += msg[&apos;ZRI&apos;][&apos;ZRI.3&apos;][&apos;ZRI.3.1&apos;].toString() + &quot;^&quot;; // Id number
+		dictator += msg[&apos;ZRI&apos;][&apos;ZRI.3&apos;][&apos;ZRI.3.2&apos;].toString() + &quot;^&quot;; // Family name
+		dictator += msg[&apos;ZRI&apos;][&apos;ZRI.3&apos;][&apos;ZRI.3.3&apos;].toString() + &quot;^&quot;; // Given name
+		dictator += msg[&apos;ZRI&apos;][&apos;ZRI.3&apos;][&apos;ZRI.3.4&apos;].toString() + &quot;^&quot;; // Middle name
+		dictator += msg[&apos;ZRI&apos;][&apos;ZRI.3&apos;][&apos;ZRI.3.5&apos;].toString() + &quot;^&quot;; // Suffix
+		dictator += msg[&apos;ZRI&apos;][&apos;ZRI.3&apos;][&apos;ZRI.3.6&apos;].toString(); // Prefix
+	}
+}
+
+
+
+
+if(dictator == &quot;&quot;)
+{
+	dicatator = $(&apos;signer&apos;);
+}
+
+channelMap.put(&quot;dictator&quot;, dictator);</script>
+          <type>JavaScript</type>
+          <data>
+            <entry>
+              <string>Script</string>
+              <string>var dictator = &quot;&quot;;
+
+// UCSF specific
+
+if(!msg[&apos;ZRI&apos;][&apos;ZRI.2&apos;][&apos;ZRI.2.2&apos;].toString().equals(&quot;&quot;))
+{
+	dictator += msg[&apos;ZRI&apos;][&apos;ZRI.2&apos;][&apos;ZRI.2.1&apos;].toString() + &quot;^&quot;; // Id number
+	dictator += msg[&apos;ZRI&apos;][&apos;ZRI.2&apos;][&apos;ZRI.2.2&apos;].toString() + &quot;^&quot;; // Family name
+	dictator += msg[&apos;ZRI&apos;][&apos;ZRI.2&apos;][&apos;ZRI.2.3&apos;].toString() + &quot;^&quot;; // Given name
+	dictator += msg[&apos;ZRI&apos;][&apos;ZRI.2&apos;][&apos;ZRI.2.4&apos;].toString() + &quot;^&quot;; // Middle name
+	dictator += msg[&apos;ZRI&apos;][&apos;ZRI.2&apos;][&apos;ZRI.2.5&apos;].toString() + &quot;^&quot;; // Suffix
+	dictator += msg[&apos;ZRI&apos;][&apos;ZRI.2&apos;][&apos;ZRI.2.6&apos;].toString(); // Prefix
+
+
+	if(!msg[&apos;ZRI&apos;][&apos;ZRI.3&apos;][&apos;ZRI.3.2&apos;].toString().equals(&quot;&quot;))
+	{
+		dictator += &quot;\\&quot;;
+		dictator += msg[&apos;ZRI&apos;][&apos;ZRI.3&apos;][&apos;ZRI.3.1&apos;].toString() + &quot;^&quot;; // Id number
+		dictator += msg[&apos;ZRI&apos;][&apos;ZRI.3&apos;][&apos;ZRI.3.2&apos;].toString() + &quot;^&quot;; // Family name
+		dictator += msg[&apos;ZRI&apos;][&apos;ZRI.3&apos;][&apos;ZRI.3.3&apos;].toString() + &quot;^&quot;; // Given name
+		dictator += msg[&apos;ZRI&apos;][&apos;ZRI.3&apos;][&apos;ZRI.3.4&apos;].toString() + &quot;^&quot;; // Middle name
+		dictator += msg[&apos;ZRI&apos;][&apos;ZRI.3&apos;][&apos;ZRI.3.5&apos;].toString() + &quot;^&quot;; // Suffix
+		dictator += msg[&apos;ZRI&apos;][&apos;ZRI.3&apos;][&apos;ZRI.3.6&apos;].toString(); // Prefix
+	}
+}
+
+
+
+
+if(dictator == &quot;&quot;)
+{
+	dicatator = $(&apos;signer&apos;);
+}
+
+channelMap.put(&quot;dictator&quot;, dictator);</string>
+            </entry>
+          </data>
+        </step>
+        <step>
+          <sequenceNumber>18</sequenceNumber>
+          <name>transcriber</name>
+          <script>var transcriber = &quot;&quot;;
+
+if(!msg[&apos;OBR&apos;][&apos;OBR.35&apos;][&apos;OBR.35.2&apos;].toString().equals(&quot;&quot;))
+{
+	transcriber += msg[&apos;OBR&apos;][&apos;OBR.35&apos;][&apos;OBR.35.1&apos;].toString() + &quot;^&quot;; // ID number
+	transcriber += msg[&apos;OBR&apos;][&apos;OBR.35&apos;][&apos;OBR.35.2&apos;].toString() + &quot;^&quot;; // Family name
+	transcriber += msg[&apos;OBR&apos;][&apos;OBR.35&apos;][&apos;OBR.35.3&apos;].toString() + &quot;^&quot;; // Given name
+	transcriber += msg[&apos;OBR&apos;][&apos;OBR.35&apos;][&apos;OBR.35.4&apos;].toString() + &quot;^&quot;; // Middle name
+	transcriber += msg[&apos;OBR&apos;][&apos;OBR.35&apos;][&apos;OBR.35.5&apos;].toString() + &quot;^&quot;; // Suffix
+	transcriber += msg[&apos;OBR&apos;][&apos;OBR.35&apos;][&apos;OBR.35.6&apos;].toString(); // Prefix
+}
+
+
+channelMap.put(&quot;transcriber&quot;, transcriber);</script>
+          <type>JavaScript</type>
+          <data>
+            <entry>
+              <string>Script</string>
+              <string>var transcriber = &quot;&quot;;
+
+if(!msg[&apos;OBR&apos;][&apos;OBR.35&apos;][&apos;OBR.35.2&apos;].toString().equals(&quot;&quot;))
+{
+	transcriber += msg[&apos;OBR&apos;][&apos;OBR.35&apos;][&apos;OBR.35.1&apos;].toString() + &quot;^&quot;; // ID number
+	transcriber += msg[&apos;OBR&apos;][&apos;OBR.35&apos;][&apos;OBR.35.2&apos;].toString() + &quot;^&quot;; // Family name
+	transcriber += msg[&apos;OBR&apos;][&apos;OBR.35&apos;][&apos;OBR.35.3&apos;].toString() + &quot;^&quot;; // Given name
+	transcriber += msg[&apos;OBR&apos;][&apos;OBR.35&apos;][&apos;OBR.35.4&apos;].toString() + &quot;^&quot;; // Middle name
+	transcriber += msg[&apos;OBR&apos;][&apos;OBR.35&apos;][&apos;OBR.35.5&apos;].toString() + &quot;^&quot;; // Suffix
+	transcriber += msg[&apos;OBR&apos;][&apos;OBR.35&apos;][&apos;OBR.35.6&apos;].toString(); // Prefix
+}
+
+
+channelMap.put(&quot;transcriber&quot;, transcriber);</string>
+            </entry>
+          </data>
+        </step>
+        <step>
+          <sequenceNumber>19</sequenceNumber>
+          <name>exam</name>
+          <script>var exam = new java.util.LinkedHashMap();
+
+exam.put(&quot;patient&quot;, $(&apos;patient&apos;));
+exam.put(&quot;accNum&quot;, $(&apos;accNum&apos;));
+exam.put(&quot;studyDescription&quot;, $(&apos;studyDescription&apos;));
+exam.put(&quot;status&quot;, $(&apos;status&apos;));
+exam.put(&quot;statusChangeTimestamp&quot;, $(&apos;statusChangeTimestamp&apos;));
+exam.put(&quot;report&quot;, $(&apos;report&apos;));
+exam.put(&quot;signer&quot;, $(&apos;signer&apos;));
+exam.put(&quot;dictator&quot;, $(&apos;dictator&apos;));
+exam.put(&quot;transcriber&quot;, $(&apos;transcriber&apos;));
+
+
+channelMap.put(&quot;exam&quot;, exam);</script>
+          <type>JavaScript</type>
+          <data>
+            <entry>
+              <string>Script</string>
+              <string>var exam = new java.util.LinkedHashMap();
+
+exam.put(&quot;patient&quot;, $(&apos;patient&apos;));
+exam.put(&quot;accNum&quot;, $(&apos;accNum&apos;));
+exam.put(&quot;studyDescription&quot;, $(&apos;studyDescription&apos;));
+exam.put(&quot;status&quot;, $(&apos;status&apos;));
+exam.put(&quot;statusChangeTimestamp&quot;, $(&apos;statusChangeTimestamp&apos;));
+exam.put(&quot;report&quot;, $(&apos;report&apos;));
+exam.put(&quot;signer&quot;, $(&apos;signer&apos;));
+exam.put(&quot;dictator&quot;, $(&apos;dictator&apos;));
+exam.put(&quot;transcriber&quot;, $(&apos;transcriber&apos;));
+
+
+channelMap.put(&quot;exam&quot;, exam);</string>
+            </entry>
+          </data>
+        </step>
+      </steps>
+      <inboundTemplate encoding="base64">TVNIfF5+XCZ8SURYcmFkfHx8fDIwMTAwNjAyMTA1N3x8T1JVfDAyODc0MjIzMDl8UHwyLjF8fApQ
+SUR8fHwwMTIzNDU2MXx8VEVTVF5QQVRJRU5UXkFeXl58RmxlaXNjaGVyXl5eXl58MTkwMTAxMDF8
+RnxQQVRJRU5UXlRFU1ReXl5efHxCT1ggMDgyNCAtIE1DQiAzMDBeREFUQSBDT05UUk9MXlNBTiBG
+UkFOQ0lTQ09eQ0FeOTQxNDN8fCg0MTUpNDc2LTE5MjZ8KDUxMCk4OTEtNDc3N1g0MjM0fHx8fEJP
+R1VTVlNUfDAwMC0wMC0wMDAwClBWMXx8SXxeT1JefHx8fFA5XkpvdmFpc15DaHJpc3RvcGhlcl5T
+Ll5eXnx8fHx8fHx8fHx8fEJPR1VTVlNUfHx8fHx8fHx8fHx8fHx8fHx8fHwxfHx8fHwyMDEwMDUw
+NTA5MDB8MjAxMDA1MTMxNDI5Ck9SQ3xSRXx8NzE3NjM3OV5JRFhyYWR8fHx8fHwyMDEwMDYwMjEw
+NTd8fHxQOV5Kb3ZhaXNeQ2hyaXN0b3BoZXJeUy5eXl58Ck9CUnx8fDcxNzYzNzleSURYcmFkfERG
+SU5HTF5GSU5HRVIsTEVGVF5JRFhyYWR8fHwyMDEwMDYwMjEwMzl8fHx8fHwwMDAufHx8UDleSm92
+YWlzXkNocmlzdG9waGVyXlMuXl5efHxOT1QgTWFtbW98Tnx8TTAxfDIwMTAwNjAyMTA1Nnx8fEZ8
+fF5eTTEwKl4yMDEwMDYwMjEwMjleXk58fHxBfHxQQTAwMDFeTWFkbGFuc2FjYXleTm9lbF5eXl58
+fHx8MjAxMDA2MDIxMDMwCk5URXwxfEx8dGVzdGluZ358Ck5URXwyfEx8dGVzdGluZ35+fApaUlB8
+fApaVFR8MTAwNDUwXkJST1dOXkZSRURFUklDS15eXl58XlJlY29nbml0aW9uXlZvaWNlXl5eXnxe
+T1JefF5PUl58UDleSm92YWlzXkNocmlzdG9waGVyXlMuXl5efE9CLFJBRApaVE18REZJTkdMXkZJ
+TkdFUixMRUZUXklEWHJhZHx8REZJTkdMXkZJTkdFUixMRUZUfENSXkNvbXB1dGVkIFJhZGlvZ3Jh
+cGh5ClpSSXxQQTAwMDFeTWFkbGFuc2FjYXleTm9lbF5eXl58fHxQQTAwMDFeTWFkbGFuc2FjYXle
+Tm9lbF5eXl4KWkFTfDcxNzYzNzl8fHwyMDEwMDYwMjEwMzB8MjAxMDA2MDIxMDMwCk9CWHwxfEZU
+fERGSU5HTCZHRFR8MXwxKSBDcmVhdGUgcmVwb3J0IGluIFJhZGh3ZXJlLnx8fHx8fEYKT0JYfDJ8
+RlR8REZJTkdMJkdEVHwxfDIpIFNpZ24vRmluYWxpemUgcmVwb3J0IGluIFJhZHdoZXJlfHx8fHx8
+RgpPQlh8M3xGVHxERklOR0wmR0RUfDF8fHx8fHx8Rg==</inboundTemplate>
+      <outboundTemplate encoding="base64"></outboundTemplate>
+      <inboundDataType>HL7V2</inboundDataType>
+      <outboundDataType>HL7V2</outboundDataType>
+      <inboundProperties class="com.mirth.connect.plugins.datatypes.hl7v2.HL7v2DataTypeProperties" version="3.4.0">
+        <serializationProperties class="com.mirth.connect.plugins.datatypes.hl7v2.HL7v2SerializationProperties" version="3.4.0">
+          <handleRepetitions>false</handleRepetitions>
+          <handleSubcomponents>false</handleSubcomponents>
+          <useStrictParser>false</useStrictParser>
+          <useStrictValidation>false</useStrictValidation>
+          <stripNamespaces>true</stripNamespaces>
+          <segmentDelimiter>\r</segmentDelimiter>
+          <convertLineBreaks>true</convertLineBreaks>
+        </serializationProperties>
+        <deserializationProperties class="com.mirth.connect.plugins.datatypes.hl7v2.HL7v2DeserializationProperties" version="3.4.0">
+          <useStrictParser>false</useStrictParser>
+          <useStrictValidation>false</useStrictValidation>
+          <segmentDelimiter>\r</segmentDelimiter>
+        </deserializationProperties>
+        <batchProperties class="com.mirth.connect.plugins.datatypes.hl7v2.HL7v2BatchProperties" version="3.4.0">
+          <splitType>MSH_Segment</splitType>
+          <batchScript></batchScript>
+        </batchProperties>
+        <responseGenerationProperties class="com.mirth.connect.plugins.datatypes.hl7v2.HL7v2ResponseGenerationProperties" version="3.4.0">
+          <segmentDelimiter>\r</segmentDelimiter>
+          <successfulACKCode>AA</successfulACKCode>
+          <successfulACKMessage></successfulACKMessage>
+          <errorACKCode>AE</errorACKCode>
+          <errorACKMessage>An Error Occured Processing Message.</errorACKMessage>
+          <rejectedACKCode>AR</rejectedACKCode>
+          <rejectedACKMessage>Message Rejected.</rejectedACKMessage>
+          <msh15ACKAccept>false</msh15ACKAccept>
+          <dateFormat>yyyyMMddHHmmss</dateFormat>
+        </responseGenerationProperties>
+        <responseValidationProperties class="com.mirth.connect.plugins.datatypes.hl7v2.HL7v2ResponseValidationProperties" version="3.4.0">
+          <successfulACKCode>AA,CA</successfulACKCode>
+          <errorACKCode>AE,CE</errorACKCode>
+          <rejectedACKCode>AR,CR</rejectedACKCode>
+          <validateMessageControlId>false</validateMessageControlId>
+          <originalMessageControlId>Destination_Encoded</originalMessageControlId>
+          <originalIdMapVariable></originalIdMapVariable>
+        </responseValidationProperties>
+      </inboundProperties>
+      <outboundProperties class="com.mirth.connect.plugins.datatypes.hl7v2.HL7v2DataTypeProperties" version="3.4.0">
+        <serializationProperties class="com.mirth.connect.plugins.datatypes.hl7v2.HL7v2SerializationProperties" version="3.4.0">
+          <handleRepetitions>false</handleRepetitions>
+          <handleSubcomponents>false</handleSubcomponents>
+          <useStrictParser>false</useStrictParser>
+          <useStrictValidation>false</useStrictValidation>
+          <stripNamespaces>true</stripNamespaces>
+          <segmentDelimiter>\r</segmentDelimiter>
+          <convertLineBreaks>true</convertLineBreaks>
+        </serializationProperties>
+        <deserializationProperties class="com.mirth.connect.plugins.datatypes.hl7v2.HL7v2DeserializationProperties" version="3.4.0">
+          <useStrictParser>false</useStrictParser>
+          <useStrictValidation>false</useStrictValidation>
+          <segmentDelimiter>\r</segmentDelimiter>
+        </deserializationProperties>
+        <batchProperties class="com.mirth.connect.plugins.datatypes.hl7v2.HL7v2BatchProperties" version="3.4.0">
+          <splitType>MSH_Segment</splitType>
+          <batchScript></batchScript>
+        </batchProperties>
+        <responseGenerationProperties class="com.mirth.connect.plugins.datatypes.hl7v2.HL7v2ResponseGenerationProperties" version="3.4.0">
+          <segmentDelimiter>\r</segmentDelimiter>
+          <successfulACKCode>AA</successfulACKCode>
+          <successfulACKMessage></successfulACKMessage>
+          <errorACKCode>AE</errorACKCode>
+          <errorACKMessage>An Error Occured Processing Message.</errorACKMessage>
+          <rejectedACKCode>AR</rejectedACKCode>
+          <rejectedACKMessage>Message Rejected.</rejectedACKMessage>
+          <msh15ACKAccept>false</msh15ACKAccept>
+          <dateFormat>yyyyMMddHHmmss</dateFormat>
+        </responseGenerationProperties>
+        <responseValidationProperties class="com.mirth.connect.plugins.datatypes.hl7v2.HL7v2ResponseValidationProperties" version="3.4.0">
+          <successfulACKCode>AA,CA</successfulACKCode>
+          <errorACKCode>AE,CE</errorACKCode>
+          <rejectedACKCode>AR,CR</rejectedACKCode>
+          <validateMessageControlId>false</validateMessageControlId>
+          <originalMessageControlId>Destination_Encoded</originalMessageControlId>
+          <originalIdMapVariable></originalIdMapVariable>
+        </responseValidationProperties>
+      </outboundProperties>
+    </transformer>
+    <filter version="3.4.0">
+      <rules/>
+    </filter>
+    <transportName>TCP Listener</transportName>
+    <mode>SOURCE</mode>
+    <enabled>true</enabled>
+    <waitForPrevious>true</waitForPrevious>
+  </sourceConnector>
+  <destinationConnectors>
+    <connector version="3.4.0">
+      <metaDataId>1</metaDataId>
+      <name>Merge Patient</name>
+      <properties class="com.mirth.connect.connectors.js.JavaScriptDispatcherProperties" version="3.4.0">
+        <destinationConnectorProperties version="3.4.0">
+          <queueEnabled>false</queueEnabled>
+          <sendFirst>false</sendFirst>
+          <retryIntervalMillis>10000</retryIntervalMillis>
+          <regenerateTemplate>false</regenerateTemplate>
+          <retryCount>0</retryCount>
+          <rotate>false</rotate>
+          <includeFilterTransformer>false</includeFilterTransformer>
+          <threadCount>1</threadCount>
+          <validateResponse>false</validateResponse>
+          <resourceIds class="linked-hash-map">
+            <entry>
+              <string>Default Resource</string>
+              <string>[Default Resource]</string>
+            </entry>
+          </resourceIds>
+          <queueBufferSize>0</queueBufferSize>
+        </destinationConnectorProperties>
+        <script>if($(&apos;event&apos;) != &quot;MERGE&quot;) 
+{
+	return;
+}
+
+
+if($(&apos;priorMrn&apos;) == $(&apos;mrn&apos;))
+{
+	throw &quot;Prior MRN and current MRN are the same: &quot; + $(&apos;mrn&apos;);
+}
+
+
+var patient = $(&apos;patient&apos;);
+
+insertOrUpdatePatient(patient);
+
+
+var con = getConnection();
+
+
+var selectNewId = &quot;SELECT patient_id FROM patients &quot;
+	+ &quot;WHERE mrn = ? AND patient_name = ? AND dob = ?&quot;;
+
+var params = new java.util.ArrayList();
+params.add($(&apos;mrn&apos;));
+params.add($(&apos;name&apos;));
+params.add($(&apos;dob&apos;));
+
+var newId;
+var rs = con.executeCachedQuery(selectNewId, params);
+if(rs.next())
+{
+	newId = rs.getInt(&quot;patient_id&quot;);
+
+
+	rs.close();
+}
+else
+{
+	throw &quot;Unable to get patient id for patient with name = &quot; + $(&apos;name&apos;) 
+		+ &quot;, mrn = &quot; + $(&apos;mrn&apos;) + &quot; and dob = &quot; + $(&apos;dob&apos;);
+}
+
+
+
+
+
+var selectOldId = &quot;SELECT patient_id FROM patients WHERE mrn = ?&quot;;
+
+params.clear();
+params.add($(&apos;priorMrn&apos;));
+
+
+rs = con.executeCachedQuery(selectOldId, params);
+while(rs.next())
+{
+	var oldId = rs.getInt(&quot;patient_id&quot;);
+
+	params.clear();
+	params.add(newId);
+	params.add(oldId);
+
+	var updateExams = &quot;UPDATE exams SET patient_id = ? WHERE patient_id = ?&quot;;
+	con.executeUpdate(updateExams, params);
+
+
+	var updateJobSets = &quot;UPDATE job_sets SET patient_id = ? WHERE patient_id = ?&quot;;
+	con.executeUpdate(updateJobSets, params);
+
+
+	
+	params.add($(&apos;mrn&apos;));
+	params.add($(&apos;priorMrn&apos;));
+
+	var insertEvent = &quot;INSERT INTO patient_merge_events (new_patient_id, old_patient_id, new_mrn, old_mrn) &quot; 
+		+ &quot;VALUES (?, ?, ?, ?)&quot;
+	con.executeUpdate(insertEvent, params);
+
+}
+
+
+
+
+
+
+var del = &quot;DELETE FROM patients WHERE mrn = ?&quot;;
+
+params.clear();
+params.add($(&apos;priorMrn&apos;));
+
+con.executeUpdate(del, params);
+
+
+con.close();
+
+
+
+logger.warn(&quot;Merged patient &quot; + $(&apos;priorMrn&apos;) + &quot; with patient &quot; + $(&apos;mrn&apos;));</script>
+      </properties>
+      <transformer version="3.4.0">
+        <steps/>
+        <inboundDataType>HL7V2</inboundDataType>
+        <outboundDataType>HL7V2</outboundDataType>
+        <inboundProperties class="com.mirth.connect.plugins.datatypes.hl7v2.HL7v2DataTypeProperties" version="3.4.0">
+          <serializationProperties class="com.mirth.connect.plugins.datatypes.hl7v2.HL7v2SerializationProperties" version="3.4.0">
+            <handleRepetitions>false</handleRepetitions>
+            <handleSubcomponents>false</handleSubcomponents>
+            <useStrictParser>false</useStrictParser>
+            <useStrictValidation>false</useStrictValidation>
+            <stripNamespaces>true</stripNamespaces>
+            <segmentDelimiter>\r</segmentDelimiter>
+            <convertLineBreaks>true</convertLineBreaks>
+          </serializationProperties>
+          <deserializationProperties class="com.mirth.connect.plugins.datatypes.hl7v2.HL7v2DeserializationProperties" version="3.4.0">
+            <useStrictParser>false</useStrictParser>
+            <useStrictValidation>false</useStrictValidation>
+            <segmentDelimiter>\r</segmentDelimiter>
+          </deserializationProperties>
+          <batchProperties class="com.mirth.connect.plugins.datatypes.hl7v2.HL7v2BatchProperties" version="3.4.0">
+            <splitType>MSH_Segment</splitType>
+            <batchScript></batchScript>
+          </batchProperties>
+          <responseGenerationProperties class="com.mirth.connect.plugins.datatypes.hl7v2.HL7v2ResponseGenerationProperties" version="3.4.0">
+            <segmentDelimiter>\r</segmentDelimiter>
+            <successfulACKCode>AA</successfulACKCode>
+            <successfulACKMessage></successfulACKMessage>
+            <errorACKCode>AE</errorACKCode>
+            <errorACKMessage>An Error Occurred Processing Message.</errorACKMessage>
+            <rejectedACKCode>AR</rejectedACKCode>
+            <rejectedACKMessage>Message Rejected.</rejectedACKMessage>
+            <msh15ACKAccept>false</msh15ACKAccept>
+            <dateFormat>yyyyMMddHHmmss</dateFormat>
+          </responseGenerationProperties>
+          <responseValidationProperties class="com.mirth.connect.plugins.datatypes.hl7v2.HL7v2ResponseValidationProperties" version="3.4.0">
+            <successfulACKCode>AA,CA</successfulACKCode>
+            <errorACKCode>AE,CE</errorACKCode>
+            <rejectedACKCode>AR,CR</rejectedACKCode>
+            <validateMessageControlId>false</validateMessageControlId>
+            <originalMessageControlId>Destination_Encoded</originalMessageControlId>
+            <originalIdMapVariable></originalIdMapVariable>
+          </responseValidationProperties>
+        </inboundProperties>
+        <outboundProperties class="com.mirth.connect.plugins.datatypes.hl7v2.HL7v2DataTypeProperties" version="3.4.0">
+          <serializationProperties class="com.mirth.connect.plugins.datatypes.hl7v2.HL7v2SerializationProperties" version="3.4.0">
+            <handleRepetitions>false</handleRepetitions>
+            <handleSubcomponents>false</handleSubcomponents>
+            <useStrictParser>false</useStrictParser>
+            <useStrictValidation>false</useStrictValidation>
+            <stripNamespaces>true</stripNamespaces>
+            <segmentDelimiter>\r</segmentDelimiter>
+            <convertLineBreaks>true</convertLineBreaks>
+          </serializationProperties>
+          <deserializationProperties class="com.mirth.connect.plugins.datatypes.hl7v2.HL7v2DeserializationProperties" version="3.4.0">
+            <useStrictParser>false</useStrictParser>
+            <useStrictValidation>false</useStrictValidation>
+            <segmentDelimiter>\r</segmentDelimiter>
+          </deserializationProperties>
+          <batchProperties class="com.mirth.connect.plugins.datatypes.hl7v2.HL7v2BatchProperties" version="3.4.0">
+            <splitType>MSH_Segment</splitType>
+            <batchScript></batchScript>
+          </batchProperties>
+          <responseGenerationProperties class="com.mirth.connect.plugins.datatypes.hl7v2.HL7v2ResponseGenerationProperties" version="3.4.0">
+            <segmentDelimiter>\r</segmentDelimiter>
+            <successfulACKCode>AA</successfulACKCode>
+            <successfulACKMessage></successfulACKMessage>
+            <errorACKCode>AE</errorACKCode>
+            <errorACKMessage>An Error Occurred Processing Message.</errorACKMessage>
+            <rejectedACKCode>AR</rejectedACKCode>
+            <rejectedACKMessage>Message Rejected.</rejectedACKMessage>
+            <msh15ACKAccept>false</msh15ACKAccept>
+            <dateFormat>yyyyMMddHHmmss</dateFormat>
+          </responseGenerationProperties>
+          <responseValidationProperties class="com.mirth.connect.plugins.datatypes.hl7v2.HL7v2ResponseValidationProperties" version="3.4.0">
+            <successfulACKCode>AA,CA</successfulACKCode>
+            <errorACKCode>AE,CE</errorACKCode>
+            <rejectedACKCode>AR,CR</rejectedACKCode>
+            <validateMessageControlId>false</validateMessageControlId>
+            <originalMessageControlId>Destination_Encoded</originalMessageControlId>
+            <originalIdMapVariable></originalIdMapVariable>
+          </responseValidationProperties>
+        </outboundProperties>
+      </transformer>
+      <responseTransformer version="3.4.0">
+        <steps/>
+        <inboundDataType>HL7V2</inboundDataType>
+        <outboundDataType>HL7V2</outboundDataType>
+        <inboundProperties class="com.mirth.connect.plugins.datatypes.hl7v2.HL7v2DataTypeProperties" version="3.4.0">
+          <serializationProperties class="com.mirth.connect.plugins.datatypes.hl7v2.HL7v2SerializationProperties" version="3.4.0">
+            <handleRepetitions>false</handleRepetitions>
+            <handleSubcomponents>false</handleSubcomponents>
+            <useStrictParser>false</useStrictParser>
+            <useStrictValidation>false</useStrictValidation>
+            <stripNamespaces>true</stripNamespaces>
+            <segmentDelimiter>\r</segmentDelimiter>
+            <convertLineBreaks>true</convertLineBreaks>
+          </serializationProperties>
+          <deserializationProperties class="com.mirth.connect.plugins.datatypes.hl7v2.HL7v2DeserializationProperties" version="3.4.0">
+            <useStrictParser>false</useStrictParser>
+            <useStrictValidation>false</useStrictValidation>
+            <segmentDelimiter>\r</segmentDelimiter>
+          </deserializationProperties>
+          <batchProperties class="com.mirth.connect.plugins.datatypes.hl7v2.HL7v2BatchProperties" version="3.4.0">
+            <splitType>MSH_Segment</splitType>
+            <batchScript></batchScript>
+          </batchProperties>
+          <responseGenerationProperties class="com.mirth.connect.plugins.datatypes.hl7v2.HL7v2ResponseGenerationProperties" version="3.4.0">
+            <segmentDelimiter>\r</segmentDelimiter>
+            <successfulACKCode>AA</successfulACKCode>
+            <successfulACKMessage></successfulACKMessage>
+            <errorACKCode>AE</errorACKCode>
+            <errorACKMessage>An Error Occurred Processing Message.</errorACKMessage>
+            <rejectedACKCode>AR</rejectedACKCode>
+            <rejectedACKMessage>Message Rejected.</rejectedACKMessage>
+            <msh15ACKAccept>false</msh15ACKAccept>
+            <dateFormat>yyyyMMddHHmmss</dateFormat>
+          </responseGenerationProperties>
+          <responseValidationProperties class="com.mirth.connect.plugins.datatypes.hl7v2.HL7v2ResponseValidationProperties" version="3.4.0">
+            <successfulACKCode>AA,CA</successfulACKCode>
+            <errorACKCode>AE,CE</errorACKCode>
+            <rejectedACKCode>AR,CR</rejectedACKCode>
+            <validateMessageControlId>false</validateMessageControlId>
+            <originalMessageControlId>Destination_Encoded</originalMessageControlId>
+            <originalIdMapVariable></originalIdMapVariable>
+          </responseValidationProperties>
+        </inboundProperties>
+        <outboundProperties class="com.mirth.connect.plugins.datatypes.hl7v2.HL7v2DataTypeProperties" version="3.4.0">
+          <serializationProperties class="com.mirth.connect.plugins.datatypes.hl7v2.HL7v2SerializationProperties" version="3.4.0">
+            <handleRepetitions>false</handleRepetitions>
+            <handleSubcomponents>false</handleSubcomponents>
+            <useStrictParser>false</useStrictParser>
+            <useStrictValidation>false</useStrictValidation>
+            <stripNamespaces>true</stripNamespaces>
+            <segmentDelimiter>\r</segmentDelimiter>
+            <convertLineBreaks>true</convertLineBreaks>
+          </serializationProperties>
+          <deserializationProperties class="com.mirth.connect.plugins.datatypes.hl7v2.HL7v2DeserializationProperties" version="3.4.0">
+            <useStrictParser>false</useStrictParser>
+            <useStrictValidation>false</useStrictValidation>
+            <segmentDelimiter>\r</segmentDelimiter>
+          </deserializationProperties>
+          <batchProperties class="com.mirth.connect.plugins.datatypes.hl7v2.HL7v2BatchProperties" version="3.4.0">
+            <splitType>MSH_Segment</splitType>
+            <batchScript></batchScript>
+          </batchProperties>
+          <responseGenerationProperties class="com.mirth.connect.plugins.datatypes.hl7v2.HL7v2ResponseGenerationProperties" version="3.4.0">
+            <segmentDelimiter>\r</segmentDelimiter>
+            <successfulACKCode>AA</successfulACKCode>
+            <successfulACKMessage></successfulACKMessage>
+            <errorACKCode>AE</errorACKCode>
+            <errorACKMessage>An Error Occurred Processing Message.</errorACKMessage>
+            <rejectedACKCode>AR</rejectedACKCode>
+            <rejectedACKMessage>Message Rejected.</rejectedACKMessage>
+            <msh15ACKAccept>false</msh15ACKAccept>
+            <dateFormat>yyyyMMddHHmmss</dateFormat>
+          </responseGenerationProperties>
+          <responseValidationProperties class="com.mirth.connect.plugins.datatypes.hl7v2.HL7v2ResponseValidationProperties" version="3.4.0">
+            <successfulACKCode>AA,CA</successfulACKCode>
+            <errorACKCode>AE,CE</errorACKCode>
+            <rejectedACKCode>AR,CR</rejectedACKCode>
+            <validateMessageControlId>false</validateMessageControlId>
+            <originalMessageControlId>Destination_Encoded</originalMessageControlId>
+            <originalIdMapVariable></originalIdMapVariable>
+          </responseValidationProperties>
+        </outboundProperties>
+      </responseTransformer>
+      <filter version="3.4.0">
+        <rules/>
+      </filter>
+      <transportName>JavaScript Writer</transportName>
+      <mode>DESTINATION</mode>
+      <enabled>true</enabled>
+      <waitForPrevious>true</waitForPrevious>
+    </connector>
+    <connector version="3.4.0">
+      <metaDataId>2</metaDataId>
+      <name>Update Exam Status</name>
+      <properties class="com.mirth.connect.connectors.js.JavaScriptDispatcherProperties" version="3.4.0">
+        <destinationConnectorProperties version="3.4.0">
+          <queueEnabled>false</queueEnabled>
+          <sendFirst>false</sendFirst>
+          <retryIntervalMillis>10000</retryIntervalMillis>
+          <regenerateTemplate>false</regenerateTemplate>
+          <retryCount>0</retryCount>
+          <rotate>false</rotate>
+          <includeFilterTransformer>false</includeFilterTransformer>
+          <threadCount>1</threadCount>
+          <validateResponse>false</validateResponse>
+          <resourceIds class="linked-hash-map">
+            <entry>
+              <string>Default Resource</string>
+              <string>[Default Resource]</string>
+            </entry>
+          </resourceIds>
+          <queueBufferSize>0</queueBufferSize>
+        </destinationConnectorProperties>
+        <script>if($(&apos;event&apos;) != &quot;UPDATE&quot; ) {
+	return;
+}
+
+var patient = $(&apos;patient&apos;);
+
+insertOrUpdatePatient(patient);
+
+
+
+
+var exam = $(&apos;exam&apos;);
+
+insertOrUpdateExam(exam);
+
+
+insertStatusChange(exam);</script>
+      </properties>
+      <transformer version="3.4.0">
+        <steps/>
+        <inboundDataType>HL7V2</inboundDataType>
+        <outboundDataType>HL7V2</outboundDataType>
+        <inboundProperties class="com.mirth.connect.plugins.datatypes.hl7v2.HL7v2DataTypeProperties" version="3.4.0">
+          <serializationProperties class="com.mirth.connect.plugins.datatypes.hl7v2.HL7v2SerializationProperties" version="3.4.0">
+            <handleRepetitions>false</handleRepetitions>
+            <handleSubcomponents>false</handleSubcomponents>
+            <useStrictParser>false</useStrictParser>
+            <useStrictValidation>false</useStrictValidation>
+            <stripNamespaces>true</stripNamespaces>
+            <segmentDelimiter>\r</segmentDelimiter>
+            <convertLineBreaks>true</convertLineBreaks>
+          </serializationProperties>
+          <deserializationProperties class="com.mirth.connect.plugins.datatypes.hl7v2.HL7v2DeserializationProperties" version="3.4.0">
+            <useStrictParser>false</useStrictParser>
+            <useStrictValidation>false</useStrictValidation>
+            <segmentDelimiter>\r</segmentDelimiter>
+          </deserializationProperties>
+          <batchProperties class="com.mirth.connect.plugins.datatypes.hl7v2.HL7v2BatchProperties" version="3.4.0">
+            <splitType>MSH_Segment</splitType>
+            <batchScript></batchScript>
+          </batchProperties>
+          <responseGenerationProperties class="com.mirth.connect.plugins.datatypes.hl7v2.HL7v2ResponseGenerationProperties" version="3.4.0">
+            <segmentDelimiter>\r</segmentDelimiter>
+            <successfulACKCode>AA</successfulACKCode>
+            <successfulACKMessage></successfulACKMessage>
+            <errorACKCode>AE</errorACKCode>
+            <errorACKMessage>An Error Occurred Processing Message.</errorACKMessage>
+            <rejectedACKCode>AR</rejectedACKCode>
+            <rejectedACKMessage>Message Rejected.</rejectedACKMessage>
+            <msh15ACKAccept>false</msh15ACKAccept>
+            <dateFormat>yyyyMMddHHmmss</dateFormat>
+          </responseGenerationProperties>
+          <responseValidationProperties class="com.mirth.connect.plugins.datatypes.hl7v2.HL7v2ResponseValidationProperties" version="3.4.0">
+            <successfulACKCode>AA,CA</successfulACKCode>
+            <errorACKCode>AE,CE</errorACKCode>
+            <rejectedACKCode>AR,CR</rejectedACKCode>
+            <validateMessageControlId>false</validateMessageControlId>
+            <originalMessageControlId>Destination_Encoded</originalMessageControlId>
+            <originalIdMapVariable></originalIdMapVariable>
+          </responseValidationProperties>
+        </inboundProperties>
+        <outboundProperties class="com.mirth.connect.plugins.datatypes.hl7v2.HL7v2DataTypeProperties" version="3.4.0">
+          <serializationProperties class="com.mirth.connect.plugins.datatypes.hl7v2.HL7v2SerializationProperties" version="3.4.0">
+            <handleRepetitions>false</handleRepetitions>
+            <handleSubcomponents>false</handleSubcomponents>
+            <useStrictParser>false</useStrictParser>
+            <useStrictValidation>false</useStrictValidation>
+            <stripNamespaces>true</stripNamespaces>
+            <segmentDelimiter>\r</segmentDelimiter>
+            <convertLineBreaks>true</convertLineBreaks>
+          </serializationProperties>
+          <deserializationProperties class="com.mirth.connect.plugins.datatypes.hl7v2.HL7v2DeserializationProperties" version="3.4.0">
+            <useStrictParser>false</useStrictParser>
+            <useStrictValidation>false</useStrictValidation>
+            <segmentDelimiter>\r</segmentDelimiter>
+          </deserializationProperties>
+          <batchProperties class="com.mirth.connect.plugins.datatypes.hl7v2.HL7v2BatchProperties" version="3.4.0">
+            <splitType>MSH_Segment</splitType>
+            <batchScript></batchScript>
+          </batchProperties>
+          <responseGenerationProperties class="com.mirth.connect.plugins.datatypes.hl7v2.HL7v2ResponseGenerationProperties" version="3.4.0">
+            <segmentDelimiter>\r</segmentDelimiter>
+            <successfulACKCode>AA</successfulACKCode>
+            <successfulACKMessage></successfulACKMessage>
+            <errorACKCode>AE</errorACKCode>
+            <errorACKMessage>An Error Occurred Processing Message.</errorACKMessage>
+            <rejectedACKCode>AR</rejectedACKCode>
+            <rejectedACKMessage>Message Rejected.</rejectedACKMessage>
+            <msh15ACKAccept>false</msh15ACKAccept>
+            <dateFormat>yyyyMMddHHmmss</dateFormat>
+          </responseGenerationProperties>
+          <responseValidationProperties class="com.mirth.connect.plugins.datatypes.hl7v2.HL7v2ResponseValidationProperties" version="3.4.0">
+            <successfulACKCode>AA,CA</successfulACKCode>
+            <errorACKCode>AE,CE</errorACKCode>
+            <rejectedACKCode>AR,CR</rejectedACKCode>
+            <validateMessageControlId>false</validateMessageControlId>
+            <originalMessageControlId>Destination_Encoded</originalMessageControlId>
+            <originalIdMapVariable></originalIdMapVariable>
+          </responseValidationProperties>
+        </outboundProperties>
+      </transformer>
+      <responseTransformer version="3.4.0">
+        <steps/>
+        <inboundDataType>HL7V2</inboundDataType>
+        <outboundDataType>HL7V2</outboundDataType>
+        <inboundProperties class="com.mirth.connect.plugins.datatypes.hl7v2.HL7v2DataTypeProperties" version="3.4.0">
+          <serializationProperties class="com.mirth.connect.plugins.datatypes.hl7v2.HL7v2SerializationProperties" version="3.4.0">
+            <handleRepetitions>false</handleRepetitions>
+            <handleSubcomponents>false</handleSubcomponents>
+            <useStrictParser>false</useStrictParser>
+            <useStrictValidation>false</useStrictValidation>
+            <stripNamespaces>true</stripNamespaces>
+            <segmentDelimiter>\r</segmentDelimiter>
+            <convertLineBreaks>true</convertLineBreaks>
+          </serializationProperties>
+          <deserializationProperties class="com.mirth.connect.plugins.datatypes.hl7v2.HL7v2DeserializationProperties" version="3.4.0">
+            <useStrictParser>false</useStrictParser>
+            <useStrictValidation>false</useStrictValidation>
+            <segmentDelimiter>\r</segmentDelimiter>
+          </deserializationProperties>
+          <batchProperties class="com.mirth.connect.plugins.datatypes.hl7v2.HL7v2BatchProperties" version="3.4.0">
+            <splitType>MSH_Segment</splitType>
+            <batchScript></batchScript>
+          </batchProperties>
+          <responseGenerationProperties class="com.mirth.connect.plugins.datatypes.hl7v2.HL7v2ResponseGenerationProperties" version="3.4.0">
+            <segmentDelimiter>\r</segmentDelimiter>
+            <successfulACKCode>AA</successfulACKCode>
+            <successfulACKMessage></successfulACKMessage>
+            <errorACKCode>AE</errorACKCode>
+            <errorACKMessage>An Error Occurred Processing Message.</errorACKMessage>
+            <rejectedACKCode>AR</rejectedACKCode>
+            <rejectedACKMessage>Message Rejected.</rejectedACKMessage>
+            <msh15ACKAccept>false</msh15ACKAccept>
+            <dateFormat>yyyyMMddHHmmss</dateFormat>
+          </responseGenerationProperties>
+          <responseValidationProperties class="com.mirth.connect.plugins.datatypes.hl7v2.HL7v2ResponseValidationProperties" version="3.4.0">
+            <successfulACKCode>AA,CA</successfulACKCode>
+            <errorACKCode>AE,CE</errorACKCode>
+            <rejectedACKCode>AR,CR</rejectedACKCode>
+            <validateMessageControlId>false</validateMessageControlId>
+            <originalMessageControlId>Destination_Encoded</originalMessageControlId>
+            <originalIdMapVariable></originalIdMapVariable>
+          </responseValidationProperties>
+        </inboundProperties>
+        <outboundProperties class="com.mirth.connect.plugins.datatypes.hl7v2.HL7v2DataTypeProperties" version="3.4.0">
+          <serializationProperties class="com.mirth.connect.plugins.datatypes.hl7v2.HL7v2SerializationProperties" version="3.4.0">
+            <handleRepetitions>false</handleRepetitions>
+            <handleSubcomponents>false</handleSubcomponents>
+            <useStrictParser>false</useStrictParser>
+            <useStrictValidation>false</useStrictValidation>
+            <stripNamespaces>true</stripNamespaces>
+            <segmentDelimiter>\r</segmentDelimiter>
+            <convertLineBreaks>true</convertLineBreaks>
+          </serializationProperties>
+          <deserializationProperties class="com.mirth.connect.plugins.datatypes.hl7v2.HL7v2DeserializationProperties" version="3.4.0">
+            <useStrictParser>false</useStrictParser>
+            <useStrictValidation>false</useStrictValidation>
+            <segmentDelimiter>\r</segmentDelimiter>
+          </deserializationProperties>
+          <batchProperties class="com.mirth.connect.plugins.datatypes.hl7v2.HL7v2BatchProperties" version="3.4.0">
+            <splitType>MSH_Segment</splitType>
+            <batchScript></batchScript>
+          </batchProperties>
+          <responseGenerationProperties class="com.mirth.connect.plugins.datatypes.hl7v2.HL7v2ResponseGenerationProperties" version="3.4.0">
+            <segmentDelimiter>\r</segmentDelimiter>
+            <successfulACKCode>AA</successfulACKCode>
+            <successfulACKMessage></successfulACKMessage>
+            <errorACKCode>AE</errorACKCode>
+            <errorACKMessage>An Error Occurred Processing Message.</errorACKMessage>
+            <rejectedACKCode>AR</rejectedACKCode>
+            <rejectedACKMessage>Message Rejected.</rejectedACKMessage>
+            <msh15ACKAccept>false</msh15ACKAccept>
+            <dateFormat>yyyyMMddHHmmss</dateFormat>
+          </responseGenerationProperties>
+          <responseValidationProperties class="com.mirth.connect.plugins.datatypes.hl7v2.HL7v2ResponseValidationProperties" version="3.4.0">
+            <successfulACKCode>AA,CA</successfulACKCode>
+            <errorACKCode>AE,CE</errorACKCode>
+            <rejectedACKCode>AR,CR</rejectedACKCode>
+            <validateMessageControlId>false</validateMessageControlId>
+            <originalMessageControlId>Destination_Encoded</originalMessageControlId>
+            <originalIdMapVariable></originalIdMapVariable>
+          </responseValidationProperties>
+        </outboundProperties>
+      </responseTransformer>
+      <filter version="3.4.0">
+        <rules/>
+      </filter>
+      <transportName>JavaScript Writer</transportName>
+      <mode>DESTINATION</mode>
+      <enabled>true</enabled>
+      <waitForPrevious>true</waitForPrevious>
+    </connector>
+  </destinationConnectors>
+  <preprocessingScript>// Modify the message variable below to pre process data
+return message;</preprocessingScript>
+  <postprocessingScript>// This script executes once after a message has been processed
+return;</postprocessingScript>
+  <deployScript>// This script executes once when the mule engine is started
+// You only have access to the globalMap here to persist data
+return;</deployScript>
+  <undeployScript>// This script executes once when the mule engine is stopped
+// You only have access to the globalMap here to persist data
+return;</undeployScript>
+  <properties version="3.4.0">
+    <clearGlobalChannelMap>true</clearGlobalChannelMap>
+    <messageStorageMode>DEVELOPMENT</messageStorageMode>
+    <encryptData>false</encryptData>
+    <removeContentOnCompletion>false</removeContentOnCompletion>
+    <removeOnlyFilteredOnCompletion>false</removeOnlyFilteredOnCompletion>
+    <removeAttachmentsOnCompletion>false</removeAttachmentsOnCompletion>
+    <initialState>STARTED</initialState>
+    <storeAttachments>false</storeAttachments>
+    <tags class="linked-hash-set"/>
+    <metaDataColumns>
+      <metaDataColumn>
+        <name>SOURCE</name>
+        <type>STRING</type>
+        <mappingName>mirth_source</mappingName>
+      </metaDataColumn>
+      <metaDataColumn>
+        <name>TYPE</name>
+        <type>STRING</type>
+        <mappingName>mirth_type</mappingName>
+      </metaDataColumn>
+    </metaDataColumns>
+    <attachmentProperties version="3.4.0">
+      <type>None</type>
+      <properties/>
+    </attachmentProperties>
+    <archiveEnabled>true</archiveEnabled>
+    <resourceIds class="linked-hash-map">
+      <entry>
+        <string>Default Resource</string>
+        <string>[Default Resource]</string>
+      </entry>
+    </resourceIds>
+  </properties>
+  <codeTemplateLibraries>
+    <codeTemplateLibrary version="3.4.0">
+      <id>51bd8ebb-d867-4fff-9f66-341bce42eef9</id>
+      <name>Library 1</name>
+      <revision>1</revision>
+      <lastModified>
+        <time>1492811868712</time>
+        <timezone>Etc/UTC</timezone>
+      </lastModified>
+      <description>This library was added upon migration to version 3.3.0. It includes all pre-existing
+code templates, and is set to be included on all pre-existing and new channels.
+
+You should create your own new libraries and assign code templates to them as you
+see fit. You should also link libraries to specific channels, so that you&apos;re not
+necessarily including all code templates on all channels all the time.</description>
+      <includeNewChannels>true</includeNewChannels>
+      <enabledChannelIds/>
+      <disabledChannelIds/>
+      <codeTemplates>
+        <codeTemplate version="3.4.0">
+          <id>c0122134-078d-403b-a860-a8951b978da8</id>
+          <name>Get Database Connection</name>
+          <revision>1</revision>
+          <lastModified>
+            <time>1492811868848</time>
+            <timezone>Etc/UTC</timezone>
+          </lastModified>
+          <type>FUNCTION</type>
+          <contextSet>
+            <delegate>
+              <contextType>CHANNEL_BATCH</contextType>
+              <contextType>GLOBAL_PREPROCESSOR</contextType>
+              <contextType>DESTINATION_FILTER_TRANSFORMER</contextType>
+              <contextType>GLOBAL_UNDEPLOY</contextType>
+              <contextType>CHANNEL_PREPROCESSOR</contextType>
+              <contextType>CHANNEL_UNDEPLOY</contextType>
+              <contextType>CHANNEL_DEPLOY</contextType>
+              <contextType>GLOBAL_DEPLOY</contextType>
+              <contextType>DESTINATION_DISPATCHER</contextType>
+              <contextType>SOURCE_FILTER_TRANSFORMER</contextType>
+              <contextType>CHANNEL_ATTACHMENT</contextType>
+              <contextType>GLOBAL_POSTPROCESSOR</contextType>
+              <contextType>CHANNEL_POSTPROCESSOR</contextType>
+              <contextType>SOURCE_RECEIVER</contextType>
+              <contextType>DESTINATION_RESPONSE_TRANSFORMER</contextType>
+            </delegate>
+          </contextSet>
+          <code>/**
+	Returns a connection to the RSNA results database
+*/
+// modify function_name and parameters as you wish.
+// one function per template is recommended. i.e.) create a new code template for each new function.
+function getConnection() {
+	var con = DatabaseConnectionFactory.createDatabaseConnection(&apos;org.postgresql.Driver&apos;, 
+		&apos;jdbc:postgresql://localhost:5432/rsnadb&apos;,&apos;edge&apos;,&apos;d17bK4#M&apos;);
+
+
+	return con;
+}</code>
+        </codeTemplate>
+        <codeTemplate version="3.4.0">
+          <id>1b6b4712-4043-4b4e-adf8-998a56dfd4ff</id>
+          <name>Insert or Update Exam</name>
+          <revision>1</revision>
+          <lastModified>
+            <time>1492811869093</time>
+            <timezone>Etc/UTC</timezone>
+          </lastModified>
+          <type>FUNCTION</type>
+          <contextSet>
+            <delegate>
+              <contextType>CHANNEL_BATCH</contextType>
+              <contextType>DESTINATION_FILTER_TRANSFORMER</contextType>
+              <contextType>SOURCE_FILTER_TRANSFORMER</contextType>
+              <contextType>CHANNEL_ATTACHMENT</contextType>
+              <contextType>CHANNEL_PREPROCESSOR</contextType>
+              <contextType>GLOBAL_POSTPROCESSOR</contextType>
+              <contextType>CHANNEL_POSTPROCESSOR</contextType>
+              <contextType>SOURCE_RECEIVER</contextType>
+              <contextType>DESTINATION_RESPONSE_TRANSFORMER</contextType>
+              <contextType>CHANNEL_UNDEPLOY</contextType>
+              <contextType>CHANNEL_DEPLOY</contextType>
+              <contextType>DESTINATION_DISPATCHER</contextType>
+            </delegate>
+          </contextSet>
+          <code>/**
+	Adds a new exam or updates an existing exam.
+*/
+function insertOrUpdateExam(exam) {
+	var patient = exam.get(&quot;patient&quot;);
+
+
+	var con = getConnection();
+	try
+	{
+		var params = new java.util.ArrayList();
+		var select = &quot;SELECT patient_id FROM patients WHERE &quot; 
+			+ &quot;patient_name = ? AND &quot;
+			+ &quot;mrn = ? AND &quot;
+			+ &quot;dob = ?&quot;;
+
+
+		params.add(patient.get(&quot;name&quot;));
+		params.add(patient.get(&quot;mrn&quot;));
+		params.add(patient.get(&quot;dob&quot;));
+
+		var rs = con.executeCachedQuery(select, params);
+		if(rs.next())
+		{
+			var patientId = rs.getInt(&quot;patient_id&quot;);
+
+			var update = &quot;UPDATE exams SET exam_description = ? &quot;
+					+ &quot;WHERE accession_number = ? AND patient_id = ?&quot;;
+
+			params.clear();
+			params.add(exam.get(&quot;studyDescription&quot;));
+			params.add(exam.get(&quot;accNum&quot;));
+			params.add(patientId);
+	
+			var count = con.executeUpdate(update, params);
+
+			if(count &gt;= 1) 
+			{
+				logger.warn(&quot;Updated exam: &quot; + exam.get(&quot;accNum&quot;));
+
+				return false;
+			}
+			else 
+			{
+				var insert = &quot;INSERT INTO exams (&quot;;
+				insert += &quot;accession_number, &quot;;
+				insert += &quot;exam_description, &quot;;
+				insert += &quot;patient_id&quot;;
+				insert += &quot;) VALUES (?, ?, ?)&quot;;
+
+
+				params.clear();
+				params.add(exam.get(&quot;accNum&quot;));
+				params.add(exam.get(&quot;studyDescription&quot;));
+				params.add(patientId);
+
+				con.executeUpdate(insert, params);
+
+				logger.warn(&quot;Added new exam: &quot; + exam.get(&quot;accNum&quot;));
+			}
+		}
+		else
+		{
+
+			throw &quot;Unable to get patient_id for patient &quot; 
+				+ patient.get(&quot;name&quot;) 
+				+ &quot; with MRN &quot; 
+				+ patient.get(&quot;mrn&quot;);
+		}
+
+	}
+	finally
+	{
+		con.close();
+	}	
+}</code>
+        </codeTemplate>
+        <codeTemplate version="3.4.0">
+          <id>e503f004-5160-4781-83c9-8120b8d259e6</id>
+          <name>Insert or Update Patient</name>
+          <revision>1</revision>
+          <lastModified>
+            <time>1492811869289</time>
+            <timezone>Etc/UTC</timezone>
+          </lastModified>
+          <type>FUNCTION</type>
+          <contextSet>
+            <delegate>
+              <contextType>CHANNEL_BATCH</contextType>
+              <contextType>DESTINATION_FILTER_TRANSFORMER</contextType>
+              <contextType>SOURCE_FILTER_TRANSFORMER</contextType>
+              <contextType>CHANNEL_ATTACHMENT</contextType>
+              <contextType>CHANNEL_PREPROCESSOR</contextType>
+              <contextType>GLOBAL_POSTPROCESSOR</contextType>
+              <contextType>CHANNEL_POSTPROCESSOR</contextType>
+              <contextType>SOURCE_RECEIVER</contextType>
+              <contextType>DESTINATION_RESPONSE_TRANSFORMER</contextType>
+              <contextType>CHANNEL_UNDEPLOY</contextType>
+              <contextType>CHANNEL_DEPLOY</contextType>
+              <contextType>DESTINATION_DISPATCHER</contextType>
+            </delegate>
+          </contextSet>
+          <code>/**
+	Adds a new patient or updates an existing patient&apos;s demographic information.  Returns &apos;true&apos; of
+	patient was added to the database, &apos;false&apos; if patient was updated
+*/
+function insertOrUpdatePatient(patient) {
+	var con = getConnection();
+
+	try
+	{
+		var update = &quot;UPDATE patients SET patient_name = ?, &quot;;
+		update += &quot;dob = ?, &quot;;
+		update += &quot;sex = ?, &quot;;
+		update += &quot;street = ?, &quot;;
+		update += &quot;city = ?, &quot;;
+		update += &quot;state = ?, &quot;;
+		update += &quot;zip_code = ? &quot;;
+		update += &quot;WHERE mrn = ?&quot;;
+
+
+		var params = new java.util.ArrayList();
+		params.add(patient.get(&quot;name&quot;));
+		params.add(patient.get(&quot;dob&quot;));
+		params.add(patient.get(&quot;sex&quot;));
+		params.add(patient.get(&quot;street&quot;));
+		params.add(patient.get(&quot;city&quot;));
+		params.add(patient.get(&quot;state&quot;));
+		params.add(patient.get(&quot;zipCode&quot;));
+		params.add(patient.get(&quot;mrn&quot;));
+
+
+		var count = con.executeUpdate(update, params);
+
+		if(count &gt;= 1) {
+			logger.warn(&quot;Updated patient: &quot; + patient.get(&quot;mrn&quot;));
+
+			return false;
+		}
+		else {
+			var insert = &quot;INSERT INTO patients (&quot;;
+			insert += &quot;patient_name, &quot;;
+			insert += &quot;mrn, &quot;;
+			insert += &quot;dob, &quot;;
+			insert += &quot;sex, &quot;;
+			insert += &quot;street, &quot;;
+			insert += &quot;city, &quot;;
+			insert += &quot;state, &quot;;
+			insert += &quot;zip_code&quot;;
+			insert += &quot;) VALUES (?, ?, ?, ?, ?, ?, ?, ?)&quot;;
+
+			params.clear();
+			params.add(patient.get(&quot;name&quot;));
+			params.add(patient.get(&quot;mrn&quot;));
+			params.add(patient.get(&quot;dob&quot;));
+			params.add(patient.get(&quot;sex&quot;));
+			params.add(patient.get(&quot;street&quot;));
+			params.add(patient.get(&quot;city&quot;));
+			params.add(patient.get(&quot;state&quot;));
+			params.add(patient.get(&quot;zipCode&quot;));
+
+			con.executeUpdate(insert, params);
+
+			logger.warn(&quot;Added new patient: &quot; + patient.get(&quot;mrn&quot;));
+
+			return true;
+		}
+	}
+	finally
+	{
+		con.close();
+	}
+}</code>
+        </codeTemplate>
+        <codeTemplate version="3.4.0">
+          <id>45cdd14a-aaa2-4f21-915a-49e93f9f6027</id>
+          <name>Insert Status Change</name>
+          <revision>1</revision>
+          <lastModified>
+            <time>1492811869439</time>
+            <timezone>Etc/UTC</timezone>
+          </lastModified>
+          <type>FUNCTION</type>
+          <contextSet>
+            <delegate>
+              <contextType>CHANNEL_BATCH</contextType>
+              <contextType>DESTINATION_FILTER_TRANSFORMER</contextType>
+              <contextType>SOURCE_FILTER_TRANSFORMER</contextType>
+              <contextType>CHANNEL_ATTACHMENT</contextType>
+              <contextType>CHANNEL_PREPROCESSOR</contextType>
+              <contextType>GLOBAL_POSTPROCESSOR</contextType>
+              <contextType>CHANNEL_POSTPROCESSOR</contextType>
+              <contextType>SOURCE_RECEIVER</contextType>
+              <contextType>DESTINATION_RESPONSE_TRANSFORMER</contextType>
+              <contextType>CHANNEL_UNDEPLOY</contextType>
+              <contextType>CHANNEL_DEPLOY</contextType>
+              <contextType>DESTINATION_DISPATCHER</contextType>
+            </delegate>
+          </contextSet>
+          <code>/**
+	Adds a new entry into the reports table
+*/
+function insertStatusChange(exam) {
+	var patient = exam.get(&quot;patient&quot;);
+
+
+	var con = getConnection();
+	try
+	{
+		var params = new java.util.ArrayList();
+		var selectExamId = &quot;SELECT exam_id FROM &quot; 
+			+ &quot;exams INNER JOIN patients ON exams.patient_id = patients.patient_id WHERE &quot; 
+			+ &quot;patient_name = ? AND &quot;
+			+ &quot;mrn = ? AND &quot;
+			+ &quot;dob = ? AND &quot;
+			+ &quot;accession_number = ?&quot;;
+
+		params.add(patient.get(&quot;name&quot;));
+		params.add(patient.get(&quot;mrn&quot;));
+		params.add(patient.get(&quot;dob&quot;));
+		params.add(exam.get(&quot;accNum&quot;));
+
+		var rs = con.executeCachedQuery(selectExamId, params);
+		if(rs.next())
+		{
+			var examId = rs.getInt(&quot;exam_id&quot;);
+
+			// Make sure we don&apos;t already have this status.
+			// This can happen if a message is retransmitted.
+			var selectCount = &quot;SELECT count(*) AS status_count FROM reports WHERE &quot;
+				+ &quot;exam_id = ? AND &quot;
+				+ &quot;status = ? AND &quot;
+				+ &quot;status_timestamp = ?&quot;
+
+			params.clear();
+			params.add(examId);
+			params.add(exam.get(&quot;status&quot;));
+			params.add(exam.get(&quot;statusChangeTimestamp&quot;));
+
+			var rs2 = con.executeCachedQuery(selectCount, params);
+			rs2.next();
+		
+			var count = rs2.getInt(&quot;status_count&quot;);
+			if(count == 0)
+			{
+				var insert = &quot;INSERT INTO reports &quot; 
+					+ &quot;(exam_id, status, status_timestamp, report_text, signer, dictator, transcriber) &quot; 
+					+ &quot;VALUES (?, ?, ?, ?, ?, ?, ?)&quot;;
+
+
+				params.clear();
+				params.add(examId);
+				params.add(exam.get(&quot;status&quot;));
+				params.add(exam.get(&quot;statusChangeTimestamp&quot;));
+				params.add(exam.get(&quot;report&quot;));
+				params.add(exam.get(&quot;signer&quot;));
+				params.add(exam.get(&quot;dictator&quot;));
+				params.add(exam.get(&quot;transcriber&quot;));
+
+
+				con.executeUpdate(insert, params);
+
+
+				logger.warn(&quot;Updated status for exam &quot; + exam.get(&quot;accNum&quot;) + &quot; to &quot; + exam.get(&quot;status&quot;));
+			}
+			else
+			{
+				logger.warn(&quot;Received duplicate status update for exam &quot; 
+					+ exam.get(&quot;accNum&quot;) 
+					+ &quot;, status: &quot; + exam.get(&quot;status&quot;) );
+			}		
+		}
+		else
+		{	
+			throw &quot;Unable to find exam id for exam with name = &quot; 
+				+ patient.get(&quot;name&quot;) 
+				+ &quot;, mrn = &quot;
+				+ patient.get(&quot;mrn&quot;)
+				+ &quot;, dob = &quot;
+				+ patient.get(&quot;dob&quot;)
+				+ &quot;, acc num = &quot;
+				+ patient.get(&quot;accNum&quot;);
+		}
+	}
+	finally
+	{
+		con.close();
+	}
+}</code>
+        </codeTemplate>
+      </codeTemplates>
+    </codeTemplateLibrary>
+  </codeTemplateLibraries>
+</channel>
